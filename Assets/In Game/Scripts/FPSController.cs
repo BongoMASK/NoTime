@@ -14,17 +14,18 @@ public class FPSController : MonoBehaviour
 
 
 
-   
+
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        cam = GetComponentInChildren<Camera>();
         rb.freezeRotation = true;
     }
 
     private void Start()
     {
-        
+
     }
 
 
@@ -32,8 +33,9 @@ public class FPSController : MonoBehaviour
     {
         if (!isActive)
             return;
-        
+
         TakeInput();
+        RotatePlayer();
         SpeedControl();
         AccelerateSpeed();
         Debug.Log(rb.velocity);
@@ -43,7 +45,8 @@ public class FPSController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
+        if(canWalk || canSprint)
+           Move();
     }
 
 
@@ -54,34 +57,46 @@ public class FPSController : MonoBehaviour
     [SerializeField] private float acceleration = 15f;
     [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
 
+    [Header("CAMERA AND ROTATION")]
+    [SerializeField] private float camSensi = 400f;
+    [SerializeField] private float upperLookLimit = 90f;
+    [SerializeField] private float lowerLookLimit = 70f;
+    private Camera cam;
+    private float rotationX = 0f;
+
+    //Input varibales
     private Vector3 moveDir = Vector3.zero;
-    private float xInput, zInput;
+    private float xMoveInput, zMoveInput, yMouseInput, xMouseInput;
     private bool sprintKeyPressed;
+
+    //Inputs strings
+    private const string Horizontal = "Horizontal";
+    private const string Vertical = "Vertical";
+    private const string MouseX = "Mouse X";
+    private const string MouseY = "Mouse Y";
 
 
     private bool IsSprinting => canSprint && sprintKeyPressed;
     private float currentSpeed = 0f;
 
-    
+
 
     private void TakeInput()
     {
-        xInput = Input.GetAxisRaw("Horizontal");
-        zInput = Input.GetAxisRaw("Vertical");
+        xMoveInput = Input.GetAxisRaw(Horizontal);
+        zMoveInput = Input.GetAxisRaw(Vertical);
 
-        moveDir = transform.forward * zInput + transform.right * xInput;
+        xMouseInput = Input.GetAxisRaw(MouseX);
+        yMouseInput = Input.GetAxisRaw(MouseY);
+
+        moveDir = transform.forward * zMoveInput + transform.right * xMoveInput;
         moveDir = moveDir.normalized;
     }
 
     private void Move()
-    {
-      
-
-        currentSpeed = IsSprinting ? sprintSpeed : walkSpeed; 
-
-        rb.AddForce(moveDir * currentSpeed * 10f,ForceMode.Acceleration);
-
-
+    { 
+        currentSpeed = IsSprinting ? sprintSpeed : walkSpeed;
+        rb.AddForce(moveDir * currentSpeed * 10f, ForceMode.Acceleration);
     }
 
     private void AccelerateSpeed()
@@ -106,17 +121,20 @@ public class FPSController : MonoBehaviour
             Vector3 limitedVel = flatVel.normalized * currentSpeed;
             rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
         }
+    }
 
-        /*  if (IsSprinting)
-          {
-              rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -sprintSpeed, sprintSpeed), 0f,Mathf.Clamp(rb.velocity.z,-sprintSpeed, sprintSpeed));
-          }
+    private void RotatePlayer()
+    {
+        float tempX = xMouseInput  * camSensi * Time.deltaTime;
+        float tempY = yMouseInput  * camSensi * Time.deltaTime;
 
-          else
-          {
-              rb.velocity = new Vector3(Mathf.Clamp(rb.velocity.x, -walkSpeed, walkSpeed), 0f, Mathf.Clamp(rb.velocity.z, -walkSpeed, walkSpeed));
+        rotationX -= tempY;
+        rotationX = Mathf.Clamp(rotationX,-upperLookLimit,lowerLookLimit);
 
-          }*/
+        cam.transform.localRotation = Quaternion.Euler(rotationX,0f,0f);
+        transform.rotation *= Quaternion.Euler(0f, tempX, 0f);
+
+       
     }
 
 }
