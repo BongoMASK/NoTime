@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 694441498}
   - component: {fileID: 694441497}
   - component: {fileID: 694441496}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -652,13 +652,27 @@ MonoBehaviour:
   canWalk: 1
   canSprint: 1
   canInteract: 1
+  canAirMove: 1
+  canJump: 1
   walkSpeed: 4
   sprintSpeed: 7
-  acceleration: 50
+  acceleration: 20
   sprintKey: 304
+  airMovementMultiplier: 0.5
+  groundMovementMultiplier: 10
   camSensi: 200
   upperLookLimit: 90
   lowerLookLimit: 70
+  jumpForce: 10
+  jumpKey: 32
+  allowJumpButtonHold: 0
+  jumpCooldown: 0.5
+  groundCheckDistance: 0.2
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  gravityForce: 20
+  maxFallingSpeed: 10
 --- !u!54 &1590087440
 Rigidbody:
   m_ObjectHideFlags: 0
