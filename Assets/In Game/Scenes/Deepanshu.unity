@@ -755,12 +755,13 @@ MonoBehaviour:
   sprintSpeed: 7
   acceleration: 20
   sprintKey: 304
-  airMovementMultiplier: 0.5
+  airMovementMultiplier: 0.1
   groundMovementMultiplier: 10
+  frictionWhenStoping: 1
   camSensi: 200
   upperLookLimit: 90
   lowerLookLimit: 70
-  jumpForce: 10
+  jumpForce: 5
   jumpKey: 32
   allowJumpButtonHold: 0
   jumpCooldown: 0.5
@@ -768,7 +769,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  gravityForce: 20
+  gravityForce: 30
   maxFallingSpeed: 10
 --- !u!54 &1590087440
 Rigidbody:

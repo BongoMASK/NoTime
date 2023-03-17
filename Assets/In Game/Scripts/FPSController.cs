@@ -21,12 +21,19 @@ public class FPSController : MonoBehaviour
     #region Basic Control,Movement,Inputs
 
     [Header("MOVE")]
+    [Header("Walk")]
     [SerializeField] private float walkSpeed = 4f;
-    [SerializeField] private float sprintSpeed = 7f;
+
+    [Header("Acceleration and multiplier")]
     [SerializeField] private float acceleration = 15f;
-    [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
     [SerializeField] private float airMovementMultiplier = .5f;
+    [SerializeField] private float frictionWhenStoping = 1f;
     [SerializeField] private float groundMovementMultiplier = 10f;
+
+    [Header("Sprint")]
+    [SerializeField] private float sprintSpeed = 7f;
+    [SerializeField] private KeyCode sprintKey = KeyCode.LeftShift;
+    private float originalDrag;
 
     [Header("CAMERA AND ROTATION")]
     [SerializeField] private float camSensi = 400f;
@@ -71,7 +78,7 @@ public class FPSController : MonoBehaviour
     { 
         currentSpeed = IsSprinting ? sprintSpeed : walkSpeed;
         rb.AddForce(moveDir * currentSpeed * groundMovementMultiplier * movementMultiplier, ForceMode.Acceleration);
-        Debug.Log(rb.velocity + " and the current speed is: " +currentSpeed);
+        //Debug.Log(movementMultiplier + " the drag is: "+rb.drag);
     }
 
     private void AccelerateSpeed()
@@ -84,6 +91,23 @@ public class FPSController : MonoBehaviour
         {
             currentSpeed = Mathf.Lerp(currentSpeed, walkSpeed, acceleration * Time.deltaTime);
         }
+    }
+
+    private void ApplyFriction()
+    {
+        if (moveDir.x!= 0 || moveDir.z != 0 && IsGrounded())
+        {
+            //Debug.Log("Reseting drag");
+            ResetDrag();
+            return;
+        }
+
+        rb.drag = frictionWhenStoping;
+    }
+
+    private void ResetDrag()
+    {
+        rb.drag = originalDrag;
     }
 
     private void SpeedControl()
@@ -127,7 +151,7 @@ public class FPSController : MonoBehaviour
     [Header("GROUND CHECK")]
     [SerializeField] private float groundCheckDistance = .2f;
     [SerializeField] private LayerMask groundLayer;
-    private float playerHieght;
+    //private float playerHieght;
 
     [Header("Gravity")]
     [SerializeField] private float gravityForce = 10f;
@@ -151,9 +175,14 @@ public class FPSController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        var res = Physics.Raycast(transform.position, Vector3.down, playerHieght * .5f + groundCheckDistance, groundLayer);
+        var res = Physics.Raycast(transform.position, Vector3.down,  groundCheckDistance, groundLayer);
 
         return res; 
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawRay(transform.position,Vector3.down *  groundCheckDistance);
     }
 
     private void ResetJump()
@@ -171,7 +200,7 @@ public class FPSController : MonoBehaviour
 
     private bool ShouldJump()
     {
-        return isJumpPressed && readyToJump && IsGrounded();
+        return isJumpPressed && readyToJump && IsGrounded() && canJump;
     }
 
     #endregion
@@ -187,7 +216,10 @@ public class FPSController : MonoBehaviour
 
     private void Start()
     {
-        playerHieght = capCollider.bounds.size.y;
+        Cursor.lockState = CursorLockMode.Locked;
+        originalDrag = rb.drag;
+        //Debug.Log(originalDrag);
+
     }
 
 
@@ -204,6 +236,7 @@ public class FPSController : MonoBehaviour
         HandleGravity();
         SpeedControl();
         AccelerateSpeed();
+        ApplyFriction();
        // Debug.Log(rb.velocity);
 
 
@@ -211,13 +244,14 @@ public class FPSController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsGrounded() && canWalk || canSprint)
+        if (IsGrounded() && (canWalk || canSprint) && (moveDir.x!= 0 || moveDir.z!= 0))
              Move();
-
         else if(!IsGrounded() && canAirMove)
         {
+            //Debug.Log("In the air");
             Move(airMovementMultiplier);
         }
+       // Debug.Log(IsGrounded());
 
     }
 
