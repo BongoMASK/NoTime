@@ -18,6 +18,59 @@ public class FPSController : MonoBehaviour
     private CapsuleCollider capCollider;
     #endregion
 
+    #region Unity Methods
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        cam = GetComponentInChildren<Camera>();
+        capCollider = GetComponentInChildren<CapsuleCollider>();
+        rb.freezeRotation = true;
+    }
+
+    private void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        originalDrag = rb.drag;
+        //Debug.Log(originalDrag);
+
+    }
+
+
+    private void Update()
+    {
+        if (!isActive)
+            return;
+
+        TakeInput();
+        RotatePlayer();
+
+        if (ShouldJump())
+            HandleJump();
+        HandleGravity();
+        SpeedControl();
+        AccelerateSpeed();
+        ApplyFriction();
+        // Debug.Log(rb.velocity);
+
+
+    }
+
+    private void FixedUpdate()
+    {
+        Debug.Log(rb.velocity);
+        if (IsGrounded() && (canWalk || canSprint) && (moveDir.x != 0 || moveDir.z != 0))
+            Move();
+        else if (!IsGrounded() && canAirMove)
+        {
+            //Debug.Log("In the air");
+            Move(airMovementMultiplier);
+        }
+        // Debug.Log(IsGrounded());
+
+    }
+
+    #endregion
+
     #region Basic Control,Movement,Inputs
 
     [Header("MOVE")]
@@ -54,7 +107,7 @@ public class FPSController : MonoBehaviour
     private const string MouseY = "Mouse Y";
 
 
-    private bool IsSprinting => canSprint && sprintKeyPressed;
+
     private float currentSpeed = 0f;
 
 
@@ -68,7 +121,7 @@ public class FPSController : MonoBehaviour
 
         isJumpPressed = allowJumpButtonHold ? Input.GetKey(jumpKey) : Input.GetKeyDown(jumpKey);
 
-        sprintKeyPressed = Input.GetKey(sprintKey);
+        sprintKeyPressed = canSprint ? Input.GetKey(sprintKey) : false;
 
         moveDir = transform.forward * zMoveInput + transform.right * xMoveInput;
         moveDir = moveDir.normalized;
@@ -205,55 +258,11 @@ public class FPSController : MonoBehaviour
 
     #endregion
 
-    #region Unity Methods
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        cam = GetComponentInChildren<Camera>();
-        capCollider = GetComponentInChildren<CapsuleCollider>();
-        rb.freezeRotation = true;
-    }
-
-    private void Start()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        originalDrag = rb.drag;
-        //Debug.Log(originalDrag);
-
-    }
-
-
-    private void Update()
-    {
-        if (!isActive)
-            return;
-
-        TakeInput();
-        RotatePlayer();
-
-        if (ShouldJump())
-            HandleJump();
-        HandleGravity();
-        SpeedControl();
-        AccelerateSpeed();
-        ApplyFriction();
-       // Debug.Log(rb.velocity);
-
-
-    }
-
-    private void FixedUpdate()
-    {
-        if (IsGrounded() && (canWalk || canSprint) && (moveDir.x!= 0 || moveDir.z!= 0))
-             Move();
-        else if(!IsGrounded() && canAirMove)
-        {
-            //Debug.Log("In the air");
-            Move(airMovementMultiplier);
-        }
-       // Debug.Log(IsGrounded());
-
-    }
+    #region Properties
+    private bool IsSprinting => canSprint && sprintKeyPressed;
+    public bool CanInteract { get => canInteract; set => canInteract = value; }
 
     #endregion
+
+
 }
