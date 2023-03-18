@@ -12,13 +12,27 @@ public class VisualPath : MonoBehaviour {
 
     bool isVisible = false;
 
+    [SerializeField] int maxSkips = 5;
+    int skipCount = 0;
+    int skipCount1 = 0;
+
     #region Add New Position
 
     public void AddRewindPos() {
+        skipCount++;
+        if (skipCount < maxSkips)
+            return;
+        skipCount = 0;
+
         AddNewPos(rewindLine, ref rewindIndex);
     }
 
     public void AddForwardPos() {
+        skipCount1++;
+        if (skipCount1 < maxSkips)
+            return;
+        skipCount1 = 0;
+
         AddNewPos(forwardLine, ref forwardIndex);
     }
 
@@ -37,10 +51,20 @@ public class VisualPath : MonoBehaviour {
     #region Remove Position
 
     public void RemoveRewindPos() {
+        skipCount--;
+        if (skipCount > 0)
+            return;
+        skipCount = maxSkips;
+
         RemovePos(rewindLine, ref rewindIndex);
     }
 
     public void RemoveForwardPos() {
+        skipCount1--;
+        if (skipCount1 > 0)
+            return;
+        skipCount1 = maxSkips;
+
         RemovePos(forwardLine, ref forwardIndex);
     }
 
@@ -50,6 +74,9 @@ public class VisualPath : MonoBehaviour {
     /// <param name="line"></param>
     /// <param name="i"></param>
     void RemovePos(LineRenderer line, ref int i) {
+        if (line.positionCount == 1)
+            return;
+
         i--;
         line.positionCount = i + 1;
     }

@@ -2,34 +2,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Recorder : MonoBehaviour {
+
     public Stack<Playback> rewindPath = new Stack<Playback>();
     public Stack<Playback> forwardPath = new Stack<Playback>();
+
+    [Header("Assignables")]
     [SerializeField] Rigidbody rb;
     [SerializeField] VisualPath vp;
 
+    [Header("Values")]
     [SerializeField] Vector3 startForce;
 
     bool isRewinding = false;
     bool isForwarding = false;
     bool isPlaying = true;
 
-    private Vector3 _lastPlayerPos = Vector3.zero;
-    Vector3 startPos;
-
-    Vector3 lastPlayerPos {
-        get {
-            if (rewindPath.Count > 0)
-                return _lastPlayerPos;
-            return startPos;
-        }
-        set {
-            _lastPlayerPos = value;
-        }
-    }
-
     private void Start() {
         rb.AddForce(startForce);
-        startPos = transform.position;
     }
 
     private void Update() {
@@ -68,12 +57,10 @@ public class Recorder : MonoBehaviour {
 
         else if (isPlaying)
             RecordData();
-
-        lastPlayerPos = transform.position;
     }
 
     void RecordData() {
-        rewindPath.Push(new Playback(transform.position - lastPlayerPos, transform.rotation));
+        rewindPath.Push(new Playback(transform.localPosition, transform.rotation));
         vp.AddRewindPos();
     }
 
@@ -85,7 +72,7 @@ public class Recorder : MonoBehaviour {
 
         Playback lastPlayback = rewindPath.Pop();
 
-        transform.position -= lastPlayback.position;
+        transform.localPosition = lastPlayback.position;
         transform.rotation = lastPlayback.rotation;
 
         forwardPath.Push(lastPlayback);
@@ -102,7 +89,7 @@ public class Recorder : MonoBehaviour {
 
         Playback lastPlayback = forwardPath.Pop();
 
-        transform.position += lastPlayback.position;
+        transform.localPosition = lastPlayback.position;
         transform.rotation = lastPlayback.rotation;
 
         rewindPath.Push(lastPlayback);
@@ -124,13 +111,17 @@ public class Recorder : MonoBehaviour {
     }
 
     Vector3 CalculateForce() {
-        if (forwardPath.Count <= 0 || rewindPath.Count <= 0)
+        if (forwardPath.Count <= 1 || rewindPath.Count <= 1)
             return startForce;
 
-        Vector3 distance = (forwardPath.Peek().position);
+        Vector3 distance = (transform.localPosition - rewindPath.Peek().position);
         Vector3 velocity = distance / Time.fixedDeltaTime;
         Vector3 acceleration = velocity / Time.fixedDeltaTime;
 
         return acceleration;
+    }
+
+    private void OnDrawGizmosSelected() {
+        // TODO: Show path stored inside of object in editor window
     }
 }
