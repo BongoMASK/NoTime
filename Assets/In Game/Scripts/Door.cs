@@ -2,42 +2,22 @@ using UnityEngine;
 
 public class Door : PuzzleObject
 {
-    [SerializeField] Animator _anim;
+    [SerializeField] Animator anim;
 
     private void Update()
     {
         CheckTrigger();
-
-        if (isOn)
-        {
-            openeDoor();
-        }
-        if (!isOn)
-        {
-            closeDoor();
-        }
     }
-
-
-    public void openeDoor()
-    {
-        _anim.SetBool("_openDoor", true);
-        SwitchOn();
-    }
-    public void closeDoor()
-    {
-        _anim.SetBool("_openDoor", false);
-        SwitchOff();
-    }
-
 
     public override void SwitchOn()
     {
-        isOn = true;
+        base.SwitchOn();
+        anim.SetBool("_openDoor", true);
     }
 
     public override void SwitchOff()
-    {
-        isOn = false;
+    {   
+        base.SwitchOff();
+        anim.SetBool("_openDoor", false);
     }
 }

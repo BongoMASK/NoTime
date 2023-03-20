@@ -17,16 +17,21 @@ public class Recorder : MonoBehaviour {
     bool isForwarding = false;
     bool isPlaying = true;
 
+    bool limitRB = false;
+
     private void Start() {
         rb.AddForce(startForce);
     }
 
     private void Update() {
+        LimitRigidbody();
+
         if (Input.GetKeyDown(KeyCode.A)) {
             isRewinding = true;
             isForwarding = false;
             isPlaying = false;
-            rb.isKinematic = true;
+            //rb.isKinematic = true;
+            limitRB = true;
         }
 
         if (Input.GetKeyUp(KeyCode.A) && isRewinding) {
@@ -37,7 +42,8 @@ public class Recorder : MonoBehaviour {
             isForwarding = true;
             isRewinding = false;
             isPlaying = false;
-            rb.isKinematic = true;
+            //rb.isKinematic = true;
+            limitRB = true;
         }
 
         if (Input.GetKeyUp(KeyCode.D) && isForwarding) {
@@ -57,6 +63,35 @@ public class Recorder : MonoBehaviour {
 
         else if (isPlaying)
             RecordData();
+    }
+
+    void PlayerInput() {
+        if (Input.GetKeyDown(KeyCode.A)) {
+            isRewinding = true;
+            isForwarding = false;
+            isPlaying = false;
+            //rb.isKinematic = true;
+            limitRB = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.A) && isRewinding) {
+            isRewinding = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.D)) {
+            isForwarding = true;
+            isRewinding = false;
+            isPlaying = false;
+            //rb.isKinematic = true;
+            limitRB = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.D) && isForwarding) {
+            isForwarding = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            Play();
     }
 
     void RecordData() {
@@ -100,7 +135,8 @@ public class Recorder : MonoBehaviour {
 
     void Play() {
         isPlaying = !isPlaying;
-        rb.isKinematic = !isPlaying;
+        //rb.isKinematic = !isPlaying;
+        limitRB = !isPlaying;
 
         if (isPlaying) {
             rb.AddForce(rb.mass * CalculateForce());
@@ -111,7 +147,7 @@ public class Recorder : MonoBehaviour {
     }
 
     Vector3 CalculateForce() {
-        if (forwardPath.Count <= 1 || rewindPath.Count <= 1)
+        if (rewindPath.Count <= 0)
             return startForce;
 
         Vector3 distance = (transform.localPosition - rewindPath.Peek().position);
@@ -119,6 +155,15 @@ public class Recorder : MonoBehaviour {
         Vector3 acceleration = velocity / Time.fixedDeltaTime;
 
         return acceleration;
+    }
+
+    void LimitRigidbody() {
+        if (!limitRB) {
+            rb.constraints = RigidbodyConstraints.None;
+            return;
+        }
+
+        rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
     }
 
     private void OnDrawGizmosSelected() {

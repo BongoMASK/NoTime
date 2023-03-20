@@ -3,6 +3,7 @@ using UnityEngine;
 public class PressurePlate : MonoBehaviour
 {
     [SerializeField] float speed = 1f;
+    [SerializeField] float pressPosY = 0.2f;
     Vector3 ogPos;
     bool canMoveBack = false;
 
@@ -10,7 +11,6 @@ public class PressurePlate : MonoBehaviour
     {
         ogPos = transform.position;
     }
-
 
     private void Update()
     {
@@ -46,25 +46,30 @@ public class PressurePlate : MonoBehaviour
     {
         if (isValidObject(collision.gameObject))
         {
-            transform.Translate(0, -0.1f * Time.deltaTime * speed, 0);
+            if(transform.position.y > ogPos.y - pressPosY)
+                transform.Translate(0, -0.1f * Time.deltaTime * speed, 0);
+
             canMoveBack = false;
         }
     }
 
     //This code checks if the tag of a given GameObject can push the button and returns a boolean value. 
-    bool isValidObject(GameObject go)
+    bool isValidObject(GameObject go) 
     {
-        //Check if the tag of the given GameObject is equal to "Player"
+        //Check if Player
         if (go.tag == "Player")
-        {
-            //Return true if the tag is equal to "Player"
             return true;
-        }
-        else
-        {
-            //Return false if the tag is not equal to "Player"
-            return false;
-        }
+
+        //Check if Cube
+        if (go.tag == "Cube")
+            return true;
+
+        //Check if Sphere
+        if (go.tag == "Sphere")
+            return true;
+
+        //Return false if the tag is not equal to "Player"
+        return false;
     }
 
 }
