@@ -57,7 +57,7 @@ public class FPSController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.Log(rb.velocity);
+        //Debug.Log(rb.velocity);
         if (IsGrounded() && (canWalk || canSprint) && (moveDir.x != 0 || moveDir.z != 0))
             Move();
         else if (!IsGrounded() && canAirMove)
