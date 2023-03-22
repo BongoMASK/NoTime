@@ -6,24 +6,32 @@ public class DoorTrigger : PuzzleObject
     {
         if (other.transform.name == "Plate")
         {
-            SwitchOn();
+            isOn = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.transform.name == "Plate")
         {
-            SwitchOff();
+            isOn = false;
         }
     }
 
     public override void SwitchOn()
     {
-        isOn = true;
+        base.SwitchOn();
+
+        // TODO:
+        // Change colour of button
+        // Change button path visual
     }
 
     public override void SwitchOff()
     {
-        isOn = false;
+        base.SwitchOff();
+
+        // TODO:
+        // Change colour of button
+        // Change button path visual
     }
 }
