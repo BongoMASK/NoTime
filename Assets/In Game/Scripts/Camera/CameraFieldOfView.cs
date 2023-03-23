@@ -1,18 +1,42 @@
 using UnityEngine;
 
 public class CameraFieldOfView : MonoBehaviour {
-    
-    [SerializeField] MeshRenderer meshRenderer;
+
+    [SerializeField] Recorder recorder;
+
     [SerializeField] new Collider collider;
     Plane[] cameraFrustum;
 
-    [SerializeField] bool displayColour = false;
+    private bool _isVisibleToCam;
+
+    public bool isVisibleToCam {
+        get => _isVisibleToCam;
+
+        private set {
+            if(value != isVisibleToCam) {
+                if(value)
+                    OnEnteredCameraFrame();
+                else
+                    OnExitCameraFrame();
+            }
+            _isVisibleToCam = value;
+        }
+    }
+
+    public void Update() {
+        isVisibleToCam = CheckIfInCamera();
+    }
 
     /// <summary>
     /// Checks if the object is inside the camera field of view
     /// </summary>
     /// <param name="cam"></param>
-    public bool CheckIfInCamera(Camera cam) {
+    public bool CheckIfInCamera() {
+        if (CameraManager.instance.activeCam == null)
+            return false;
+
+        Camera cam = CameraManager.instance.activeCam.cam;
+
         Bounds bounds = collider.bounds;
         cameraFrustum = GeometryUtility.CalculateFrustumPlanes(cam);
 
@@ -22,29 +46,21 @@ public class CameraFieldOfView : MonoBehaviour {
         return false;
     }
 
-    /// <summary>
-    /// Change material based on which camera is looking at 
-    /// </summary>
-    /// <param name="cam"></param>
-    private void ChangeMatColour(Camera cam) {
-        if (!displayColour)
-            return;
+    public void OnEnteredCameraFrame() {
+        recorder.enabled = true;
 
-        if (cam == null) {
-            meshRenderer.material.color = Color.black;
-            return;
-        }
-
-        meshRenderer.material.color = GetCameraColour(cam);
+        CameraManager.instance.Rewind += recorder.Rewind;
+        CameraManager.instance.Forward += recorder.Forward;
+        CameraManager.instance.Play += recorder.Play;
+        CameraManager.instance.OnPlayPress += recorder.OnPlayPress;
     }
 
-    /// <summary>
-    /// Gets the colour of the camera that is affecting the object.
-    /// Used for Debugging and Level Design
-    /// </summary>
-    /// <param name="cam"></param>
-    /// <returns></returns>
-    private Color GetCameraColour(Camera cam) {
-        return cam.gameObject.GetComponent<CameraInfluence>().colour;
+    public void OnExitCameraFrame() {
+        CameraManager.instance.Rewind -= recorder.Rewind;
+        CameraManager.instance.Forward -= recorder.Forward;
+        CameraManager.instance.Play -= recorder.Play;
+        CameraManager.instance.OnPlayPress -= recorder.OnPlayPress;
+
+        recorder.enabled = false;
     }
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DoorTrigger : PuzzleObject
+public class DoorTrigger : Button
 {
     private void OnTriggerEnter(Collider other)
     {

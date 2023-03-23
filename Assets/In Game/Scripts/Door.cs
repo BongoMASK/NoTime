@@ -1,23 +1,25 @@
 using UnityEngine;
 
-public class Door : PuzzleObject
+public class Door : PuzzleComponent
 {
     [SerializeField] Animator anim;
 
-    private void Update()
-    {
-        CheckTrigger();
+    [Tooltip("Keeps door open at Start")]
+    [SerializeField] bool isDoorAlreadyOpen = false;
+
+    private void Start() {
+        anim.SetBool("_openDoor", isDoorAlreadyOpen);
     }
 
     public override void SwitchOn()
     {
         base.SwitchOn();
-        anim.SetBool("_openDoor", true);
+        anim.SetBool("_openDoor", !isDoorAlreadyOpen);
     }
 
     public override void SwitchOff()
     {   
         base.SwitchOff();
-        anim.SetBool("_openDoor", false);
+        anim.SetBool("_openDoor", isDoorAlreadyOpen);
     }
 }

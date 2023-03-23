@@ -1,8 +1,11 @@
 using UnityEngine;
 
 public class CameraInfluence : MonoBehaviour {
+
     public Color colour = Color.green;
     [SerializeField] bool showCameraRange = false;
+
+    public Camera cam;
 
     /// <summary>
     /// Creates a mesh that displays the range of that camera. Used for debugging and level design

@@ -15,9 +15,8 @@ public class Recorder : MonoBehaviour {
 
     bool isRewinding = false;
     bool isForwarding = false;
-    bool isPlaying = true;
-
-    bool limitRB = false;
+    bool isPlaying { get => CameraManager.instance.isPlaying; }
+    bool limitRB { get => !isPlaying; }
 
     private void Start() {
         rb.AddForce(startForce);
@@ -26,82 +25,51 @@ public class Recorder : MonoBehaviour {
     private void Update() {
         LimitRigidbody();
 
-        if (Input.GetKeyDown(KeyCode.A)) {
-            isRewinding = true;
-            isForwarding = false;
-            isPlaying = false;
-            //rb.isKinematic = true;
-            limitRB = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.A)) {
+        //    isRewinding = true;
+        //    isForwarding = false;
+        //    isPlaying = false;
+        //    //rb.isKinematic = true;
+        //    limitRB = true;
+        //}
 
-        if (Input.GetKeyUp(KeyCode.A) && isRewinding) {
-            isRewinding = false;
-        }
+        //if (Input.GetKeyUp(KeyCode.A) && isRewinding) {
+        //    isRewinding = false;
+        //}
 
-        if (Input.GetKeyDown(KeyCode.D)) {
-            isForwarding = true;
-            isRewinding = false;
-            isPlaying = false;
-            //rb.isKinematic = true;
-            limitRB = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.D)) {
+        //    isForwarding = true;
+        //    isRewinding = false;
+        //    isPlaying = false;
+        //    //rb.isKinematic = true;
+        //    limitRB = true;
+        //}
 
-        if (Input.GetKeyUp(KeyCode.D) && isForwarding) {
-            isForwarding = false;
-        }
+        //if (Input.GetKeyUp(KeyCode.D) && isForwarding) {
+        //    isForwarding = false;
+        //}
 
-        if (Input.GetKeyDown(KeyCode.Space))
-            Play();
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //    OnPlayPress();
     }
 
     private void FixedUpdate() {
-        if (isRewinding)
-            Rewind();
+        //if (isRewinding)
+        //    Rewind();
 
-        else if (isForwarding)
-            Forward();
+        //else if (isForwarding)
+        //    Forward();
 
-        else if (isPlaying)
-            RecordData();
+        //else if (isPlaying)
+        //    Play();
     }
 
-    void PlayerInput() {
-        if (Input.GetKeyDown(KeyCode.A)) {
-            isRewinding = true;
-            isForwarding = false;
-            isPlaying = false;
-            //rb.isKinematic = true;
-            limitRB = true;
-        }
-
-        if (Input.GetKeyUp(KeyCode.A) && isRewinding) {
-            isRewinding = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.D)) {
-            isForwarding = true;
-            isRewinding = false;
-            isPlaying = false;
-            //rb.isKinematic = true;
-            limitRB = true;
-        }
-
-        if (Input.GetKeyUp(KeyCode.D) && isForwarding) {
-            isForwarding = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-            Play();
-    }
-
-    void RecordData() {
+    public void Play() {
         rewindPath.Push(new Playback(transform.localPosition, transform.rotation));
         vp.AddRewindPos();
     }
 
-    void Rewind() {
-        isPlaying = false;
-
+    public void Rewind() {
         if (rewindPath.Count <= 0)
             return;
 
@@ -116,9 +84,7 @@ public class Recorder : MonoBehaviour {
         vp.AddForwardPos();
     }
 
-    void Forward() {
-        isPlaying = false;
-
+    public void Forward() {
         if (forwardPath.Count <= 0)
             return;
 
@@ -133,11 +99,7 @@ public class Recorder : MonoBehaviour {
         vp.AddRewindPos();
     }
 
-    void Play() {
-        isPlaying = !isPlaying;
-        //rb.isKinematic = !isPlaying;
-        limitRB = !isPlaying;
-
+    public void OnPlayPress() {
         if (isPlaying) {
             rb.AddForce(rb.mass * CalculateForce());
             forwardPath.Clear();
@@ -157,7 +119,7 @@ public class Recorder : MonoBehaviour {
         return acceleration;
     }
 
-    void LimitRigidbody() {
+    public void LimitRigidbody() {
         if (!limitRB) {
             rb.constraints = RigidbodyConstraints.None;
             return;
@@ -165,7 +127,7 @@ public class Recorder : MonoBehaviour {
 
         rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
     }
-
+    
     private void OnDrawGizmosSelected() {
         // TODO: Show path stored inside of object in editor window
     }

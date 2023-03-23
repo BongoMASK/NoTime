@@ -1,61 +1,67 @@
 using UnityEngine;
 
-public class PressurePlate : MonoBehaviour
-{
+public class PressurePlate : MonoBehaviour {
     [SerializeField] float speed = 1f;
     [SerializeField] float pressPosY = 0.2f;
+
     Vector3 ogPos;
+
     bool canMoveBack = false;
 
-    private void Start()
-    {
-        ogPos = transform.position;
+    private void Start() {
+        ogPos = transform.localPosition;
     }
 
-    private void Update()
-    {
-        if (canMoveBack)
-        {
-            if (transform.position.y < ogPos.y)
-            {
-                transform.Translate(0, 0.1f * Time.deltaTime * speed, 0);
-            }
-            else
-            {
-                canMoveBack = false;
-            }
-        }
+    private void Update() {
+        ControlPressurePlate();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (isValidObject(collision.gameObject))
-        {
+    /// <summary>
+    /// Checks whether pressure plate can move up
+    /// </summary>
+    void ControlPressurePlate() {
+        if (!canMoveBack)
+            return;
+
+        if (transform.localPosition.y < ogPos.y)
+            transform.Translate(0, 0.1f * Time.deltaTime * speed, 0);
+
+        else
+            canMoveBack = false;
+    }
+
+    #region Collisions
+
+    private void OnCollisionStay(Collision collision) {
+        // While button is BEING pressed
+        if (isValidObject(collision.gameObject)) {
+            if (transform.localPosition.y > ogPos.y - pressPosY) {
+                transform.Translate(0, -0.1f * Time.deltaTime * speed, 0);
+            }
+
             canMoveBack = false;
         }
     }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (isValidObject(collision.gameObject))
-        {
+    private void OnCollisionEnter(Collision collision) {
+        if(isValidObject(collision.gameObject)) {
+            canMoveBack = false;
+        }
+    }
+    private void OnCollisionExit(Collision collision) {
+        // When button has been released
+        if (isValidObject(collision.gameObject)) {
             canMoveBack = true;
         }
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (isValidObject(collision.gameObject))
-        {
-            if(transform.position.y > ogPos.y - pressPosY)
-                transform.Translate(0, -0.1f * Time.deltaTime * speed, 0);
+    #endregion
 
-            canMoveBack = false;
-        }
-    }
-
-    //This code checks if the tag of a given GameObject can push the button and returns a boolean value. 
-    bool isValidObject(GameObject go) 
-    {
+    /// <summary>
+    /// Checks if the tag of a given GameObject can push the button and returns a boolean value. 
+    /// </summary>
+    /// <param name="go"></param>
+    /// <returns></returns>
+    bool isValidObject(GameObject go) {
         //Check if Player
         if (go.tag == "Player")
             return true;
@@ -71,5 +77,4 @@ public class PressurePlate : MonoBehaviour
         //Return false if the tag is not equal to "Player"
         return false;
     }
-
 }

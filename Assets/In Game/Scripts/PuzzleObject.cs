@@ -11,7 +11,6 @@ public abstract class PuzzleObject : MonoBehaviour
     /// SwitchOff() is called the frame it is turned off.
     /// </summary>
     public bool isOn {
-        //get; set;
         get => _isOn;
 
         set {
@@ -24,7 +23,7 @@ public abstract class PuzzleObject : MonoBehaviour
         }
     }
 
-    public List<DoorTrigger> triggerList;
+    public List<PuzzleObject> puzzleObjList;
 
     /// <summary>
     /// Is called whenever isOn becomes true.
@@ -40,19 +39,5 @@ public abstract class PuzzleObject : MonoBehaviour
     /// </summary>
     public virtual void SwitchOff() {
         _isOn = false;
-    }
-
-    /// <summary>
-    /// Checks whether it should turn on or not
-    /// </summary>
-    public void CheckTrigger()
-    {
-        bool b = true;
-        foreach (var x in triggerList)
-            b = b && x.isOn;
-
-        // Done so that it does not continue calling isOn. Saves memory
-        if (b != isOn)
-            isOn = b;
     }
 }

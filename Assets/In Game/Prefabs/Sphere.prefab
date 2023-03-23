@@ -453,7 +453,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 551f2b4f375850244a420be0ac4018eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshRenderer: {fileID: 0}
+  recorder: {fileID: 9135981166501011897}
+  meshRenderer: {fileID: 6930902293430475880}
   collider: {fileID: 9135981166501011864}
   displayColour: 0
 --- !u!114 &9135981166501011845

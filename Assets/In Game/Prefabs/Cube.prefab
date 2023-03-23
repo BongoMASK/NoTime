@@ -5715,7 +5715,8 @@ GameObject:
   - component: {fileID: 3576092944025106492}
   - component: {fileID: 3576092944025106494}
   - component: {fileID: 3576092944025106438}
-  m_Layer: 0
+  - component: {fileID: 240947291}
+  m_Layer: 7
   m_Name: Box
   m_TagString: Cube
   m_Icon: {fileID: 0}
@@ -5745,7 +5746,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3576092944025106437}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f08dd2bff4db9e343942624c80d3e317, type: 3}
   m_Name: 
@@ -5767,7 +5768,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &3576092944025106492
 MonoBehaviour:
@@ -5776,14 +5777,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3576092944025106437}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 551f2b4f375850244a420be0ac4018eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  meshRenderer: {fileID: 0}
+  recorder: {fileID: 3576092944025106434}
   collider: {fileID: 3576092944025106438}
-  displayColour: 0
 --- !u!114 &3576092944025106494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5813,6 +5813,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &240947291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3576092944025106437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 977f0d91ebe573c4888f958b14a6f78c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerVeiwedText: press E to interact
+  timeToPick: 1
 --- !u!1 &3576092944351019699
 GameObject:
   m_ObjectHideFlags: 0

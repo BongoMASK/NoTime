@@ -11,7 +11,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField, Tooltip("Transform of game object where the object should be after interaction")] private Transform interactedObjectPos;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
 
-    private Pickable currentInteractedObject;
+    [SerializeField] Pickable currentInteractedObject;
     private float inputTimer;
 
     private Ray ray;
@@ -40,7 +40,8 @@ public class PlayerInteraction : MonoBehaviour
 
             if (Input.GetKeyDown(interactKey))
             {
-                Invoke(nameof(ResetInteractedObject),2f);
+                //Invoke(nameof(ResetInteractedObject),2f);
+                ResetInteractedObject();
             }
 
             return;
@@ -55,20 +56,14 @@ public class PlayerInteraction : MonoBehaviour
             if (hit.transform.TryGetComponent<Pickable>(out Pickable pickableObject))
             {
                 Debug.Log(pickableObject.OnPlayerViewed());
-                if (Input.GetKey(interactKey))
+                if (Input.GetKeyDown(interactKey))
                 {
                     currentInteractedObject = pickableObject;
                     Debug.Log($"Current holded object is: {currentInteractedObject.name}");
                 }
 
-
-
-
             }
-
         }
-
-
     }
 
     private bool ObjectInRange()
