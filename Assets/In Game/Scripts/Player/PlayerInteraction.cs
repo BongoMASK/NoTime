@@ -1,8 +1,11 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerInteraction : MonoBehaviour
 {
     FPSController playerController;
+
+    [SerializeField] RawImage screen;
 
     [Header("Object detection")]
     [SerializeField] private float detectionRange = 1f;
@@ -11,12 +14,14 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField, Tooltip("Transform of game object where the object should be after interaction")] private Transform interactedObjectPos;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
 
-    [SerializeField] Pickable currentInteractedObject;
+    [SerializeField] Transform currentInteractedObject;
     private float inputTimer;
 
     private Ray ray;
     private RaycastHit hit;
     private float lastTimeInteractPressed = 0;
+
+    bool isScreenOpen = false;
 
     private void Awake()
     {
@@ -32,11 +37,14 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+            ToggleScreen();
+
         if (currentInteractedObject != null)
         {
             if (interactedObjectPos == null)
                 Debug.LogWarning("Interacted object position is not set up");
-            currentInteractedObject.transform.position = interactedObjectPos.position;
+            currentInteractedObject.transform.position = interactedObjectPos.position - currentInteractedObject.GetChild(0).localPosition;
 
             if (Input.GetKeyDown(interactKey))
             {
@@ -58,7 +66,7 @@ public class PlayerInteraction : MonoBehaviour
                 Debug.Log(pickableObject.OnPlayerViewed());
                 if (Input.GetKeyDown(interactKey))
                 {
-                    currentInteractedObject = pickableObject;
+                    currentInteractedObject = pickableObject.transform.parent;
                     Debug.Log($"Current holded object is: {currentInteractedObject.name}");
                 }
 
@@ -76,5 +84,15 @@ public class PlayerInteraction : MonoBehaviour
         currentInteractedObject = null;
     }
 
+    [SerializeField] CameraInfluence cam;
+
+    void ToggleScreen() {
+        // Enables and disables the screen
+        isScreenOpen = !isScreenOpen;
+        screen.enabled = isScreenOpen;
+        playerController.lockInput = isScreenOpen;
+
+        CameraManager.instance.activeCam = isScreenOpen ? cam : null;
+    }
 
 }

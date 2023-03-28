@@ -11,6 +11,9 @@ public class FPSController : MonoBehaviour
     [SerializeField] private bool canInteract = true;
     [SerializeField] private bool canAirMove = true;
     [SerializeField] private bool canJump = true;
+    
+    public bool lockInput = false;
+
     #endregion
 
     #region Internal references
@@ -113,6 +116,9 @@ public class FPSController : MonoBehaviour
 
     private void TakeInput()
     {
+        if (lockInput)
+            return;
+
         xMoveInput = Input.GetAxisRaw(Horizontal);
         zMoveInput = Input.GetAxisRaw(Vertical);
 
@@ -259,6 +265,7 @@ public class FPSController : MonoBehaviour
     #endregion
 
     #region Properties
+
     private bool IsSprinting => canSprint && sprintKeyPressed;
     public bool CanInteract { get => canInteract; set => canInteract = value; }
 

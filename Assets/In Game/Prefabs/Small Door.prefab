@@ -26,9 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961699495896603649}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 3.38, y: 1.665, z: -4.81}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 961699495896236075}
   - {fileID: 961699495896236067}
@@ -67,10 +67,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6431bb40666fe5b43a9f39b890047d25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerList:
-  - {fileID: 0}
-  - {fileID: 0}
+  puzzleObjList: []
   anim: {fileID: 8535247119392960488}
+  isDoorAlreadyOpen: 0
 --- !u!1 &961699495896603651
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,6 +164,7 @@ GameObject:
   - component: {fileID: 961699495896236075}
   - component: {fileID: 961699495897530379}
   - component: {fileID: 961699495898530507}
+  - component: {fileID: 5804304984351343469}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -237,3 +237,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &5804304984351343469
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 961699495896603659}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.008600006, y: 0.21909472, z: 0.12519798}
+  m_Center: {x: -0.00000009778887, y: 0, z: -0.000000055879354}

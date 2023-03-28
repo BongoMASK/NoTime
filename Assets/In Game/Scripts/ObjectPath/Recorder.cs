@@ -13,10 +13,19 @@ public class Recorder : MonoBehaviour {
     [Header("Values")]
     [SerializeField] Vector3 startForce;
 
-    bool isRewinding = false;
-    bool isForwarding = false;
     bool isPlaying { get => CameraManager.instance.isPlaying; }
     bool limitRB { get => !isPlaying; }
+
+    private void Awake() {
+
+        if(TryGetComponent(out PreRecorder playback)) {
+            rewindPath = new Stack<Playback>(playback.rewindList);
+
+            foreach(Playback p in playback.rewindList) 
+                vp.AddRewindPos(p.position);
+        }
+
+    }
 
     private void Start() {
         rb.AddForce(startForce);
@@ -66,7 +75,9 @@ public class Recorder : MonoBehaviour {
 
     public void Play() {
         rewindPath.Push(new Playback(transform.localPosition, transform.rotation));
-        vp.AddRewindPos();
+
+        if (vp != null) 
+            vp.AddRewindPos();
     }
 
     public void Rewind() {
@@ -80,8 +91,10 @@ public class Recorder : MonoBehaviour {
 
         forwardPath.Push(lastPlayback);
 
-        vp.RemoveRewindPos();
-        vp.AddForwardPos();
+        if (vp != null) {
+            vp.RemoveRewindPos();
+            vp.AddForwardPos();
+        }
     }
 
     public void Forward() {
@@ -95,8 +108,10 @@ public class Recorder : MonoBehaviour {
 
         rewindPath.Push(lastPlayback);
 
-        vp.RemoveForwardPos();
-        vp.AddRewindPos();
+        if (vp != null) {
+            vp.RemoveForwardPos();
+            vp.AddRewindPos();
+        }
     }
 
     public void OnPlayPress() {
@@ -105,7 +120,9 @@ public class Recorder : MonoBehaviour {
             forwardPath.Clear();
         }
 
-        vp.ClearForwardLine();
+        if (vp != null) {
+            vp.ClearForwardLine();
+        }
     }
 
     Vector3 CalculateForce() {

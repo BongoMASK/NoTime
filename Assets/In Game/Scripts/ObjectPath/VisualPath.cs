@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class VisualPath : MonoBehaviour {
 
-    [SerializeField] LineRenderer rewindLine;
-    [SerializeField] LineRenderer forwardLine;
+    public LineRenderer rewindLine;
+    public LineRenderer forwardLine;
 
     [SerializeField] Transform boxBox;
 
@@ -27,6 +27,15 @@ public class VisualPath : MonoBehaviour {
         AddNewPos(rewindLine, ref rewindIndex);
     }
 
+    public void AddRewindPos(Vector3 pos) {
+        skipCount++;
+        if (skipCount < maxSkips)
+            return;
+        skipCount = 0;
+
+        AddNewPos(rewindLine, ref rewindIndex, pos);
+    }
+
     public void AddForwardPos() {
         skipCount1++;
         if (skipCount1 < maxSkips)
@@ -43,6 +52,18 @@ public class VisualPath : MonoBehaviour {
     void AddNewPos(LineRenderer line, ref int i) {
         line.positionCount = i + 1;
         line.SetPosition(i, boxBox.localPosition);
+        i++;
+    }
+
+    /// <summary>
+    /// Adds pos in the line renderer
+    /// </summary>
+    /// <param name="line"></param>
+    /// <param name="i"></param>
+    /// <param name="pos"></param>
+    void AddNewPos(LineRenderer line, ref int i, Vector3 pos) {
+        line.positionCount = i + 1;
+        line.SetPosition(i, pos);
         i++;
     }
 

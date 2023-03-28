@@ -1,16 +1,26 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class CameraManager : MonoBehaviour
 {
     public static CameraManager instance;
-    
+
+    private CameraInfluence _activeCam;
+
     /// <summary>
     /// Shows which camera is currently being used.
     /// If it's null, it means player is not looking at the screen
     /// </summary>
-    public CameraInfluence activeCam { get; private set; }
+    public CameraInfluence activeCam {
+        get => _activeCam;
+        set {
+            // Pause game when there is no active cam present
+            if (value == null)
+                isPlaying = false;
+
+            _activeCam = value;
+        }
+    }
 
     /// <summary>
     /// Parent of all the cameras in the scene
@@ -26,7 +36,6 @@ public class CameraManager : MonoBehaviour
     public bool isRewinding { get; private set; } = false;
     public bool isForwarding { get; private set; } = false;
     public bool isPlaying { get; private set; } = false;
-    public bool limitRB { get => !isPlaying; }
 
     public delegate void CameraActions();
     public CameraActions Rewind;

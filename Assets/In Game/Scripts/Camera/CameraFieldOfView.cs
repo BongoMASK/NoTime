@@ -47,6 +47,7 @@ public class CameraFieldOfView : MonoBehaviour {
     }
 
     public void OnEnteredCameraFrame() {
+        Debug.Log("fjndaljkfd");
         recorder.enabled = true;
 
         CameraManager.instance.Rewind += recorder.Rewind;
