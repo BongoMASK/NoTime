@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 8617639086521613810}
   - component: {fileID: 8617639086521613811}
   - component: {fileID: 8617639086521613807}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -521,7 +521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d02e29f8e74497408223f3192767f95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerList: []
+  puzzleObjList: []
 --- !u!65 &8617639087046744832
 BoxCollider:
   m_ObjectHideFlags: 0

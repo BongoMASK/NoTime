@@ -87,12 +87,14 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] CameraInfluence cam;
 
     void ToggleScreen() {
-        // Enables and disables the screen
         isScreenOpen = !isScreenOpen;
+        CameraManager.instance.activeCam = isScreenOpen ? cam : null;
+
+        ResetInteractedObject();
+
+        // Enables and disables the screen
         screen.enabled = isScreenOpen;
         playerController.lockInput = isScreenOpen;
-
-        CameraManager.instance.activeCam = isScreenOpen ? cam : null;
     }
 
 }

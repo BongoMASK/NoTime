@@ -459,14 +459,14 @@ MonoBehaviour:
   camSensi: 40
   upperLookLimit: 90
   lowerLookLimit: 70
-  jumpForce: 5
+  jumpForce: 6
   jumpKey: 32
   allowJumpButtonHold: 0
   jumpCooldown: 0.5
   groundCheckDistance: 0.2
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 136
   gravityForce: 25
   maxFallingSpeed: 10
 --- !u!114 &7064831151021580995

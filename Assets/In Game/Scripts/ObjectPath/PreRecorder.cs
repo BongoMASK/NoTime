@@ -1,12 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Recorder))]
 public class PreRecorder : MonoBehaviour
 {
     [SerializeField] public List<Playback> rewindList = new List<Playback>();
 
+    [SerializeField] bool shouldRecord = true;
+
     private void FixedUpdate() {
-        //PreRecord();
+        if (shouldRecord)
+            PreRecord();
     }
 
     void PreRecord() {

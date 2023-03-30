@@ -1,6 +1,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(VisualPath))]
+[RequireComponent(typeof(CameraFieldOfView))]
+[RequireComponent(typeof(Rigidbody))]
+
 public class Recorder : MonoBehaviour {
 
     public Stack<Playback> rewindPath = new Stack<Playback>();
@@ -14,7 +18,6 @@ public class Recorder : MonoBehaviour {
     [SerializeField] Vector3 startForce;
 
     bool isPlaying { get => CameraManager.instance.isPlaying; }
-    bool limitRB { get => !isPlaying; }
 
     private void Awake() {
 
@@ -24,53 +27,10 @@ public class Recorder : MonoBehaviour {
             foreach(Playback p in playback.rewindList) 
                 vp.AddRewindPos(p.position);
         }
-
     }
 
     private void Start() {
         rb.AddForce(startForce);
-    }
-
-    private void Update() {
-        LimitRigidbody();
-
-        //if (Input.GetKeyDown(KeyCode.A)) {
-        //    isRewinding = true;
-        //    isForwarding = false;
-        //    isPlaying = false;
-        //    //rb.isKinematic = true;
-        //    limitRB = true;
-        //}
-
-        //if (Input.GetKeyUp(KeyCode.A) && isRewinding) {
-        //    isRewinding = false;
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.D)) {
-        //    isForwarding = true;
-        //    isRewinding = false;
-        //    isPlaying = false;
-        //    //rb.isKinematic = true;
-        //    limitRB = true;
-        //}
-
-        //if (Input.GetKeyUp(KeyCode.D) && isForwarding) {
-        //    isForwarding = false;
-        //}
-
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //    OnPlayPress();
-    }
-
-    private void FixedUpdate() {
-        //if (isRewinding)
-        //    Rewind();
-
-        //else if (isForwarding)
-        //    Forward();
-
-        //else if (isPlaying)
-        //    Play();
     }
 
     public void Play() {
@@ -81,7 +41,7 @@ public class Recorder : MonoBehaviour {
     }
 
     public void Rewind() {
-        if (rewindPath.Count <= 0)
+        if (rewindPath.Count <= 0) 
             return;
 
         Playback lastPlayback = rewindPath.Pop();
@@ -136,15 +96,25 @@ public class Recorder : MonoBehaviour {
         return acceleration;
     }
 
-    public void LimitRigidbody() {
-        if (!limitRB) {
+    public void LimitRigidbody(bool isPlaying) {
+        Debug.Log("hi");
+        if (isPlaying) {
             rb.constraints = RigidbodyConstraints.None;
             return;
         }
 
         rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
     }
-    
+
+    public void LimitRigidbody() {
+        if (isPlaying) {
+            rb.constraints = RigidbodyConstraints.None;
+            return;
+        }
+
+        rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+    }
+
     private void OnDrawGizmosSelected() {
         // TODO: Show path stored inside of object in editor window
     }

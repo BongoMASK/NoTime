@@ -9,22 +9,37 @@ public class CameraManager : MonoBehaviour
 
     /// <summary>
     /// Shows which camera is currently being used.
-    /// If it's null, it means player is not looking at the screen
+    /// If it's null, it means player is not looking at the screen, also locks input of camera
     /// </summary>
     public CameraInfluence activeCam {
         get => _activeCam;
+
         set {
             // Pause game when there is no active cam present
-            if (value == null)
+            if (value == null) {
+                lockInput = true;
+            }
+            else {
+                // It's better to set these values to false when you assign a camera,
+                // than set it to false when you remove the camera
+                // slightly messy and difficult to understand
+                // review later
                 isPlaying = false;
+                isRewinding = false;
+                isForwarding = false;
+
+                lockInput = false;
+            }
 
             _activeCam = value;
         }
     }
 
+    [Header("Assignables")]
     /// <summary>
     /// Parent of all the cameras in the scene
     /// </summary>
+    [Tooltip("Parent of all the cameras in the scene")]
     [SerializeField] Transform camParent;
 
     /// <summary>
@@ -32,16 +47,34 @@ public class CameraManager : MonoBehaviour
     /// </summary>
     private List<CameraInfluence> cameraInfluences = new List<CameraInfluence>();
 
+    [Header("Camera Action Booleans")]
+
+    [SerializeField] private bool _isRewinding = false;
+    [SerializeField] private bool _isForwarding = false;
+    [SerializeField] private bool _isPlaying = false;
+
     // set to pause mode by default
-    public bool isRewinding { get; private set; } = false;
-    public bool isForwarding { get; private set; } = false;
-    public bool isPlaying { get; private set; } = false;
+    public bool isRewinding {
+        get => _isRewinding;
+        private set { _isRewinding = value; }
+    }
+    public bool isForwarding {
+        get => _isForwarding;
+        private set { _isForwarding = value; }
+    }
+    public bool isPlaying {
+        get => _isPlaying;
+        private set { _isPlaying = value; }
+    }
 
     public delegate void CameraActions();
     public CameraActions Rewind;
     public CameraActions Forward;
     public CameraActions Play;
     public CameraActions OnPlayPress;
+    public CameraActions OnCameraStop;
+
+    [SerializeField] bool lockInput = true;
 
     private void Awake() {
         instance = this;
@@ -55,6 +88,9 @@ public class CameraManager : MonoBehaviour
     }
 
     private void Update() {
+        if (lockInput)
+            return;
+
         if (Input.GetKeyDown(KeyCode.A)) {
             OnRewindPress();
         }
@@ -76,6 +112,9 @@ public class CameraManager : MonoBehaviour
     }
 
     private void FixedUpdate() {
+        if (lockInput)
+            return;
+
         if (isRewinding)
             Rewind();
 

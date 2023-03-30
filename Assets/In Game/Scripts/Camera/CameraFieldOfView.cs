@@ -9,15 +9,21 @@ public class CameraFieldOfView : MonoBehaviour {
 
     private bool _isVisibleToCam;
 
+    private bool isPlaying => CameraManager.instance.isPlaying;
+
     public bool isVisibleToCam {
         get => _isVisibleToCam;
 
         private set {
-            if(value != isVisibleToCam) {
-                if(value)
+            if (value != isVisibleToCam) {
+                if (value) {
+                    recorder.LimitRigidbody(isPlaying);
                     OnEnteredCameraFrame();
-                else
+                }
+                else {
+                    recorder.LimitRigidbody(false);
                     OnExitCameraFrame();
+                }
             }
             _isVisibleToCam = value;
         }
@@ -47,13 +53,13 @@ public class CameraFieldOfView : MonoBehaviour {
     }
 
     public void OnEnteredCameraFrame() {
-        Debug.Log("fjndaljkfd");
         recorder.enabled = true;
 
         CameraManager.instance.Rewind += recorder.Rewind;
         CameraManager.instance.Forward += recorder.Forward;
         CameraManager.instance.Play += recorder.Play;
         CameraManager.instance.OnPlayPress += recorder.OnPlayPress;
+        CameraManager.instance.OnPlayPress += recorder.LimitRigidbody;
     }
 
     public void OnExitCameraFrame() {
@@ -61,6 +67,7 @@ public class CameraFieldOfView : MonoBehaviour {
         CameraManager.instance.Forward -= recorder.Forward;
         CameraManager.instance.Play -= recorder.Play;
         CameraManager.instance.OnPlayPress -= recorder.OnPlayPress;
+        CameraManager.instance.OnPlayPress -= recorder.LimitRigidbody;
 
         recorder.enabled = false;
     }

@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/In Game/Scenes/Shourish.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+    path: Assets/In Game/Scenes/Game Levels/Level 1.unity
+    guid: 2d9f2cd884500e24b8e67cffdff00b57
+  - enabled: 1
+    path: Assets/In Game/Scenes/Game Levels/Level 2.unity
+    guid: cf937b84b2889ca429c1abeee62c438a
   m_configObjects: {}
