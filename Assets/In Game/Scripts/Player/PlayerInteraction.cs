@@ -5,6 +5,9 @@ public class PlayerInteraction : MonoBehaviour
 {
     FPSController playerController;
 
+
+    [Header("References")]
+    [SerializeField] private UIManager uiManager;
     [SerializeField] RawImage screen;
 
     [Header("Object detection")]
@@ -60,6 +63,15 @@ public class PlayerInteraction : MonoBehaviour
 
         if (ObjectInRange() && currentInteractedObject == null)
         {
+            if(hit.transform.TryGetComponent<IRayCastMessage>(out IRayCastMessage message))
+            {
+                uiManager.SetInteractText(message.OnPlayerViewed());
+            }
+            else
+            {
+                uiManager.SetInteractText("");
+            }
+
             Debug.Log("We can hold the object");
             if (hit.transform.TryGetComponent<Pickable>(out Pickable pickableObject))
             {
@@ -71,6 +83,10 @@ public class PlayerInteraction : MonoBehaviour
                 }
 
             }
+        }
+        else
+        {
+            uiManager.SetInteractText("");
         }
     }
 
