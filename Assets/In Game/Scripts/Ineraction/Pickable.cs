@@ -13,7 +13,7 @@ public class Pickable : MonoBehaviour,IRayCastMessage, IInteractable
         Debug.Log("Interacted with object");
     }
 
-    public string OnPlayerViewed()
+    public string OnPlayerViewedText()
     {
         return playerVeiwedText;
     }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,6 +17,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Transform playerCam;
     [SerializeField, Tooltip("Transform of game object where the object should be after interaction")] private Transform interactedObjectPos;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
+    [SerializeField] private KeyCode toggleKey = KeyCode.Q;
 
     [SerializeField] Transform currentInteractedObject;
     private float inputTimer;
@@ -23,6 +25,10 @@ public class PlayerInteraction : MonoBehaviour
     private Ray ray;
     private RaycastHit hit;
     private float lastTimeInteractPressed = 0;
+
+    private Pickable pickable;
+    private IRayCastMessage rayCastMessage;
+    private IInteractable interactable;
 
     bool isScreenOpen = false;
 
@@ -40,13 +46,14 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(toggleKey))
             ToggleScreen();
 
         if (currentInteractedObject != null)
         {
             if (interactedObjectPos == null)
                 Debug.LogWarning("Interacted object position is not set up");
+            
             currentInteractedObject.transform.position = interactedObjectPos.position - currentInteractedObject.GetChild(0).localPosition;
 
             if (Input.GetKeyDown(interactKey))
@@ -63,26 +70,28 @@ public class PlayerInteraction : MonoBehaviour
 
         if (ObjectInRange() && currentInteractedObject == null)
         {
-            if(hit.transform.TryGetComponent<IRayCastMessage>(out IRayCastMessage message))
-            {
-                uiManager.SetInteractText(message.OnPlayerViewed());
-            }
-            else
-            {
-                uiManager.SetInteractText("");
-            }
+            GetObjectData();//Set the refrences to use interfaces methods
+
+            uiManager.SetInteractText(rayCastMessage.OnPlayerViewedText());
 
             Debug.Log("We can hold the object");
-            if (hit.transform.TryGetComponent<Pickable>(out Pickable pickableObject))
+
+            if (Input.GetKeyDown(interactKey))
             {
-                Debug.Log(pickableObject.OnPlayerViewed());
+                interactable.Interact();
+                currentInteractedObject = pickable.transform.parent;
+                Debug.Log($"Current holded object is: {currentInteractedObject.name}");
+            }
+           /* if (hit.transform.TryGetComponent<Pickable>(out Pickable pickableObject))
+            {
+                Debug.Log(pickableObject.OnPlayerViewedText());
                 if (Input.GetKeyDown(interactKey))
                 {
                     currentInteractedObject = pickableObject.transform.parent;
                     Debug.Log($"Current holded object is: {currentInteractedObject.name}");
                 }
 
-            }
+            }*/
         }
         else
         {
@@ -100,9 +109,22 @@ public class PlayerInteraction : MonoBehaviour
         currentInteractedObject = null;
     }
 
+    private void GetObjectData()
+    {
+        if(hit.transform.TryGetComponent(out pickable))
+        {
+            rayCastMessage = pickable;
+            interactable = pickable;
+        }
+        else
+        {
+            Debug.LogError("Object don't contain pickable scripts to reference");
+        }
+    }
+
     [SerializeField] CameraInfluence cam;
 
-    void ToggleScreen() {
+    private void ToggleScreen() {
         isScreenOpen = !isScreenOpen;
         CameraManager.instance.activeCam = isScreenOpen ? cam : null;
 

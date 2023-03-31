@@ -1,4 +1,4 @@
 public interface IRayCastMessage 
 {
-    string OnPlayerViewed();
+    string OnPlayerViewedText();
 }
