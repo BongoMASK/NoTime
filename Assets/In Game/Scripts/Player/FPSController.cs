@@ -54,6 +54,7 @@ public class FPSController : MonoBehaviour
         AccelerateSpeed();
         ApplyFriction();
         // Debug.Log(rb.velocity);
+        Debug.Log(IsGrounded());
 
 
     }
@@ -209,8 +210,10 @@ public class FPSController : MonoBehaviour
 
     [Header("GROUND CHECK")]
     [SerializeField] private float groundCheckDistance = .2f;
+    [SerializeField] private float sphereRadius = 1f;
     [SerializeField] private LayerMask groundLayer;
     //private float playerHieght;
+    private Vector3 pos;
 
     [Header("Gravity")]
     [SerializeField] private float gravityForce = 10f;
@@ -234,14 +237,21 @@ public class FPSController : MonoBehaviour
 
     private bool IsGrounded()
     {
-        var res = Physics.Raycast(transform.position, Vector3.down,  groundCheckDistance, groundLayer);
+        //var res = Physics.Raycast(transform.position, Vector3.down,  groundCheckDistance, groundLayer);
+
+        pos = new Vector3(transform.position.x, transform.position.y - groundCheckDistance, transform.position.z);
+        //Debug.Log(pos);
+        var res = Physics.SphereCast(pos, sphereRadius, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer);
+        //Debug.Log(hit.collider.name);
+        if (res) Debug.Log("We hit : ");
+        else Debug.Log("Didnt hit");
 
         return res; 
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawRay(transform.position,Vector3.down *  groundCheckDistance);
+        Gizmos.DrawWireSphere(pos,sphereRadius);
     }
 
     private void ResetJump()

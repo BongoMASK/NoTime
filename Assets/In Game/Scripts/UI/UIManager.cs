@@ -5,7 +5,7 @@ public class UIManager : MonoBehaviour
 {
 
    [SerializeField] private TextMeshProUGUI interactText;
-
+    private Pickable pickable;
     public void SetInteractText(string text)
     {
         interactText.text = text;
@@ -15,4 +15,5 @@ public class UIManager : MonoBehaviour
     {
         interactText.gameObject.SetActive(false);
     }
+
 }

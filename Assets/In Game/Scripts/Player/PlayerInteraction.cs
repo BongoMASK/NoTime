@@ -65,8 +65,7 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
 
-        ray = new Ray(playerCam.position, playerCam.forward);
-        Debug.DrawRay(playerCam.position, playerCam.forward * detectionRange);
+        SetRay();
 
         if (ObjectInRange() && currentInteractedObject == null)
         {
@@ -97,6 +96,12 @@ public class PlayerInteraction : MonoBehaviour
         {
             uiManager.SetInteractText("");
         }
+    }
+
+    private void SetRay()
+    {
+        ray = new Ray(playerCam.position, playerCam.forward);
+        Debug.DrawRay(playerCam.position, playerCam.forward * detectionRange);
     }
 
     private bool ObjectInRange()
