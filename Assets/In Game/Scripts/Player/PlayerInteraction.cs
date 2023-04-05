@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -69,10 +70,14 @@ public class PlayerInteraction : MonoBehaviour
 
         if (ObjectInRange() && currentInteractedObject == null)
         {
-            GetObjectData();//Set the refrences to use interfaces methods
+            if (!TryGetObjectData()) //Trying to set the refrences to use interfaces methods
+            {
+                Debug.LogWarning("Couldn't get the refernces. The required script might not be attached");
+                return;
 
-            uiManager.SetInteractText(rayCastMessage.OnPlayerViewedText());
-
+            }
+            var message = rayCastMessage.OnPlayerViewedText();
+            IRayCastMessage.OnPlayerViewed?.Invoke(message);
             Debug.Log("We can hold the object");
 
             if (Input.GetKeyDown(interactKey))
@@ -81,20 +86,10 @@ public class PlayerInteraction : MonoBehaviour
                 currentInteractedObject = pickable.transform.parent;
                 Debug.Log($"Current holded object is: {currentInteractedObject.name}");
             }
-           /* if (hit.transform.TryGetComponent<Pickable>(out Pickable pickableObject))
-            {
-                Debug.Log(pickableObject.OnPlayerViewedText());
-                if (Input.GetKeyDown(interactKey))
-                {
-                    currentInteractedObject = pickableObject.transform.parent;
-                    Debug.Log($"Current holded object is: {currentInteractedObject.name}");
-                }
-
-            }*/
         }
         else
         {
-            uiManager.SetInteractText("");
+            IRayCastMessage.OnPlayerViewed?.Invoke("");
         }
     }
 
@@ -114,17 +109,18 @@ public class PlayerInteraction : MonoBehaviour
         currentInteractedObject = null;
     }
 
-    private void GetObjectData()
+    private bool TryGetObjectData()
     {
         if(hit.transform.TryGetComponent(out pickable))
         {
             rayCastMessage = pickable;
             interactable = pickable;
+            return true;
         }
-        else
-        {
-            Debug.LogError("Object don't contain pickable scripts to reference");
-        }
+        Debug.LogError("Object don't contain pickable scripts to reference");
+        return false; 
+        
+        
     }
 
     [SerializeField] CameraInfluence cam;

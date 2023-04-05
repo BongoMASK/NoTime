@@ -239,19 +239,24 @@ public class FPSController : MonoBehaviour
     {
         //var res = Physics.Raycast(transform.position, Vector3.down,  groundCheckDistance, groundLayer);
 
-        pos = new Vector3(transform.position.x, transform.position.y - groundCheckDistance, transform.position.z);
+        /*pos = new Vector3(transform.position.x, transform.position.y - groundCheckDistance, transform.position.z);
         //Debug.Log(pos);
         var res = Physics.SphereCast(pos, sphereRadius, Vector3.down, out RaycastHit hit, Mathf.Infinity, groundLayer);
         //Debug.Log(hit.collider.name);
         if (res) Debug.Log("We hit : ");
         else Debug.Log("Didnt hit");
 
-        return res; 
+        return res; */
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, sphereRadius,groundLayer);
+
+        Debug.Log("IS Grounded: "+ (colliders.Length > 0));
+        return colliders.Length > 0;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(pos,sphereRadius);
+        Gizmos.DrawWireSphere(transform.position,sphereRadius);
     }
 
     private void ResetJump()
