@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PlayerInteraction : MonoBehaviour
 {
-    FPSController playerController;
+    PlayerMovement playerController;
 
 
     [Header("References")]
@@ -35,17 +35,17 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Awake()
     {
-        playerController = GetComponent<FPSController>();
+        playerController = GetComponent<PlayerMovement>();
         currentInteractedObject = null;
     }
 
 
     private void Update()
     {
-        if (!playerController.CanInteract)
-        {
-            return;
-        }
+        //if (!playerController.CanInteract)
+        //{
+        //    return;
+        //}
 
         if (Input.GetKeyDown(toggleKey))
             ToggleScreen();
