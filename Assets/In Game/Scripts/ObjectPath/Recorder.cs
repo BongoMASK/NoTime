@@ -12,7 +12,6 @@ public class Recorder : MonoBehaviour {
 
     [Header("Assignables")]
     [SerializeField] Rigidbody rb;
-    [SerializeField] VisualPath vp;
 
     [Header("Values")]
     [SerializeField] Vector3 startForce;
@@ -20,28 +19,50 @@ public class Recorder : MonoBehaviour {
     bool isPlaying { get => CameraManager.instance.isPlaying; }
 
     private void Awake() {
-
-        if(TryGetComponent(out PreRecorder playback)) {
+        if(TryGetComponent(out PreRecorder playback))
             rewindPath = new Stack<Playback>(playback.rewindList);
-
-            foreach(Playback p in playback.rewindList) 
-                vp.AddRewindPos(p.position);
-        }
     }
 
     private void Start() {
         rb.AddForce(startForce);
     }
 
-    public void Play() {
-        rewindPath.Push(new Playback(transform.localPosition, transform.rotation));
+    private void OnEnable() {
+        CameraManager.instance.Rewind += Rewind;
+        CameraManager.instance.Forward += Forward;
 
-        if (vp != null) 
-            vp.AddRewindPos();
+        CameraManager.instance.Play += Play;
+        CameraManager.instance.OnPlayPress += OnPlayPress;
+
+        CameraManager.instance.LimitRigidbody += LimitRigidbody;
     }
 
+    private void OnDisable() {
+        CameraManager.instance.Rewind -= Rewind;
+
+        CameraManager.instance.Forward -= Forward;
+
+        CameraManager.instance.Play -= Play;
+        CameraManager.instance.OnPlayPress -= OnPlayPress;
+            
+        CameraManager.instance.LimitRigidbody -= LimitRigidbody;
+    }
+
+    /// <summary>
+    /// Adds position data to the Rewind stack on FixedUpdate.
+    /// Used when physics needs to be applied on the object
+    /// </summary>
+    public void Play() {
+        rewindPath.Push(new Playback(transform.localPosition, transform.rotation));
+    }
+
+    /// <summary>
+    /// Adds position data to the Forward stack on FixedUpdate.
+    /// Used when we need the object to trace back its Rewind path.
+    /// No physics are being applied on the object.
+    /// </summary>
     public void Rewind() {
-        if (rewindPath.Count <= 0) 
+        if (rewindPath.Count <= 0)
             return;
 
         Playback lastPlayback = rewindPath.Pop();
@@ -50,13 +71,13 @@ public class Recorder : MonoBehaviour {
         transform.rotation = lastPlayback.rotation;
 
         forwardPath.Push(lastPlayback);
-
-        if (vp != null) {
-            vp.RemoveRewindPos();
-            vp.AddForwardPos();
-        }
     }
 
+    /// <summary>
+    /// Gives back position data to the Rewind Stack on FixedUpdate
+    /// Used when we need the object to trace back its Forward path.
+    /// No physics are being applied on the object.
+    /// </summary>
     public void Forward() {
         if (forwardPath.Count <= 0)
             return;
@@ -67,21 +88,12 @@ public class Recorder : MonoBehaviour {
         transform.rotation = lastPlayback.rotation;
 
         rewindPath.Push(lastPlayback);
-
-        if (vp != null) {
-            vp.RemoveForwardPos();
-            vp.AddRewindPos();
-        }
     }
 
     public void OnPlayPress() {
         if (isPlaying) {
             rb.AddForce(rb.mass * CalculateForce());
             forwardPath.Clear();
-        }
-
-        if (vp != null) {
-            vp.ClearForwardLine();
         }
     }
 
@@ -97,7 +109,6 @@ public class Recorder : MonoBehaviour {
     }
 
     public void LimitRigidbody(bool isPlaying) {
-        Debug.Log("hi");
         if (isPlaying) {
             rb.constraints = RigidbodyConstraints.None;
             return;

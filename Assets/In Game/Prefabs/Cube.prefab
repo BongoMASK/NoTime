@@ -5752,7 +5752,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 3576092944025106433}
-  vp: {fileID: 3576092944025106494}
   startForce: {x: 0, y: 0, z: 0}
 --- !u!54 &3576092944025106433
 Rigidbody:
@@ -5783,6 +5782,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recorder: {fileID: 3576092944025106434}
+  visualPath: {fileID: 3576092944025106494}
   collider: {fileID: 3576092944025106438}
 --- !u!114 &3576092944025106494
 MonoBehaviour:
@@ -5791,7 +5791,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3576092944025106437}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 465ae4ccc34fb2445bfb9541810f6cb2, type: 3}
   m_Name: 

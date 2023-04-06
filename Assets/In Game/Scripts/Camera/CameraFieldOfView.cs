@@ -3,6 +3,7 @@ using UnityEngine;
 public class CameraFieldOfView : MonoBehaviour {
 
     [SerializeField] Recorder recorder;
+    [SerializeField] VisualPath visualPath;
 
     [SerializeField] new Collider collider;
     Plane[] cameraFrustum;
@@ -54,21 +55,11 @@ public class CameraFieldOfView : MonoBehaviour {
 
     public void OnEnteredCameraFrame() {
         recorder.enabled = true;
-
-        CameraManager.instance.Rewind += recorder.Rewind;
-        CameraManager.instance.Forward += recorder.Forward;
-        CameraManager.instance.Play += recorder.Play;
-        CameraManager.instance.OnPlayPress += recorder.OnPlayPress;
-        CameraManager.instance.OnPlayPress += recorder.LimitRigidbody;
+        visualPath.enabled = true;
     }
 
     public void OnExitCameraFrame() {
-        CameraManager.instance.Rewind -= recorder.Rewind;
-        CameraManager.instance.Forward -= recorder.Forward;
-        CameraManager.instance.Play -= recorder.Play;
-        CameraManager.instance.OnPlayPress -= recorder.OnPlayPress;
-        CameraManager.instance.OnPlayPress -= recorder.LimitRigidbody;
-
         recorder.enabled = false;
+        visualPath.enabled = false;
     }
 }
