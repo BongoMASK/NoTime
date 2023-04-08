@@ -28,6 +28,7 @@ public class Menu_Manager : MonoBehaviour
     private string levelToLoad; 
     [SerializeField] private GameObject nosavedPopup = null;
     [SerializeField] public GameObject new_gamepopup;
+    [SerializeField] public GameObject POpup_Panel;
     [SerializeField] public GameObject loadgame_popup;
     [SerializeField] public GameObject NoFound_popup;
     [SerializeField] public GameObject Mainmenu_panel;
@@ -111,10 +112,18 @@ public class Menu_Manager : MonoBehaviour
         SceneManager.LoadScene(_newGameLevel);
     }
 
-    public void NO_buttonpressed(GameObject popups)
+    public void NO_buttonpressed()
     {
-        popups.SetActive(false);
-        Mainmenu_panel.SetActive(true);
+        if (new_gamepopup == true)
+        {
+            new_gamepopup.SetActive(false);
+            Mainmenu_panel.SetActive(true);
+        }
+        if(loadgame_popup == true)
+        {
+            loadgame_popup.SetActive(false);
+            Mainmenu_panel.SetActive(true);
+        }
     }
 
     
