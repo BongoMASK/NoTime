@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 
 [RequireComponent(typeof(Rigidbody))]
 public class FPSController : MonoBehaviour
@@ -144,11 +145,11 @@ public class FPSController : MonoBehaviour
     {
         if (IsSprinting)
         {
-            currentSpeed = Mathf.Lerp(currentSpeed, sprintSpeed, acceleration * Time.deltaTime);
+            currentSpeed = Mathf.SmoothStep(currentSpeed, sprintSpeed, acceleration * Time.deltaTime);
         }
         else
         {
-            currentSpeed = Mathf.Lerp(currentSpeed, walkSpeed, acceleration * Time.deltaTime);
+            currentSpeed = Mathf.SmoothStep(currentSpeed, walkSpeed, acceleration * Time.deltaTime);
         }
     }
 
@@ -225,7 +226,7 @@ public class FPSController : MonoBehaviour
             rb.AddForce(-transform.up * gravityForce * Time.deltaTime, ForceMode.Acceleration);
         }
 
-        rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallingSpeed, maxFallingSpeed), rb.velocity.z);
+        rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallingSpeed, Mathf.Infinity), rb.velocity.z);
     }
 
     private void Jump()
@@ -275,6 +276,7 @@ public class FPSController : MonoBehaviour
     [SerializeField] private float stepUpSpeed = .1f;
     [SerializeField] private Transform stepRayUpper;
     [SerializeField] private Transform stepRayLower;
+    [SerializeField,Range(.1f,.3f)] private float lowerRayDetectRange = .3f; 
 
     RaycastHit firstRayHit;
     float colliderHieght;
@@ -296,7 +298,7 @@ public class FPSController : MonoBehaviour
 
     private bool CheckForStairs()
     {
-        bool firstRayCheck = Physics.Raycast(stepRayLower.position, -transform.up, out firstRayHit, .3f);
+        bool firstRayCheck = Physics.Raycast(stepRayLower.position, -transform.up, out firstRayHit, lowerRayDetectRange);
         if (!firstRayCheck)
         {
             return false;

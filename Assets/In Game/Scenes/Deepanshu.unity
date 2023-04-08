@@ -1425,7 +1425,7 @@ MonoBehaviour:
   canJump: 1
   lockInput: 0
   walkSpeed: 4
-  acceleration: 15
+  acceleration: 10
   airMovementMultiplier: 0.1
   frictionWhenStoping: 2.5
   groundMovementMultiplier: 10
@@ -1443,8 +1443,8 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 136
-  gravityForce: 25
-  maxFallingSpeed: 10
+  gravityForce: 30
+  maxFallingSpeed: 15
   maxStepHeight: 0.5
   stepUpSpeed: 0.1
   stepRayUpper: {fileID: 1209108019}
