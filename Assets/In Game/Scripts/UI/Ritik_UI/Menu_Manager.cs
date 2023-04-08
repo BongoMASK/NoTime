@@ -32,8 +32,16 @@ public class Menu_Manager : MonoBehaviour
     [SerializeField] public GameObject NoFound_popup;
     [SerializeField] public GameObject Mainmenu_panel;
     [SerializeField] public GameObject Option_Panel;
+    [SerializeField] private TMP_Dropdown resolutionDropDown;
+
+    private Resolution[] resolutions;
+    private List<Resolution> filterResolutions;
+    private float currentRefreshRate;
+    private int currentResolutionIndex = 0;
 
     public static Menu_Manager instance;
+
+   
     private void Awake()
     {
         if (instance != null)
@@ -46,6 +54,50 @@ public class Menu_Manager : MonoBehaviour
         }
 
     }
+
+
+    private void Start()
+    {
+        resolutions = Screen.resolutions;
+        filterResolutions = new List<Resolution>();
+        resolutionDropDown.ClearOptions();
+        currentRefreshRate = Screen.currentResolution.refreshRate;
+
+        Debug.Log("RefreshRate :" + currentRefreshRate);
+
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            Debug.Log("CurrentResolution :" + resolutions[i]);
+            if (resolutions[i].refreshRate == currentRefreshRate)
+            {
+                filterResolutions.Add(resolutions[i]);
+            }
+        }
+
+        List<string> options = new List<string>();
+
+        for (int i = 0; i < filterResolutions.Count; i++)
+        {
+            string resolutionOption = filterResolutions[i].width + "x" + filterResolutions[i].height + " " + filterResolutions[i].refreshRate + "Hz";
+            options.Add(resolutionOption);
+            if (filterResolutions[i].width == Screen.width && filterResolutions[i].height == Screen.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+
+        resolutionDropDown.AddOptions(options);
+        resolutionDropDown.value = currentResolutionIndex;
+        resolutionDropDown.RefreshShownValue();
+    }
+
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = filterResolutions[resolutionIndex];
+        Screen.SetResolution(resolution.width, resolution.height, true);
+    }
+
+
     public void NewGameButtonClick()
     {
         new_gamepopup.SetActive(true);
