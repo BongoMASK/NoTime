@@ -9,7 +9,6 @@ public class PlayerInteraction : MonoBehaviour
 
 
     [Header("References")]
-    [SerializeField] private UIManager uiManager;
     [SerializeField] RawImage screen;
 
     [Header("Object detection")]
@@ -84,6 +83,7 @@ public class PlayerInteraction : MonoBehaviour
             {
                 interactable.Interact();
                 currentInteractedObject = pickable.transform.parent;
+                IRayCastMessage.OnPlayerViewed?.Invoke("press E to place object");
                 Debug.Log($"Current holded object is: {currentInteractedObject.name}");
             }
         }

@@ -269,7 +269,6 @@ public class FPSController : MonoBehaviour
 
     #endregion
 
-
     #region Stairs step
     [Header("Stair Step Up")]
     [SerializeField] private float maxStepHeight = .5f;
@@ -318,7 +317,7 @@ public class FPSController : MonoBehaviour
 
     #endregion
 
-    #region Properties
+    #region Public Properties
 
     private bool IsSprinting => canSprint && sprintKeyPressed;
     public bool CanInteract { get => canInteract; set => canInteract = value; }

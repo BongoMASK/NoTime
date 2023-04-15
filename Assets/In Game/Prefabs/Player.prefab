@@ -450,25 +450,31 @@ MonoBehaviour:
   canJump: 1
   lockInput: 0
   walkSpeed: 4
-  acceleration: 15
+  acceleration: 10
   airMovementMultiplier: 0.1
-  frictionWhenStoping: 2.5
+  frictionWhenStoping: 4
   groundMovementMultiplier: 10
   sprintSpeed: 7
   sprintKey: 304
-  camSensi: 40
+  camSensi: 200
   upperLookLimit: 90
   lowerLookLimit: 70
-  jumpForce: 6
+  jumpForce: 5
   jumpKey: 32
   allowJumpButtonHold: 0
   jumpCooldown: 0.5
   groundCheckDistance: 0.2
+  sphereRadius: 0.62
   groundLayer:
     serializedVersion: 2
     m_Bits: 136
-  gravityForce: 25
-  maxFallingSpeed: 10
+  gravityForce: 30
+  maxFallingSpeed: 15
+  maxStepHeight: 0.5
+  stepUpSpeed: 0.1
+  stepRayUpper: {fileID: 0}
+  stepRayLower: {fileID: 0}
+  lowerRayDetectRange: 0.3
 --- !u!114 &7064831151021580995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,6 +495,7 @@ MonoBehaviour:
   playerCam: {fileID: 7064831151119904475}
   interactedObjectPos: {fileID: 7064831150386370106}
   interactKey: 101
+  toggleKey: 113
   currentInteractedObject: {fileID: 0}
   cam: {fileID: 0}
 --- !u!1 &7064831151119904476

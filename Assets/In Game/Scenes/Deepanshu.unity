@@ -1427,7 +1427,7 @@ MonoBehaviour:
   walkSpeed: 4
   acceleration: 10
   airMovementMultiplier: 0.1
-  frictionWhenStoping: 2.5
+  frictionWhenStoping: 4
   groundMovementMultiplier: 10
   sprintSpeed: 7
   sprintKey: 304
@@ -1439,7 +1439,7 @@ MonoBehaviour:
   allowJumpButtonHold: 0
   jumpCooldown: 0.5
   groundCheckDistance: 0.2
-  sphereRadius: 0.86
+  sphereRadius: 0.62
   groundLayer:
     serializedVersion: 2
     m_Bits: 136
@@ -1449,6 +1449,7 @@ MonoBehaviour:
   stepUpSpeed: 0.1
   stepRayUpper: {fileID: 1209108019}
   stepRayLower: {fileID: 1400807756}
+  lowerRayDetectRange: 0.3
 --- !u!54 &1590087440
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1974,6 +1975,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 3576092944025106434, guid: 1c8f5a8be5ece7f41af6df9b51d89619,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3576092944025106438, guid: 1c8f5a8be5ece7f41af6df9b51d89619,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: 9bd2ae7d90e69fa4a8d9af604128454a,
+        type: 2}
     - target: {fileID: 3576092944351019692, guid: 1c8f5a8be5ece7f41af6df9b51d89619,
         type: 3}
       propertyPath: m_RootOrder
