@@ -5,7 +5,7 @@ public class CameraManager : MonoBehaviour
 {
     public static CameraManager instance;
 
-    private CameraInfluence _activeCam;
+    [SerializeField] private CameraInfluence _activeCam;
 
     /// <summary>
     /// Shows which camera is currently being used.
@@ -36,6 +36,7 @@ public class CameraManager : MonoBehaviour
     }
 
     [Header("Assignables")]
+
     /// <summary>
     /// Parent of all the cameras in the scene
     /// </summary>
@@ -131,12 +132,20 @@ public class CameraManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Sets all bools to false.
+    /// Sets isRewinding to true.
+    /// </summary>
     void OnRewindPress() {
         isRewinding = true;
         isForwarding = false;
         isPlaying = false;
     }
 
+    /// <summary>
+    /// Sets all bools to false.
+    /// Sets isForwarding to true.
+    /// </summary>
     void OnForwardPress() {
         isForwarding = true;
         isRewinding = false;

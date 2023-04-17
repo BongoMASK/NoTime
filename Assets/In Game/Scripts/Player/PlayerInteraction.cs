@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerInteraction : MonoBehaviour
 {
     FPSController playerController;
-
+    PlayerMovement playerMovement;
 
     [Header("References")]
     [SerializeField] RawImage screen;
@@ -35,6 +35,7 @@ public class PlayerInteraction : MonoBehaviour
     private void Awake()
     {
         playerController = GetComponent<FPSController>();
+        playerMovement = GetComponent<PlayerMovement>();    
         currentInteractedObject = null;
     }
 
@@ -133,7 +134,7 @@ public class PlayerInteraction : MonoBehaviour
 
         // Enables and disables the screen
         screen.enabled = isScreenOpen;
-        playerController.lockInput = isScreenOpen;
+        playerMovement.lockInput = isScreenOpen;
     }
 
 }

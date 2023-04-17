@@ -34,7 +34,8 @@ public class CameraFieldOfView : MonoBehaviour {
     }
 
     /// <summary>
-    /// Checks if the object is inside the camera field of view
+    /// If active camera can see it, return true.
+    /// If it cant, return false.
     /// </summary>
     /// <param name="cam"></param>
     public bool CheckIfInCamera() {

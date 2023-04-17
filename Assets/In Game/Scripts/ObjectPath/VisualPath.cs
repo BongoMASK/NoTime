@@ -95,7 +95,7 @@ public class VisualPath : MonoBehaviour {
     /// <param name="line"></param>
     /// <param name="i"></param>
     void RemovePos(LineRenderer line, ref int i) {
-        if (line.positionCount == 1)
+        if (line.positionCount <= 1)
             return;
 
         i--;

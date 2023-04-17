@@ -323,6 +323,4 @@ public class FPSController : MonoBehaviour
     public bool CanInteract { get => canInteract; set => canInteract = value; }
 
     #endregion
-
-
 }

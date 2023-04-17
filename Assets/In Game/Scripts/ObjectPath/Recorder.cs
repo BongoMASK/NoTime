@@ -114,8 +114,4 @@ public class Recorder : MonoBehaviour {
 
         rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
     }
-
-    private void OnDrawGizmosSelected() {
-        // TODO: Show path stored inside of object in editor window
-    }
 }
