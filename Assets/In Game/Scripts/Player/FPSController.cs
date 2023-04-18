@@ -51,11 +51,10 @@ public class FPSController : MonoBehaviour
 
         if (ShouldJump())
             HandleJump();
-        HandleGravity();
         SpeedControl();
         AccelerateSpeed();
         ApplyFriction();
-        StairStep();
+        HandleGravity();
         // Debug.Log(rb.velocity);
     }
 
@@ -69,6 +68,7 @@ public class FPSController : MonoBehaviour
             //Debug.Log("In the air");
             Move(airMovementMultiplier);
         }
+        StairStep();
         // Debug.Log(IsGrounded());
 
     }
@@ -221,7 +221,7 @@ public class FPSController : MonoBehaviour
 
     private void HandleGravity()
     {
-        if (rb.velocity.y < 0)
+        if (rb.velocity.y < -0.5f)
         {
             rb.AddForce(-transform.up * gravityForce * Time.deltaTime, ForceMode.Acceleration);
         }
@@ -246,7 +246,8 @@ public class FPSController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(transform.position, sphereRadius);
-        Gizmos.DrawRay(stepRayLower.position, -transform.up * .3f);
+        Gizmos.DrawRay(stepRayLower.position, -transform.up * lowerRayDetectRange);
+        Gizmos.DrawRay(stepRayUpper.position, -transform.up * upperRayDetectRange);
     }
 
     private void ResetJump()
@@ -275,19 +276,21 @@ public class FPSController : MonoBehaviour
     [SerializeField] private float stepUpSpeed = .1f;
     [SerializeField] private Transform stepRayUpper;
     [SerializeField] private Transform stepRayLower;
-    [SerializeField,Range(.1f,.3f)] private float lowerRayDetectRange = .3f; 
+    [SerializeField,Range(.1f,.5f)] private float lowerRayDetectRange = .3f; 
+    [SerializeField,Range(.1f,.5f)] private float upperRayDetectRange = .3f; 
 
     RaycastHit firstRayHit;
     float colliderHieght;
 
     private void StairStep()
     {
+        Debug.Log("Calling steps");
         if (CheckForStairs())
         {
             Debug.Log("Name of the object is : " + firstRayHit.transform.name);
             Debug.Log("Steping up stairs");
 
-            transform.position -= new Vector3(0f, -stepUpSpeed, 0f);
+            transform.position -= new Vector3(0f, -stepUpSpeed * Time.fixedDeltaTime, 0f);
             /* colliderHieght = firstRayHit.collider.bounds.size.y;
              moveDir.y += colliderHieght;*/
             //Debug.Log("Move Dir is: " + moveDir);
@@ -302,7 +305,7 @@ public class FPSController : MonoBehaviour
         {
             return false;
         }
-        bool secondRayCheck = Physics.Raycast(stepRayUpper.position, -transform.up, .2f);
+        bool secondRayCheck = Physics.Raycast(stepRayUpper.position, -transform.up, upperRayDetectRange);
         if (secondRayCheck)
         {
             return false;
