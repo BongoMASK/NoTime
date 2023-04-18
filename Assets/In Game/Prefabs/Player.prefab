@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1415557220335242135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6457470106912996802}
+  m_Layer: 0
+  m_Name: StepUpRay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6457470106912996802
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415557220335242135}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7064831151021580992}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7064831150386370107
 GameObject:
   m_ObjectHideFlags: 0
@@ -24,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7064831150386370107}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0, y: -0.72, z: 1.99}
+  m_LocalPosition: {x: -0, y: -0.72, z: 1.455}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -308,12 +339,14 @@ Transform:
   m_GameObject: {fileID: 7064831151021580996}
   m_LocalRotation: {x: 0.00000004470349, y: 0.70710677, z: -0.000000029802326, w: 0.70710677}
   m_LocalPosition: {x: -0, y: -0, z: -4}
-  m_LocalScale: {x: 1.2999998, y: 1.3, z: 1.2999997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 7064831150412861655}
   - {fileID: 7895904417807117120}
   - {fileID: 7064831151153173480}
+  - {fileID: 6457470106912996802}
+  - {fileID: 9155727447171969300}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -352,8 +385,8 @@ MonoBehaviour:
   canAirMove: 1
   canJump: 1
   lockInput: 0
-  walkSpeed: 4
-  acceleration: 10
+  walkSpeed: 7
+  acceleration: 20
   airMovementMultiplier: 0.1
   frictionWhenStoping: 4
   groundMovementMultiplier: 10
@@ -362,7 +395,7 @@ MonoBehaviour:
   camSensi: 200
   upperLookLimit: 90
   lowerLookLimit: 70
-  jumpForce: 5
+  jumpForce: 20
   jumpKey: 32
   allowJumpButtonHold: 0
   jumpCooldown: 0.5
@@ -370,13 +403,13 @@ MonoBehaviour:
   sphereRadius: 0.62
   groundLayer:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 2147483647
   gravityForce: 30
-  maxFallingSpeed: 15
+  maxFallingSpeed: 40
   maxStepHeight: 0.5
   stepUpSpeed: 0.1
-  stepRayUpper: {fileID: 0}
-  stepRayLower: {fileID: 0}
+  stepRayUpper: {fileID: 6457470106912996802}
+  stepRayLower: {fileID: 9155727447171969300}
   lowerRayDetectRange: 0.3
 --- !u!114 &7684798956310426299
 MonoBehaviour:
@@ -697,4 +730,35 @@ Transform:
   - {fileID: 7064831150386370106}
   m_Father: {fileID: 7064831151021580992}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7336606243000237407
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9155727447171969300}
+  m_Layer: 0
+  m_Name: StepLowRay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9155727447171969300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7336606243000237407}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.287, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7064831151021580992}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

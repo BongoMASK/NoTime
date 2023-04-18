@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraManager : MonoBehaviour
-{
+public class CameraManager : MonoBehaviour {
     public static CameraManager instance;
 
     [SerializeField] private CameraInfluence _activeCam;
@@ -36,7 +35,6 @@ public class CameraManager : MonoBehaviour
     }
 
     [Header("Assignables")]
-
     /// <summary>
     /// Parent of all the cameras in the scene
     /// </summary>
@@ -65,7 +63,10 @@ public class CameraManager : MonoBehaviour
     }
     public bool isPlaying {
         get => _isPlaying;
-        private set { _isPlaying = value; }
+        private set {
+            _isPlaying = value;
+            LimitRigidbody();
+        }
     }
 
     public delegate void CameraActions();
@@ -73,7 +74,7 @@ public class CameraManager : MonoBehaviour
     public CameraActions Forward;
     public CameraActions Play;
     public CameraActions OnPlayPress;
-    public CameraActions OnCameraStop;
+    public CameraActions LimitRigidbody;
 
     [SerializeField] bool lockInput = true;
 
@@ -83,6 +84,7 @@ public class CameraManager : MonoBehaviour
         Rewind += EmptyFunc;
         Forward += EmptyFunc;
         Play += EmptyFunc;
+        LimitRigidbody += EmptyFunc;
         OnPlayPress += () => isPlaying = !isPlaying;
 
         GetAllCameras(camParent);

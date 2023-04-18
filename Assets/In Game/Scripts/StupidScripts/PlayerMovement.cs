@@ -7,10 +7,6 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] Transform playerCam;
     [SerializeField] Transform orientation;
 
-    //Multiplier
-    float goopMultiplier = 2.5f;
-    bool gooped = false;
-
     //Other
     private Rigidbody rb;
 

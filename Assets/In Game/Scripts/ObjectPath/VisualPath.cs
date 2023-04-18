@@ -16,6 +16,36 @@ public class VisualPath : MonoBehaviour {
     int skipCount = 0;
     int skipCount1 = 0;
 
+    private void OnEnable() {
+        CameraManager.instance.Rewind += RemoveRewindPos;
+        CameraManager.instance.Rewind += AddForwardPos;
+
+        CameraManager.instance.Forward += RemoveForwardPos;
+        CameraManager.instance.Forward += AddRewindPos;
+
+        CameraManager.instance.Play += AddRewindPos;
+        CameraManager.instance.OnPlayPress += ClearForwardLine;
+    }
+
+    private void OnDisable() {
+        CameraManager.instance.Rewind -= RemoveRewindPos;
+        CameraManager.instance.Rewind -= AddForwardPos;
+
+        CameraManager.instance.Forward -= RemoveForwardPos;
+        CameraManager.instance.Forward -= AddRewindPos;
+
+        CameraManager.instance.Play -= AddRewindPos;
+        CameraManager.instance.OnPlayPress -= ClearForwardLine;
+    }
+
+    private void Awake() {
+
+        if (TryGetComponent(out PreRecorder playback)) {
+            foreach (Playback p in playback.rewindList)
+                AddRewindPos(p.position);
+        }
+    }
+
     #region Add New Position
 
     public void AddRewindPos() {
