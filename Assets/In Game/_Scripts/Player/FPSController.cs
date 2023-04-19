@@ -12,6 +12,7 @@ public class FPSController : MonoBehaviour
     [SerializeField] private bool canInteract = true;
     [SerializeField] private bool canAirMove = true;
     [SerializeField] private bool canJump = true;
+    [SerializeField] private bool canStepUp = true;
 
     public bool lockInput = false;
 
@@ -30,12 +31,15 @@ public class FPSController : MonoBehaviour
         capCollider = GetComponentInChildren<CapsuleCollider>();
         rb.freezeRotation = true;
         stepRayUpper.position = new Vector3(stepRayUpper.position.x, maxStepHeight, stepRayUpper.position.z);
+        if (sphereCastPosition == null)
+            sphereCastPosition = transform;
     }
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         originalDrag = rb.drag;
+        gravity = Physics.gravity;
         //Debug.Log(originalDrag);
 
     }
@@ -51,10 +55,10 @@ public class FPSController : MonoBehaviour
 
         if (ShouldJump())
             HandleJump();
+        HandleLanding();
         SpeedControl();
         AccelerateSpeed();
         ApplyFriction();
-        HandleGravity();
         // Debug.Log(rb.velocity);
     }
 
@@ -68,7 +72,11 @@ public class FPSController : MonoBehaviour
             //Debug.Log("In the air");
             Move(airMovementMultiplier);
         }
-        StairStep();
+        if (canStepUp)
+        {
+            StairStep();
+        }
+       // HandleGravity();
         // Debug.Log(IsGrounded());
 
     }
@@ -200,40 +208,53 @@ public class FPSController : MonoBehaviour
 
     #region Jump and gravity
     [Header("JUMPING")]
-    [SerializeField] private float jumpForce = 15f;
+    [SerializeField] private float jumpHeight = 1.5f;
     [SerializeField] private KeyCode jumpKey = KeyCode.Space;
     [SerializeField] private bool allowJumpButtonHold = false;
     [SerializeField] private float jumpCooldown = .5f;
+    private float jumpForce;
 
     private bool isJumpPressed;
     private bool readyToJump = true;
+    private bool wasGrounded = false;
 
     [Header("GROUND CHECK")]
     [SerializeField] private float groundCheckDistance = .2f;
+    [SerializeField] private Transform sphereCastPosition;
     [SerializeField] private float sphereRadius = 1f;
     [SerializeField] private LayerMask groundLayer;
     //private float playerHieght;
     private Vector3 pos;
+    private Vector3 previousVel;
 
     [Header("Gravity")]
-    [SerializeField] private float gravityForce = 10f;
+    [SerializeField] private float gravityMultiplier = 10f;
+    private Vector3 gravity;
     [SerializeField] private float maxFallingSpeed = 10f;
 
     private void HandleGravity()
     {
         if (rb.velocity.y < -0.5f)
         {
-            rb.AddForce(-transform.up * gravityForce * Time.deltaTime, ForceMode.Acceleration);
+            rb.AddForce(gravity *  gravityMultiplier * Time.deltaTime, ForceMode.Acceleration);
         }
 
-        rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallingSpeed, Mathf.Infinity), rb.velocity.z);
+        //rb.velocity = new Vector3(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -maxFallingSpeed, Mathf.Infinity), rb.velocity.z);
     }
 
     private void Jump()
     {
+        jumpForce = CalculateJumpForce();
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
+
+    private float CalculateJumpForce()
+    {
+        return Mathf.Sqrt(2f * Physics.gravity.magnitude * jumpHeight);
+    }
+
+
 
     private bool IsGrounded()
     {
@@ -259,8 +280,24 @@ public class FPSController : MonoBehaviour
     {
         readyToJump = false;
 
+       
+
         Jump();
         Invoke(nameof(ResetJump), jumpCooldown);
+    }
+    private void HandleLanding()
+    {
+        if(!wasGrounded && IsGrounded())
+        {
+            Debug.Log("Just landed");
+            rb.velocity = previousVel;
+
+
+        }
+
+        wasGrounded = IsGrounded();
+        previousVel = rb.velocity;
+
     }
 
     private bool ShouldJump()
