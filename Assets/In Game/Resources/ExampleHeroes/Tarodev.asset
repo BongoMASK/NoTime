@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e977e3e6c75905d4e8f9c3698cdbb79c, type: 3}
+  m_Name: Tarodev
+  m_EditorClassIdentifier: 
+  Faction: 0
+  _stats:
+    Health: 0
+    AttackPower: 0
+    TravelDistance: 0
+  Prefab: {fileID: 2568705755908630225, guid: c9366d785be0a8f458eabeb4bcca9af0, type: 3}
+  Description: 
+  MenuSprite: {fileID: 0}
+  HeroType: 0
