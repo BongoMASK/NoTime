@@ -1,5 +1,5 @@
 using System;
-
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +31,9 @@ public class PlayerInteraction : MonoBehaviour
     private IInteractable interactable;
 
     bool isScreenOpen = false;
+    Collider colliderOnOnbject = null;
+
+
 
     private void Awake()
     {
@@ -114,6 +117,16 @@ public class PlayerInteraction : MonoBehaviour
     {
         if(hit.transform.TryGetComponent(out pickable))
         {
+            /*if (interactedObjectPos.GetComponent<Collider>() == null)
+            {
+
+                colliderOnOnbject = hit.transform.GetComponent<Collider>();
+
+                Collider newCollider = interactedObjectPos.gameObject.AddComponent(colliderOnOnbject.GetType()) as Collider;
+
+                newCollider.isTrigger = colliderOnOnbject.isTrigger;
+            }*/
+
             rayCastMessage = pickable;
             interactable = pickable;
             return true;
