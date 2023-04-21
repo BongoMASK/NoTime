@@ -3,8 +3,12 @@ using UnityEngine.SceneManagement;
 
 public class ChangeScenes : MonoBehaviour
 {
-    [SerializeField] Transform player;
+    Transform player;
     [SerializeField] KeyCode restartKey = KeyCode.P;
+
+    private void Start() {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     private void Update() {
         CheckForPos();

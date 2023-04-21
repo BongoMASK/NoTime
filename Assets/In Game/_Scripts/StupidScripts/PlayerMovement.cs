@@ -30,8 +30,6 @@ public class PlayerMovement : HeroUnitBase {
     //Crouch & slide
     private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
     private Vector3 playerScale;
-    [SerializeField] float slideForce = 400;
-    [SerializeField] float slideCounterMovement = 0.2f;
 
     public bool lockInput = false;
 
@@ -48,21 +46,11 @@ public class PlayerMovement : HeroUnitBase {
     //Input
     protected struct UserInput {
         public int x, y;
-        public bool jumping, sprinting, slide;
+        public bool jumping;
         public bool pressed;
 
         public bool IsPressed() {
             return x == 0 && y == 0;
-        }
-
-        public bool isShiftJumping(bool grounded, Rigidbody rb, float maxSpeed) {
-            if (grounded && slide && jumping)
-                return true;
-
-            if (!grounded && jumping && rb.velocity.magnitude > maxSpeed)
-                return true;
-
-            return false;
         }
     }
 
@@ -94,7 +82,6 @@ public class PlayerMovement : HeroUnitBase {
     }
 
     private void FixedUpdate() {
-
         Movement();
         Gravity();
     }
@@ -139,15 +126,11 @@ public class PlayerMovement : HeroUnitBase {
             userInput.y = 0;
 
         userInput.jumping = Input.GetKey(KeyCode.Space);
-        userInput.slide = Input.GetKey(KeyCode.LeftShift);
     }
 
     private void StartCrouch() {
         ChangePlayerHeight(crouchScale);
         transform.position = new Vector3(transform.position.x, transform.position.y - 0.5f, transform.position.z);
-        if (rb.velocity.magnitude > 0.5f)
-            if (grounded)
-                rb.AddForce(orientation.transform.forward * slideForce);
     }
 
     private void StopCrouch() {
@@ -199,21 +182,15 @@ public class PlayerMovement : HeroUnitBase {
         // Counteract sliding and sloppy movement
         CounterMovement(mag);
 
+        // Limit running diagonally
+        LimitDiagonalRunning();
+
         // If holding jump && ready to jump, then jump
         Jump();
 
         // Some multipliers
         float multiplier = 1f;
         float multiplierV = 1f;
-
-        // Movement while sliding
-        if (grounded && userInput.slide) multiplierV = 0f;
-
-        // If sliding down a ramp, add force down so player stays grounded and also builds speed
-        if (userInput.slide && grounded && readyToJump) {
-            rb.AddForce(Vector3.down * Time.deltaTime * 3000);
-            return;
-        }
 
         // Movement in air
         if (!grounded) {
@@ -241,14 +218,14 @@ public class PlayerMovement : HeroUnitBase {
                 readyToJump = false;
 
                 //Add jump forces
-                rb.AddForce(Vector2.up * jumpForce * 1.5f);
-                rb.AddForce(normalVector * jumpForce * 0.5f);
+                //rb.AddForce(Vector2.up * jumpForce * 1.5f);
+                rb.AddForce(normalVector * jumpForce * 2);
                 rb.AddForce(orientation.transform.forward * userInput.y * moveSpeed * Time.deltaTime);
 
                 //If userInput.jumping while falling, reset userInput.y velocity.
                 Vector3 vel = rb.velocity;
                 if (rb.velocity.y < 0.5f) {
-                    //rb.velocity = new Vector3(vel.x, 0, vel.z);
+                    rb.velocity = new Vector3(vel.x, 0, vel.z);
                 }
                 else if (rb.velocity.y > 0) {
                     rb.velocity = new Vector3(vel.x, vel.y / 2, vel.z);
@@ -289,50 +266,34 @@ public class PlayerMovement : HeroUnitBase {
     }
 
     private void CounterMovement(Vector2 mag) {
-
-        //Slow down sliding
-        if (userInput.slide) {
-            rb.AddForce(moveSpeed * Time.deltaTime * -rb.velocity.normalized * slideCounterMovement);
-            return;
-        }
-
         //Counter movement
-        if (mag.x < -threshold && userInput.x > 0.05f || mag.x > threshold && userInput.x < -0.05f) {
-            rb.AddForce(moveSpeed * orientation.transform.right * Time.deltaTime * -mag.x * counterMovement);
+        CounterMovementForAxis(mag.x, userInput.x, orientation.transform.right);
+        CounterMovementForAxis(mag.y, userInput.y, orientation.transform.forward);
+    }
+
+    void CounterMovementForAxis(float x, float input, Vector3 direction) {
+        // Counter movement in a certain direction
+        if (x < -threshold && input > 0.05f || x > threshold && input < -0.05f) {
+            Vector3 force = moveSpeed * direction * Time.deltaTime * x * counterMovement;
+            rb.AddForce(force * -1);
         }
-        else if (mag.x < -threshold && userInput.x == 0 || mag.x > threshold && userInput.x == 0) {
-            // let rigidbody come to rest on its own after adding a force opposite to it
+
+        // Come to rest if there is no input
+        else if (x < -threshold && input == 0 || x > threshold && input == 0) {
             if (grounded) {
-                rb.AddForce(moveSpeed * orientation.transform.right * Time.deltaTime * -mag.x * stopMovement);
-            }
-            else {
-                //do nothing
+                Vector3 force = moveSpeed * direction * Time.deltaTime * x * stopMovement;
+                rb.AddForce(force * -1);
             }
         }
+    }
 
-        if (mag.y < -threshold && userInput.y > 0.05f || mag.y > threshold && userInput.y < -0.05f) {
-            rb.AddForce(moveSpeed * orientation.transform.forward * Time.deltaTime * -mag.y * counterMovement);
-        }
-        else if (mag.y < -threshold && userInput.y == 0 || mag.y > threshold && userInput.y == 0) {
-            // let rigidbody come to rest on its own after adding a force opposite to it
-            if (grounded) {
-                rb.AddForce(moveSpeed * orientation.transform.forward * Time.deltaTime * -mag.y * stopMovement);
-            }
-            else {
-                //do nothing
-            }
-        }
-
-        if (userInput.isShiftJumping(grounded, rb, maxSpeed))
-            return;
-
+    private void LimitDiagonalRunning() {
         //Limit diagonal running. This will also cause a full stop if sliding fast and un-userInput.crouching, so not optimal.
         if (Mathf.Sqrt(Mathf.Pow(rb.velocity.x, 2) + Mathf.Pow(rb.velocity.z, 2)) > maxSpeed) {
-            if (grounded || userInput.jumping) {
-                float fallspeed = rb.velocity.y;
-                Vector3 n = rb.velocity.normalized * maxSpeed;
-                rb.velocity = new Vector3(n.x, fallspeed, n.z);
-            }
+            float fallspeed = rb.velocity.y;
+            Vector3 vel = new Vector3(rb.velocity.x, 0, rb.velocity.z);
+            Vector3 n = vel.normalized * maxSpeed;
+            rb.velocity = new Vector3(n.x, fallspeed, n.z);
         }
     }
 

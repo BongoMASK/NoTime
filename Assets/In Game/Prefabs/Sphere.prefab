@@ -387,9 +387,10 @@ GameObject:
   - component: {fileID: 9135981166501011847}
   - component: {fileID: 9135981166501011845}
   - component: {fileID: 9135981166501011864}
-  m_Layer: 0
+  - component: {fileID: 58153354}
+  m_Layer: 6
   m_Name: Sphere
-  m_TagString: Untagged
+  m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -417,13 +418,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9135981166501011902}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f08dd2bff4db9e343942624c80d3e317, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 9135981166501011898}
-  vp: {fileID: 9135981166501011845}
   startForce: {x: 0, y: 0, z: 0}
 --- !u!54 &9135981166501011898
 Rigidbody:
@@ -439,8 +439,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 126
+  m_CollisionDetection: 1
 --- !u!114 &9135981166501011847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,9 +454,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recorder: {fileID: 9135981166501011897}
-  meshRenderer: {fileID: 6930902293430475880}
+  visualPath: {fileID: 9135981166501011845}
   collider: {fileID: 9135981166501011864}
-  displayColour: 0
 --- !u!114 &9135981166501011845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -464,7 +463,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9135981166501011902}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 465ae4ccc34fb2445bfb9541810f6cb2, type: 3}
   m_Name: 
@@ -486,6 +485,20 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &58153354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9135981166501011902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 977f0d91ebe573c4888f958b14a6f78c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerVeiwedText: 
+  timeToPick: 1
 --- !u!1 &9135981166707661576
 GameObject:
   m_ObjectHideFlags: 0
