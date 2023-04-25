@@ -1,4 +1,5 @@
 public interface IInteractable 
 {
-    void Interact();
+    void Interact(PlayerInteraction interactor);
+    string OnInteractText { get; }
 }

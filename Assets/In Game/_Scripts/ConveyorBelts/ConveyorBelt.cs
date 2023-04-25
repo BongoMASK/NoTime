@@ -13,7 +13,7 @@ public class ConveyorBelt : MonoBehaviour
     {
         if(other.transform.TryGetComponent(out Rigidbody rb))
         {
-            Debug.Log(rb.name + " is added rigibodies to the list");
+            //Debug.Log(rb.name + " is added rigibodies to the list");
             rigidbodies.Add(rb);
         }
     }
@@ -22,7 +22,7 @@ public class ConveyorBelt : MonoBehaviour
     {
         if (other.transform.TryGetComponent(out Rigidbody rb))
         {
-            Debug.Log(rb.name + "is removed rigibodies to the list");
+            //Debug.Log(rb.name + "is removed rigibodies to the list");
             rigidbodies.Remove(rb);
         }
     }
@@ -32,7 +32,7 @@ public class ConveyorBelt : MonoBehaviour
     {
         if(rigidbodies.Count > 0)
         {
-            Debug.Log("Moving rigibodies in the list");
+            //Debug.Log("Moving rigibodies in the list");
             foreach (Rigidbody rb in rigidbodies)
             {
                 Vector3 pos = rb.position;

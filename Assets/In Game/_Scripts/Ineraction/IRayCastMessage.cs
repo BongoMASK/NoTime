@@ -2,7 +2,7 @@ using System;
 
 public interface IRayCastMessage 
 {
-    string OnPlayerViewedText();
+    string OnPlayerViewedText { get; }
 
     public static Action<string> OnPlayerViewed;
 

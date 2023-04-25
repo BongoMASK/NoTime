@@ -1,5 +1,3 @@
-using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,11 +18,12 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private KeyCode toggleKey = KeyCode.Q;
 
     [SerializeField] Transform currentInteractedObject;
+    public Transform CurrentInetractedObject { get => currentInteractedObject;  set => currentInteractedObject = value; }
     private float inputTimer;
 
     private Ray ray;
     private RaycastHit hit;
-    private float lastTimeInteractPressed = 0;
+    private float lastTimeInteracted = 0;
 
     private Pickable pickable;
     private IRayCastMessage rayCastMessage;
@@ -34,12 +33,21 @@ public class PlayerInteraction : MonoBehaviour
     Collider colliderOnOnbject = null;
 
 
+    //Read-only properties
+    private bool IsCurrentlyInteracted => currentInteractedObject != null;
+
+
 
     private void Awake()
     {
         playerController = GetComponent<FPSController>();
         playerMovement = GetComponent<PlayerMovement>();    
         currentInteractedObject = null;
+    }
+
+    private void Start()
+    {
+        lastTimeInteracted = 0;
     }
 
 
@@ -53,42 +61,31 @@ public class PlayerInteraction : MonoBehaviour
         if (Input.GetKeyDown(toggleKey))
             ToggleScreen();
 
-        if (currentInteractedObject != null)
+        if (IsCurrentlyInteracted)
         {
-            if (interactedObjectPos == null)
-                Debug.LogWarning("Interacted object position is not set up");
-            
-            currentInteractedObject.transform.position = interactedObjectPos.position - currentInteractedObject.GetChild(0).localPosition;
-
-            if (Input.GetKeyDown(interactKey))
-            {
-                //Invoke(nameof(ResetInteractedObject),2f);
-                ResetInteractedObject();
-            }
+            HandleAlreadyInteracting();
 
             return;
         }
 
         SetRay();
 
-        if (ObjectInRange() && currentInteractedObject == null)
+        if (ObjectInRange() && !IsCurrentlyInteracted)
         {
             if (!TryGetObjectData()) //Trying to set the refrences to use interfaces methods
             {
-                Debug.LogWarning("Couldn't get the refernces. The required script might not be attached");
+                //Debug.LogWarning("Couldn't get the refernces. The required script might not be attached");
                 return;
 
             }
-            var message = rayCastMessage.OnPlayerViewedText();
+            string message = rayCastMessage.OnPlayerViewedText;
             IRayCastMessage.OnPlayerViewed?.Invoke(message);
-            Debug.Log("We can hold the object");
+            //Debug.Log("We can hold the object");
 
-            if (Input.GetKeyDown(interactKey))
+            if (Input.GetKey(interactKey))
             {
-                interactable.Interact();
-                currentInteractedObject = pickable.transform.parent;
-                IRayCastMessage.OnPlayerViewed?.Invoke("press E to place object");
-                Debug.Log($"Current holded object is: {currentInteractedObject.name}");
+                
+                HandleInteraction();
             }
         }
         else
@@ -131,10 +128,35 @@ public class PlayerInteraction : MonoBehaviour
             interactable = pickable;
             return true;
         }
-        Debug.LogError("Object don't contain pickable scripts to reference");
+        //Debug.LogError("Object don't contain pickable scripts to reference");
         return false; 
         
         
+    }
+
+    private void HandleAlreadyInteracting()
+    {
+        if (interactedObjectPos == null)
+            //Debug.LogWarning("Interacted object position is not set up");
+
+        currentInteractedObject.transform.position = interactedObjectPos.position - currentInteractedObject.GetChild(0).localPosition;
+
+        if (Input.GetKeyDown(interactKey))
+        {
+            //Invoke(nameof(ResetInteractedObject),2f);
+            ResetInteractedObject();
+        }
+    }
+
+    private void HandleInteraction()
+    {
+        if (Time.time >= pickable.TimeToPick + lastTimeInteracted)
+        {
+            //Debug.Log("Interacting in time: " + pickable.TimeToPick);
+            interactable.Interact(this);
+            IRayCastMessage.OnPlayerViewed?.Invoke(pickable.OnInteractText);
+            lastTimeInteracted = Time.time;
+        }
     }
 
     [SerializeField] CameraInfluence cam;

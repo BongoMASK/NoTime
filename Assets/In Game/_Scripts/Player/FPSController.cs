@@ -47,6 +47,7 @@ public class FPSController : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log("Is grounded: " + IsGrounded());
         if (!isActive)
             return;
 
@@ -55,7 +56,8 @@ public class FPSController : MonoBehaviour
 
         if (ShouldJump())
             HandleJump();
-        HandleLanding();
+        //HandleLanding();
+        HandleGravity();
         SpeedControl();
         AccelerateSpeed();
         ApplyFriction();
@@ -76,7 +78,7 @@ public class FPSController : MonoBehaviour
         {
             StairStep();
         }
-       // HandleGravity();
+        //HandleGravity();
         // Debug.Log(IsGrounded());
 
     }
@@ -234,8 +236,9 @@ public class FPSController : MonoBehaviour
 
     private void HandleGravity()
     {
-        if (rb.velocity.y < -0.5f)
+        if (rb.velocity.y < -0.1f)
         {
+            Debug.Log("Adding gravity");
             rb.AddForce(gravity *  gravityMultiplier * Time.deltaTime, ForceMode.Acceleration);
         }
 
@@ -261,6 +264,7 @@ public class FPSController : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, sphereRadius, groundLayer);
 
         //Debug.Log("IS Grounded: "+ (colliders.Length > 0));
+        //Debug.Log(colliders[0].name);
         return colliders.Length > 0;
     }
 
@@ -321,7 +325,7 @@ public class FPSController : MonoBehaviour
 
     private void StairStep()
     {
-        Debug.Log("Calling steps");
+        //Debug.Log("Calling steps");
         if (CheckForStairs())
         {
             Debug.Log("Name of the object is : " + firstRayHit.transform.name);
