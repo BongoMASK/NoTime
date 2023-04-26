@@ -14,7 +14,7 @@ public class Pickable : MonoBehaviour,IRayCastMessage, IInteractable
 
     public void Interact(PlayerInteraction interactor)
     {
-        Debug.Log("Setting up the interaction references");
+        Debug.Log("Setting up the interaction references WITH " + transform.parent.name );
         interactor.CurrentInetractedObject = transform.parent;
     }
 }

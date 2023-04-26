@@ -3728,6 +3728,16 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 1017351516}
+    - target: {fileID: 7064831151021580995, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: currentInteractedObject
+      value: 
+      objectReference: {fileID: 1529786558}
+    - target: {fileID: 7064831151021580995, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: interactableLayer.m_Bits
+      value: 127
+      objectReference: {fileID: 0}
     - target: {fileID: 7064831151021580996, guid: c9366d785be0a8f458eabeb4bcca9af0,
         type: 3}
       propertyPath: m_Name
@@ -4494,6 +4504,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &1529786558 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7064831150386370106, guid: c9366d785be0a8f458eabeb4bcca9af0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1185758683}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1630385317
 GameObject:
   m_ObjectHideFlags: 0

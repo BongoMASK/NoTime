@@ -19,7 +19,6 @@ public class PlayerInteraction : MonoBehaviour
 
     [SerializeField] Transform currentInteractedObject;
     public Transform CurrentInetractedObject { get => currentInteractedObject;  set => currentInteractedObject = value; }
-    private float inputTimer;
 
     private Ray ray;
     private RaycastHit hit;
@@ -63,6 +62,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (IsCurrentlyInteracted)
         {
+            Debug.Log("Already interacted");
             HandleAlreadyInteracting();
 
             return;
@@ -80,6 +80,7 @@ public class PlayerInteraction : MonoBehaviour
             }
             string message = rayCastMessage.OnPlayerViewedText;
             IRayCastMessage.OnPlayerViewed?.Invoke(message);
+            IInteractable.OnFocus?.Invoke();
             //Debug.Log("We can hold the object");
 
             if (Input.GetKey(interactKey))
@@ -91,6 +92,7 @@ public class PlayerInteraction : MonoBehaviour
         else
         {
             IRayCastMessage.OnPlayerViewed?.Invoke("");
+            IInteractable.OnFocus?.Invoke();
         }
     }
 
@@ -152,7 +154,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Time.time >= pickable.TimeToPick + lastTimeInteracted)
         {
-            //Debug.Log("Interacting in time: " + pickable.TimeToPick);
+            Debug.Log("Interacting in time: " + pickable.TimeToPick);
             interactable.Interact(this);
             IRayCastMessage.OnPlayerViewed?.Invoke(pickable.OnInteractText);
             lastTimeInteracted = Time.time;

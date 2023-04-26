@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028483, g: 0.22571622, b: 0.30692366, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028457, g: 0.22571498, b: 0.30692363, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1001,6 +1001,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &354704470 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6457470106912996802, guid: c9366d785be0a8f458eabeb4bcca9af0,
+    type: 3}
+  m_PrefabInstance: {fileID: 7064831151469920127}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &392711612
 GameObject:
   m_ObjectHideFlags: 0
@@ -3623,6 +3629,12 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!4 &2119168434 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9155727447171969300, guid: c9366d785be0a8f458eabeb4bcca9af0,
+    type: 3}
+  m_PrefabInstance: {fileID: 7064831151469920127}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7064831151469920127
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3630,6 +3642,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2568705755908630225, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7064831151021580992, guid: c9366d785be0a8f458eabeb4bcca9af0,
         type: 3}
       propertyPath: m_RootOrder
@@ -3685,6 +3702,86 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580993, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: canStepUp
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: jumpHeight
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: sprintSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: stepUpSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: acceleration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: stepRayLower
+      value: 
+      objectReference: {fileID: 2119168434}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: stepRayUpper
+      value: 
+      objectReference: {fileID: 354704470}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: maxStepHeight
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: maxFallingSpeed
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: gravityMultiplier
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: sphereCastPosition
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: frictionWhenStoping
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: upperRayDetectRange
+      value: 0.2
+      objectReference: {fileID: 0}
     - target: {fileID: 7064831151021580995, guid: c9366d785be0a8f458eabeb4bcca9af0,
         type: 3}
       propertyPath: cam
@@ -3695,5 +3792,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2568705755908630225, guid: c9366d785be0a8f458eabeb4bcca9af0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: c9366d785be0a8f458eabeb4bcca9af0, type: 3}
