@@ -34,7 +34,7 @@ public class PlayerInteraction : MonoBehaviour
 
 
     //Read-only properties
-    private bool IsCurrentlyInteracted => currentInteractedObject != null;
+    private bool IsCurrentlyInteracted { get => currentInteractedObject != null; }
 
 
 
@@ -136,14 +136,18 @@ public class PlayerInteraction : MonoBehaviour
 
     private void HandleAlreadyInteracting()
     {
-        if (interactedObjectPos == null)
-            //Debug.LogWarning("Interacted object position is not set up");
+        if (interactedObjectPos == null) {
 
-        currentInteractedObject.transform.position = interactedObjectPos.position - currentInteractedObject.GetChild(0).localPosition;
+            //Debug.LogWarning("Interacted object position is not set up");
+        }
+
+        // Puts "object" in "hand" position by moving the "parent"
+        Vector3 dist = currentInteractedObject.GetChild(0).position - interactedObjectPos.position;
+        Vector3 targetDist = currentInteractedObject.transform.position - dist;
+        currentInteractedObject.transform.position = Vector3.Lerp(currentInteractedObject.transform.position, targetDist, 0.8f);
 
         if (Input.GetKeyDown(interactKey))
         {
-            //Invoke(nameof(ResetInteractedObject),2f);
             ResetInteractedObject();
         }
     }
@@ -169,6 +173,7 @@ public class PlayerInteraction : MonoBehaviour
 
         // Enables and disables the screen
         screen.enabled = isScreenOpen;
+        playerController.lockInput = isScreenOpen;
         playerMovement.lockInput = isScreenOpen;
     }
 

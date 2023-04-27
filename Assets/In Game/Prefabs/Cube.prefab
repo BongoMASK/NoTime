@@ -5826,6 +5826,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerVeiwedText: press E to interact
+  onInteractText: press E to place Object
   timeToPick: 1
 --- !u!1 &3576092944351019699
 GameObject:
