@@ -4,10 +4,11 @@ using UnityEngine;
 public class ConveyorBelt : MonoBehaviour
 {
     [SerializeField] private float speed = 2f;
+    [SerializeField] private bool canMove = true;
 
     List<Rigidbody> rigidbodies = new List<Rigidbody>();
 
-
+    private bool ShouldMove => canMove && rigidbodies.Count > 0;
 
     private void OnCollisionEnter(Collision other)
     {
@@ -30,7 +31,7 @@ public class ConveyorBelt : MonoBehaviour
     
     private void FixedUpdate()
     {
-        if(rigidbodies.Count > 0)
+        if(ShouldMove)
         {
             //Debug.Log("Moving rigibodies in the list");
             foreach (Rigidbody rb in rigidbodies)

@@ -141,7 +141,7 @@ public class PlayerInteraction : MonoBehaviour
         if (interactedObjectPos == null)
             //Debug.LogWarning("Interacted object position is not set up");
 
-        currentInteractedObject.transform.position = interactedObjectPos.position - currentInteractedObject.GetChild(0).localPosition;
+        CurrentInetractedObject.transform.position = interactedObjectPos.position - currentInteractedObject.GetChild(0).localPosition;
 
         if (Input.GetKeyDown(interactKey))
         {
