@@ -478,6 +478,7 @@ GameObject:
   m_Component:
   - component: {fileID: 64626968}
   - component: {fileID: 64626969}
+  - component: {fileID: 64626970}
   m_Layer: 0
   m_Name: PP Manager
   m_TagString: Untagged
@@ -501,6 +502,23 @@ Transform:
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &64626969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 64626967}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 5870862b67648b84180063b596ff0f44, type: 2}
+--- !u!114 &64626970
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2055,7 +2073,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh28094
+  m_Name: pb_Mesh28100
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2831,7 +2849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb795b497fd1bb48860459bce522e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 20
   CanMove: 0
   dir: 2
 --- !u!1 &877183267
@@ -3277,7 +3295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb795b497fd1bb48860459bce522e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 20
   CanMove: 0
   dir: 3
 --- !u!65 &1056119944
@@ -3436,7 +3454,7 @@ MonoBehaviour:
   m_StopNaN: 0
   m_Dithering: 0
   m_ClearDepth: 1
-  m_AllowXRRendering: 1
+  m_AllowXRRendering: 0
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
@@ -3468,7 +3486,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -1.91
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -3794,13 +3812,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2568705755908630225, guid: c9366d785be0a8f458eabeb4bcca9af0,
         type: 3}
-      propertyPath: m_Enabled
-      value: 1
+      propertyPath: _maxSpeed
+      value: 6
       objectReference: {fileID: 0}
-    - target: {fileID: 5100427335475725630, guid: c9366d785be0a8f458eabeb4bcca9af0,
+    - target: {fileID: 2568705755908630225, guid: c9366d785be0a8f458eabeb4bcca9af0,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6253284621566282904, guid: c9366d785be0a8f458eabeb4bcca9af0,
         type: 3}
@@ -3811,11 +3829,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 0.703
-      objectReference: {fileID: 0}
-    - target: {fileID: 7064831150412861654, guid: c9366d785be0a8f458eabeb4bcca9af0,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7064831150412861656, guid: c9366d785be0a8f458eabeb4bcca9af0,
         type: 3}
@@ -3875,11 +3888,6 @@ PrefabInstance:
     - target: {fileID: 7064831151021580992, guid: c9366d785be0a8f458eabeb4bcca9af0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7064831151021580993, guid: c9366d785be0a8f458eabeb4bcca9af0,
-        type: 3}
-      propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7064831151021580994, guid: c9366d785be0a8f458eabeb4bcca9af0,
@@ -3986,11 +3994,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7684798956310426299, guid: c9366d785be0a8f458eabeb4bcca9af0,
-        type: 3}
-      propertyPath: whatIsParent.m_Bits
-      value: 255
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9366d785be0a8f458eabeb4bcca9af0, type: 3}
@@ -9446,7 +9449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb795b497fd1bb48860459bce522e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 20
   CanMove: 0
   dir: 2
 --- !u!65 &1767037748
@@ -14475,7 +14478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb795b497fd1bb48860459bce522e35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 20
   CanMove: 0
   dir: 2
 --- !u!65 &2033648310
