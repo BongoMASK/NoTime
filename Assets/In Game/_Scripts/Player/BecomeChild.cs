@@ -33,4 +33,8 @@ public class BecomeChild : MonoBehaviour {
     private void OnCollisionStay(Collision collision) {
         HandleCollision(collision);
     }
+
+    private void OnCollisionExit(Collision collision) {
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+    }
 }

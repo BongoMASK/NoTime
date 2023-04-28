@@ -18,9 +18,18 @@ public class PlayerMovement : HeroUnitBase {
     //Movement
     [Header("Move Speeds")]
     [SerializeField] float moveSpeed = 4500;
-    [SerializeField] float maxSpeed = 20;
+    [SerializeField] float _maxSpeed = 20;
     [SerializeField] bool grounded;
     [SerializeField] LayerMask whatIsGround;
+
+    private float maxSpeed {
+        get {
+            if(grounded)
+                return _maxSpeed;
+
+            return _maxSpeed * 1.35f;
+        }
+    }
 
     [SerializeField] float counterMovement = 0.175f;
     [SerializeField] float stopMovement = 0.3f;
@@ -31,7 +40,17 @@ public class PlayerMovement : HeroUnitBase {
     private Vector3 crouchScale = new Vector3(1, 0.5f, 1);
     private Vector3 playerScale;
 
-    public bool lockInput = false;
+    private bool _lockInput = false;
+
+    public bool lockInput {
+        get {
+            return _lockInput;
+        }
+        set {
+            _lockInput = value;
+            //playerCam.GetComponentInChildren<Camera>().enabled = !value;
+        }
+    }
 
     //jumping
     private bool readyToJump = true;

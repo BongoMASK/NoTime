@@ -19,6 +19,7 @@ public class PlayerInteraction : MonoBehaviour
 
     [SerializeField] Transform currentInteractedObject;
     public Transform CurrentInetractedObject { get => currentInteractedObject;  set => currentInteractedObject = value; }
+    private float inputTimer;
 
     private Ray ray;
     private RaycastHit hit;
@@ -33,7 +34,7 @@ public class PlayerInteraction : MonoBehaviour
 
 
     //Read-only properties
-    private bool IsCurrentlyInteracted => currentInteractedObject != null;
+    private bool IsCurrentlyInteracted { get => currentInteractedObject != null; }
 
 
 
@@ -62,7 +63,6 @@ public class PlayerInteraction : MonoBehaviour
 
         if (IsCurrentlyInteracted)
         {
-            Debug.Log("Already interacted");
             HandleAlreadyInteracting();
 
             return;
@@ -80,7 +80,6 @@ public class PlayerInteraction : MonoBehaviour
             }
             string message = rayCastMessage.OnPlayerViewedText;
             IRayCastMessage.OnPlayerViewed?.Invoke(message);
-            IInteractable.OnFocus?.Invoke();
             //Debug.Log("We can hold the object");
 
             if (Input.GetKey(interactKey))
@@ -92,7 +91,6 @@ public class PlayerInteraction : MonoBehaviour
         else
         {
             IRayCastMessage.OnPlayerViewed?.Invoke("");
-            IInteractable.OnFocus?.Invoke();
         }
     }
 
@@ -138,14 +136,18 @@ public class PlayerInteraction : MonoBehaviour
 
     private void HandleAlreadyInteracting()
     {
-        if (interactedObjectPos == null)
-            //Debug.LogWarning("Interacted object position is not set up");
+        if (interactedObjectPos == null) {
 
-        CurrentInetractedObject.transform.position = interactedObjectPos.position - currentInteractedObject.GetChild(0).localPosition;
+            //Debug.LogWarning("Interacted object position is not set up");
+        }
+
+        // Puts "object" in "hand" position by moving the "parent"
+        Vector3 dist = currentInteractedObject.GetChild(0).position - interactedObjectPos.position;
+        Vector3 targetDist = currentInteractedObject.transform.position - dist;
+        currentInteractedObject.transform.position = Vector3.Lerp(currentInteractedObject.transform.position, targetDist, 0.8f);
 
         if (Input.GetKeyDown(interactKey))
         {
-            //Invoke(nameof(ResetInteractedObject),2f);
             ResetInteractedObject();
         }
     }
@@ -154,7 +156,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (Time.time >= pickable.TimeToPick + lastTimeInteracted)
         {
-            Debug.Log("Interacting in time: " + pickable.TimeToPick);
+            //Debug.Log("Interacting in time: " + pickable.TimeToPick);
             interactable.Interact(this);
             IRayCastMessage.OnPlayerViewed?.Invoke(pickable.OnInteractText);
             lastTimeInteracted = Time.time;
@@ -171,6 +173,7 @@ public class PlayerInteraction : MonoBehaviour
 
         // Enables and disables the screen
         screen.enabled = isScreenOpen;
+        playerController.lockInput = isScreenOpen;
         playerMovement.lockInput = isScreenOpen;
     }
 
