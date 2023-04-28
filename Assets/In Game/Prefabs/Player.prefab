@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 7064831150412861653}
   - component: {fileID: 7064831150412861654}
   - component: {fileID: 5100427335475725630}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: PlayerGFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   - component: {fileID: 7684798956310426299}
   - component: {fileID: 7064831151021580995}
   - component: {fileID: 2568705755908630225}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -401,33 +401,33 @@ MonoBehaviour:
   canStepUp: 1
   lockInput: 0
   walkSpeed: 7
-  acceleration: 20
+  acceleration: 10
   airMovementMultiplier: 0.1
-  frictionWhenStoping: 4
+  frictionWhenStoping: 5
   groundMovementMultiplier: 10
-  sprintSpeed: 7
+  sprintSpeed: 5
   sprintKey: 304
   camSensi: 200
   upperLookLimit: 90
   lowerLookLimit: 70
-  jumpHeight: 1.5
+  jumpHeight: 2
   jumpKey: 32
   allowJumpButtonHold: 0
   jumpCooldown: 0.5
   groundCheckDistance: 0.2
-  sphereCastPosition: {fileID: 0}
+  sphereCastPosition: {fileID: 7064831151021580992}
   sphereRadius: 0.62
   groundLayer:
     serializedVersion: 2
-    m_Bits: 2147483647
-  gravityMultiplier: 10
-  maxFallingSpeed: 40
-  maxStepHeight: 0.5
-  stepUpSpeed: 0.1
+    m_Bits: 383
+  gravityMultiplier: 5
+  maxFallingSpeed: 500
+  maxStepHeight: 0.7
+  stepUpSpeed: 1
   stepRayUpper: {fileID: 6457470106912996802}
   stepRayLower: {fileID: 9155727447171969300}
   lowerRayDetectRange: 0.3
-  upperRayDetectRange: 0.3
+  upperRayDetectRange: 0.2
 --- !u!114 &7684798956310426299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -481,7 +481,7 @@ MonoBehaviour:
   playerCam: {fileID: 7895904417807117120}
   orientation: {fileID: 7064831150412861655}
   moveSpeed: 3000
-  maxSpeed: 7
+  _maxSpeed: 6
   grounded: 0
   whatIsGround:
     serializedVersion: 2
@@ -489,7 +489,6 @@ MonoBehaviour:
   counterMovement: 0.175
   stopMovement: 0.3
   maxSlopeAngle: 35
-  lockInput: 0
   jumpForce: 350
   jumpGraceTime: 0
   downForce: 20

@@ -144,7 +144,7 @@ public class PlayerInteraction : MonoBehaviour
         // Puts "object" in "hand" position by moving the "parent"
         Vector3 dist = currentInteractedObject.GetChild(0).position - interactedObjectPos.position;
         Vector3 targetDist = currentInteractedObject.transform.position - dist;
-        currentInteractedObject.transform.position = Vector3.Lerp(currentInteractedObject.transform.position, targetDist, 0.8f);
+        currentInteractedObject.transform.position = Vector3.Lerp(currentInteractedObject.transform.position, targetDist, 0.4f);
 
         if (Input.GetKeyDown(interactKey))
         {
