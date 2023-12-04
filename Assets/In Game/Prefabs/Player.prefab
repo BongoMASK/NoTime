@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 5100427335475725630}
   m_Layer: 7
   m_Name: PlayerGFX
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -465,7 +465,6 @@ MonoBehaviour:
   interactKey: 101
   toggleKey: 113
   currentInteractedObject: {fileID: 0}
-  cam: {fileID: 0}
 --- !u!114 &2568705755908630225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -489,9 +488,9 @@ MonoBehaviour:
   counterMovement: 0.175
   stopMovement: 0.3
   maxSlopeAngle: 35
-  jumpForce: 350
+  jumpForce: 300
   jumpGraceTime: 0
-  downForce: 20
+  downForce: 0
 --- !u!1 &7064831151119904476
 GameObject:
   m_ObjectHideFlags: 0

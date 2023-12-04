@@ -16,7 +16,7 @@ public class Recorder : MonoBehaviour {
     [Header("Values")]
     [SerializeField] Vector3 startForce;
 
-    bool isPlaying { get => CameraManager.instance.isPlaying; }
+    bool isPlaying => CameraManager.instance.cameraMode == CameraMode.Play;
 
     private void Awake() {
         if (TryGetComponent(out PreRecorder playback))
@@ -124,5 +124,9 @@ public class Recorder : MonoBehaviour {
         }
 
         rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+    }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.DrawRay(transform.position, startForce / 10);
     }
 }

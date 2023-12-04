@@ -10,7 +10,7 @@ public class CameraFieldOfView : MonoBehaviour {
 
     private bool _isVisibleToCam;
 
-    private bool isPlaying => CameraManager.instance.isPlaying;
+    private bool isPlaying => CameraManager.instance.cameraMode == CameraMode.Play;
 
     public bool isVisibleToCam {
         get => _isVisibleToCam;
@@ -32,6 +32,7 @@ public class CameraFieldOfView : MonoBehaviour {
 
     public void Update() {
         isVisibleToCam = CheckIfInCamera();
+        //Debug.Log(isVisibleToCam);
     }
 
     /// <summary>
@@ -43,6 +44,10 @@ public class CameraFieldOfView : MonoBehaviour {
         if (CameraManager.instance.activeCam == null)
             return false;
 
+        // Check distance to Camera
+        if((transform.position - CameraManager.instance.activeCam.transform.position).magnitude > CameraManager.instance.activeCam.cameraRange)
+            return false;
+
         Camera cam = CameraManager.instance.activeCam.cam;
 
         Bounds bounds = collider.bounds;
@@ -50,6 +55,16 @@ public class CameraFieldOfView : MonoBehaviour {
 
         if (GeometryUtility.TestPlanesAABB(cameraFrustum, bounds))
             return true;
+
+        /// This was some code we tried out to keep objects far away from the camera undetectable 
+        /// It worked fine in that regard, but makes it so that any object will obstruct the camera view
+        /// We changed it to a simple distance 
+
+        //Vector3 dir = transform.position - CameraManager.instance.activeCam.transform.position;
+        //if (Physics.Raycast(CameraManager.instance.activeCam.transform.position, dir, out RaycastHit hitInfo)) {
+        //    if(hitInfo.transform== transform)
+        //        return true;
+        //}
 
         return false;
     }

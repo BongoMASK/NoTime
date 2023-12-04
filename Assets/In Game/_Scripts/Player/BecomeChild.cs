@@ -19,15 +19,20 @@ public class BecomeChild : MonoBehaviour {
         transform.parent = obj.transform;
     }
 
+    void MakeParentNull() {
+        transform.parent = null;
+        transform.localScale = Vector3.one;
+    }
+
     void HandleCollision(Collision collision) {
         if (CheckNormal(collision)) {
             if (IsValidObject(collision.gameObject))
                 BecomeChildOfGameObject(collision.gameObject);
             else
-                transform.parent = null;
+                MakeParentNull();
         }
         else
-            transform.parent = null;
+            MakeParentNull();
     }
 
     private void OnCollisionStay(Collision collision) {

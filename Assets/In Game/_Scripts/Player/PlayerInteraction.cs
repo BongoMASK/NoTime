@@ -53,6 +53,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
+
         if (!playerController.CanInteract)
         {
             return;
@@ -163,11 +164,9 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    [SerializeField] CameraInfluence cam;
-
     private void ToggleScreen() {
         isScreenOpen = !isScreenOpen;
-        CameraManager.instance.activeCam = isScreenOpen ? cam : null;
+        CameraManager.instance.activeCam = isScreenOpen ? CameraManager.instance.FindActiveCam() : null;
 
         ResetInteractedObject();
 
