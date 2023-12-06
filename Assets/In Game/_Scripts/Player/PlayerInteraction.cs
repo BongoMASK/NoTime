@@ -1,3 +1,5 @@
+using TMPro;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +17,9 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Transform playerCam;
     [SerializeField, Tooltip("Transform of game object where the object should be after interaction")] private Transform interactedObjectPos;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
-    [SerializeField] private KeyCode toggleKey = KeyCode.Q;
+    [SerializeField] private KeyCode toggleKey = KeyCode.Tab;
+
+    [SerializeField] TMP_Text interactText;
 
     [SerializeField] Transform currentInteractedObject;
     public Transform CurrentInetractedObject { get => currentInteractedObject;  set => currentInteractedObject = value; }
@@ -81,9 +85,9 @@ public class PlayerInteraction : MonoBehaviour
             }
             string message = rayCastMessage.OnPlayerViewedText;
             IRayCastMessage.OnPlayerViewed?.Invoke(message);
-            //Debug.Log("We can hold the object");
+            ShowInteractMessage(message);
 
-            if (Input.GetKey(interactKey))
+            if (Input.GetKeyDown(interactKey))
             {
                 
                 HandleInteraction();
@@ -92,7 +96,18 @@ public class PlayerInteraction : MonoBehaviour
         else
         {
             IRayCastMessage.OnPlayerViewed?.Invoke("");
+            ShowInteractMessage("");
         }
+    }
+
+    private void InteractionBongo() {
+        if(ObjectInRange() && !IsCurrentlyInteracted) {
+
+        }
+    }
+
+    void ShowInteractMessage(string message) {
+        interactText.text = message;
     }
 
     private void SetRay()
