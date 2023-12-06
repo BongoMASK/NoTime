@@ -69,7 +69,7 @@ public class PlayerInteraction : MonoBehaviour
         if (IsCurrentlyInteracted)
         {
             HandleAlreadyInteracting();
-
+            ShowInteractMessage("");
             return;
         }
 
@@ -97,12 +97,6 @@ public class PlayerInteraction : MonoBehaviour
         {
             IRayCastMessage.OnPlayerViewed?.Invoke("");
             ShowInteractMessage("");
-        }
-    }
-
-    private void InteractionBongo() {
-        if(ObjectInRange() && !IsCurrentlyInteracted) {
-
         }
     }
 
