@@ -1619,7 +1619,7 @@ GameObject:
   - component: {fileID: 546770633}
   - component: {fileID: 546770632}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: WhiteBoard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5735,7 +5735,7 @@ PrefabInstance:
     - target: {fileID: 961699495896236065, guid: c7e0728f2a016d14580be74d004c0277,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.659004
+      value: -8.909004
       objectReference: {fileID: 0}
     - target: {fileID: 961699495896236065, guid: c7e0728f2a016d14580be74d004c0277,
         type: 3}
@@ -5745,27 +5745,27 @@ PrefabInstance:
     - target: {fileID: 961699495896236065, guid: c7e0728f2a016d14580be74d004c0277,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.281658
+      value: -13.531658
       objectReference: {fileID: 0}
     - target: {fileID: 961699495896236065, guid: c7e0728f2a016d14580be74d004c0277,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.0000029653306
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 961699495896236065, guid: c7e0728f2a016d14580be74d004c0277,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 961699495896236065, guid: c7e0728f2a016d14580be74d004c0277,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 961699495896236065, guid: c7e0728f2a016d14580be74d004c0277,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 961699495896236065, guid: c7e0728f2a016d14580be74d004c0277,
         type: 3}
@@ -5775,7 +5775,7 @@ PrefabInstance:
     - target: {fileID: 961699495896236065, guid: c7e0728f2a016d14580be74d004c0277,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -180
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 961699495896236065, guid: c7e0728f2a016d14580be74d004c0277,
         type: 3}
@@ -7075,7 +7075,7 @@ GameObject:
   - component: {fileID: 1719841277}
   - component: {fileID: 1719841276}
   m_Layer: 0
-  m_Name: WhiteBoaard
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

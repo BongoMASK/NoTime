@@ -11,6 +11,10 @@ public class CameraInfluence : MonoBehaviour {
 
     public float cameraRange = 10;
 
+    private void Start() {
+        cameraUI.ChangeActiveCamText("CAM " + (transform.GetSiblingIndex() + 1) + "/" + transform.parent.childCount);
+    }
+
     public bool ShouldStopRecordingRewind() {
         if (videoPlaybackTime < 0)
             return true;

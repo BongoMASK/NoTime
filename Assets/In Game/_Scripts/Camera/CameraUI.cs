@@ -14,13 +14,13 @@ public class CameraUI : MonoBehaviour
     [SerializeField] Sprite forwardSprite;
 
     [SerializeField] TMP_Text currentTimeText;
+    [SerializeField] TMP_Text activeCamText;
 
     DateTime now;
     DateTime currentTime;
 
     private void Start() {
         now = DateTime.Now;
-        Debug.Log(now.ToString("h:mm:ss tt"));
     }
 
     private void Update() {
@@ -29,7 +29,6 @@ public class CameraUI : MonoBehaviour
             videoSlider.value = CameraManager.instance.activeCam.videoPlaybackTime;
 
             currentTime = now.AddSeconds(videoSlider.value);
-            //Debug.Log(currentTime.ToString("h:mm:ss:ff tt"));
 
             currentTimeText.text = currentTime.ToString("h:mm:ss:ff tt");
         }
@@ -53,5 +52,9 @@ public class CameraUI : MonoBehaviour
                 cameraActionImage.sprite = forwardSprite;
                 break;
         }
+    }
+
+    public void ChangeActiveCamText(string text) {
+        activeCamText.text = text;
     }
 }

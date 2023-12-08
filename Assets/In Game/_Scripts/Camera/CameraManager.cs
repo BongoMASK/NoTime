@@ -10,6 +10,7 @@ public enum CameraMode {
 }
 
 public class CameraManager : MonoBehaviour {
+
     public static CameraManager instance;
 
     [SerializeField] private CameraInfluence _activeCam;
@@ -63,6 +64,7 @@ public class CameraManager : MonoBehaviour {
     /// List of all cameraInfluences player must interact with
     /// </summary>
     private List<CameraInfluence> cameraInfluences = new List<CameraInfluence>();
+    int activeCamIndex = 0;
 
     // Convert this to an enum later
     [Header("Camera Action Booleans")]
@@ -195,22 +197,38 @@ public class CameraManager : MonoBehaviour {
 
         #region Camera Switching
 
-        if(Input.GetKeyDown(KeyCode.W)) {
+        if (Input.GetKeyDown(KeyCode.W)) {
+            ChangeActiveCamera(1);
+        }
 
+        if (Input.GetKeyDown(KeyCode.S)) {
+            ChangeActiveCamera(-1);
         }
 
         #endregion
     }
 
     public CameraInfluence FindActiveCam() {
-        return cameraInfluences[0];
+        if (activeCamIndex >= cameraInfluences.Count || activeCamIndex < 0)
+            activeCamIndex = 0;
+
+        return cameraInfluences[activeCamIndex];
+    }
+
+    public void ChangeActiveCamera(int inc) {
+        activeCamIndex += inc;
+
+        activeCamIndex %= cameraInfluences.Count;
+
+        if(activeCamIndex < 0)
+            activeCamIndex = cameraInfluences.Count - 1;
+
+        activeCam = cameraInfluences[activeCamIndex];
     }
 
     public void ChangeCameraParent(Transform parent) {
         camParent = parent;
         GetAllCameras(camParent);
-
-        Debug.Log(camParent.name);
     }
 
     void GetAllCameras(Transform cameraParent) {
