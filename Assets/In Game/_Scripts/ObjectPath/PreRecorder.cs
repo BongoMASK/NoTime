@@ -3,11 +3,19 @@ using UnityEngine;
 
 [RequireComponent(typeof(Recorder))]
 public class PreRecorder : MonoBehaviour {
+
     [SerializeField] public List<Playback> rewindList = new List<Playback>();
     [SerializeField] bool shouldRecord = true;
 
     public void Start() {
+        if(shouldRecord) {
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        }
+
         if (!shouldRecord) {
+            if (rewindList.Count == 0)
+                return;
+
             transform.localPosition = rewindList[rewindList.Count - 1].position;
             transform.rotation = rewindList[rewindList.Count - 1].rotation;
         }

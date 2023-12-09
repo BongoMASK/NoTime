@@ -20,6 +20,14 @@ public class ChangeScenes : MonoBehaviour
             if(Input.GetKeyDown(restartKey)) {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
+            if (Input.GetKeyDown(KeyCode.O)) {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            }
+        }
+
+        // Make player go to next level in case of any bugs
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
     }
 

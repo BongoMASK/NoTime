@@ -1,7 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+
+public enum CameraMode {
+    Pause = 0,
+    Play, 
+    Rewind,
+    Forward
+}
 
 public class CameraManager : MonoBehaviour {
+
     public static CameraManager instance;
 
     [SerializeField] private CameraInfluence _activeCam;
@@ -14,6 +23,9 @@ public class CameraManager : MonoBehaviour {
         get => _activeCam;
 
         set {
+            if (_activeCam != null)
+                _activeCam.DeAssign();
+
             // Pause game when there is no active cam present
             if (value == null) {
                 lockInput = true;
@@ -23,11 +35,15 @@ public class CameraManager : MonoBehaviour {
                 // than set it to false when you remove the camera
                 // slightly messy and difficult to understand
                 // review later
-                isPlaying = false;
-                isRewinding = false;
-                isForwarding = false;
+
+                //isPlaying = false;
+                //isRewinding = false;
+                //isForwarding = false;
+
+                cameraMode = CameraMode.Pause;
 
                 lockInput = false;
+                value.Assign();
             }
 
             _activeCam = value;
@@ -35,6 +51,9 @@ public class CameraManager : MonoBehaviour {
     }
 
     [Header("Assignables")]
+
+    public RenderTexture mainRenderTexture;
+
     /// <summary>
     /// Parent of all the cameras in the scene
     /// </summary>
@@ -45,7 +64,9 @@ public class CameraManager : MonoBehaviour {
     /// List of all cameraInfluences player must interact with
     /// </summary>
     private List<CameraInfluence> cameraInfluences = new List<CameraInfluence>();
+    int activeCamIndex = 0;
 
+    // Convert this to an enum later
     [Header("Camera Action Booleans")]
 
     [SerializeField] private bool _isRewinding = false;
@@ -53,19 +74,32 @@ public class CameraManager : MonoBehaviour {
     [SerializeField] private bool _isPlaying = false;
 
     // set to pause mode by default
-    public bool isRewinding {
-        get => _isRewinding;
-        private set { _isRewinding = value; }
-    }
-    public bool isForwarding {
-        get => _isForwarding;
-        private set { _isForwarding = value; }
-    }
-    public bool isPlaying {
-        get => _isPlaying;
+    //public bool isRewinding {
+    //    get => _isRewinding;
+    //    private set { _isRewinding = value; }
+    //}
+    //public bool isForwarding {
+    //    get => _isForwarding;
+    //    private set { _isForwarding = value; }
+    //}
+    //public bool isPlaying {
+    //    get => _isPlaying;
+    //    private set {
+    //        _isPlaying = value;
+    //        LimitRigidbody();
+    //    }
+    //}
+
+    [SerializeField] private CameraMode _cameraMode = CameraMode.Pause;
+
+    public CameraMode cameraMode {
+        get => _cameraMode;
         private set {
-            _isPlaying = value;
+            _cameraMode = value;
             LimitRigidbody();
+
+            if (activeCam != null)
+                activeCam.cameraUI.DisplayPlayerInput(_cameraMode);
         }
     }
 
@@ -85,53 +119,157 @@ public class CameraManager : MonoBehaviour {
         Forward += EmptyFunc;
         Play += EmptyFunc;
         LimitRigidbody += EmptyFunc;
-        OnPlayPress += () => isPlaying = !isPlaying;
+        //OnPlayPress += () => isPlaying = !isPlaying;
+        OnPlayPress +=  WhenPressedPlay;
 
         GetAllCameras(camParent);
     }
 
     private void Update() {
-        if (lockInput)
-            return;
-
-        if (Input.GetKeyDown(KeyCode.A)) {
-            OnRewindPress();
-        }
-
-        if (Input.GetKeyUp(KeyCode.A) && isRewinding) {
-            isRewinding = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.D)) {
-            OnForwardPress();
-        }
-
-        if (Input.GetKeyUp(KeyCode.D) && isForwarding) {
-            isForwarding = false;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space))
-            OnPlayPress();
+        GetInput();
     }
 
     private void FixedUpdate() {
         if (lockInput)
             return;
 
-        if (isRewinding)
-            Rewind();
+        switch (_cameraMode) {
+            case CameraMode.Pause:
+                break;
 
-        else if (isForwarding)
-            Forward();
+            case CameraMode.Play:
+                MakeCameraRecord();
+                break;
 
-        else if (isPlaying)
-            Play();
+            case CameraMode.Rewind:
+                MakeCameraRewind();
+                break;
+
+            case CameraMode.Forward:
+                MakeCameraForward();
+                break;
+        }
+
+        //if (isRewinding)
+        //    MakeCameraRewind();
+
+        //else if (isForwarding)
+        //    MakeCameraForward();
+
+        //else if (isPlaying)
+        //    MakeCameraRecord();
+    }
+
+    void GetInput() {
+        if (lockInput)
+            return;
+
+        #region Camera Actions
+
+        if (Input.GetKeyDown(KeyCode.A)) {
+            OnRewindPress();
+        }
+
+        //if (Input.GetKeyUp(KeyCode.A) && isRewinding) {
+        //    isRewinding = false;
+        //}
+
+        if (Input.GetKeyUp(KeyCode.A) && cameraMode == CameraMode.Rewind) {
+            cameraMode = CameraMode.Pause;
+        }
+
+        if (Input.GetKeyDown(KeyCode.D)) {
+            OnForwardPress();
+        }
+
+        //if (Input.GetKeyUp(KeyCode.D) && isForwarding) {
+        //    isForwarding = false;
+        //}
+
+        if (Input.GetKeyUp(KeyCode.D) && cameraMode == CameraMode.Forward) {
+            cameraMode = CameraMode.Pause;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+            OnPlayPress();
+
+        #endregion
+
+        #region Camera Switching
+
+        if (Input.GetKeyDown(KeyCode.W)) {
+            ChangeActiveCamera(1);
+        }
+
+        if (Input.GetKeyDown(KeyCode.S)) {
+            ChangeActiveCamera(-1);
+        }
+
+        #endregion
+    }
+
+    public CameraInfluence FindActiveCam() {
+        if (activeCamIndex >= cameraInfluences.Count || activeCamIndex < 0)
+            activeCamIndex = 0;
+
+        return cameraInfluences[activeCamIndex];
+    }
+
+    public void ChangeActiveCamera(int inc) {
+        activeCamIndex += inc;
+
+        activeCamIndex %= cameraInfluences.Count;
+
+        if(activeCamIndex < 0)
+            activeCamIndex = cameraInfluences.Count - 1;
+
+        activeCam = cameraInfluences[activeCamIndex];
+    }
+
+    public void ChangeCameraParent(Transform parent) {
+        camParent = parent;
+        GetAllCameras(camParent);
     }
 
     void GetAllCameras(Transform cameraParent) {
+        cameraInfluences.Clear();
+
         for (int i = 0; i < cameraParent.childCount; i++) {
             cameraInfluences.Add(cameraParent.GetChild(i).GetComponent<CameraInfluence>());
         }
+    }
+
+    void MakeCameraRecord() {
+        if (activeCam == null)
+            return;
+
+        if (activeCam.ShouldStopRecordingPlay())
+            return;
+
+        activeCam.videoPlaybackTime += Time.fixedDeltaTime;
+        Play();
+    }
+
+    void MakeCameraForward() {
+        if (activeCam == null)
+            return;
+
+        if (activeCam.ShouldStopRecordingForward())
+            return;
+
+        activeCam.videoPlaybackTime += Time.fixedDeltaTime;
+        Forward();
+    }
+
+    void MakeCameraRewind() {
+        if (activeCam == null)
+            return;
+
+        if (activeCam.ShouldStopRecordingRewind())
+            return;
+
+        activeCam.videoPlaybackTime -= Time.fixedDeltaTime;
+        Rewind();
     }
 
     /// <summary>
@@ -139,9 +277,11 @@ public class CameraManager : MonoBehaviour {
     /// Sets isRewinding to true.
     /// </summary>
     void OnRewindPress() {
-        isRewinding = true;
-        isForwarding = false;
-        isPlaying = false;
+        //isRewinding = true;
+        //isForwarding = false;
+        //isPlaying = false;
+
+        cameraMode = CameraMode.Rewind;
     }
 
     /// <summary>
@@ -149,9 +289,18 @@ public class CameraManager : MonoBehaviour {
     /// Sets isForwarding to true.
     /// </summary>
     void OnForwardPress() {
-        isForwarding = true;
-        isRewinding = false;
-        isPlaying = false;
+        //isForwarding = true;
+        //isRewinding = false;
+        //isPlaying = false;
+
+        cameraMode = CameraMode.Forward;
+    }
+
+    void WhenPressedPlay() {
+        if (cameraMode == CameraMode.Play)
+            cameraMode = CameraMode.Pause;
+        else
+            cameraMode = CameraMode.Play;
     }
 
     void EmptyFunc() { }

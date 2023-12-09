@@ -16,7 +16,7 @@ public class Recorder : MonoBehaviour {
     [Header("Values")]
     [SerializeField] Vector3 startForce;
 
-    bool isPlaying { get => CameraManager.instance.isPlaying; }
+    bool isPlaying => CameraManager.instance.cameraMode == CameraMode.Play;
 
     private void Awake() {
         if (TryGetComponent(out PreRecorder playback))
@@ -48,6 +48,10 @@ public class Recorder : MonoBehaviour {
         CameraManager.instance.LimitRigidbody -= LimitRigidbody;
     }
 
+    public void Init(Vector3 velocity) {
+        rb.AddForce(velocity, ForceMode.Impulse);
+    }
+
     /// <summary>
     /// Adds position data to the Rewind stack on FixedUpdate.
     /// Used when physics needs to be applied on the object
@@ -73,14 +77,27 @@ public class Recorder : MonoBehaviour {
         forwardPath.Push(lastPlayback);
     }
 
+    //bool badCode = false;
+
     /// <summary>
     /// Gives back position data to the Rewind Stack on FixedUpdate
     /// Used when we need the object to trace back its Forward path.
     /// No physics are being applied on the object.
     /// </summary>
     public void Forward() {
-        if (forwardPath.Count <= 0)
+        if (forwardPath.Count <= 0) {
+            
+            //if(!badCode)
+            //    rb.AddForce(rb.mass * CalculateForce());
+
+            //badCode = true;
+
+            //DontLimit();
+            //Play();
             return;
+        }
+
+        //badCode = false;
 
         Playback lastPlayback = forwardPath.Pop();
 
@@ -124,5 +141,14 @@ public class Recorder : MonoBehaviour {
         }
 
         rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+    }
+
+    //public void DontLimit() {
+    //    rb.constraints = RigidbodyConstraints.None;
+
+    //}
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.DrawRay(transform.position, startForce / 10);
     }
 }

@@ -2,18 +2,50 @@ using UnityEngine;
 
 public class CameraInfluence : MonoBehaviour {
 
-    public Color colour = Color.green;
-    [SerializeField] bool showCameraRange = false;
+    public const int maxTime = 10;
+    public float videoPlaybackTime = 0;
 
     public Camera cam;
 
-    /// <summary>
-    /// Creates a mesh that displays the range of that camera. Used for debugging and level design
-    /// </summary>
-    public void ShowCameraRange() {
-        if (!showCameraRange)
-            return;
+    public CameraUI cameraUI;
 
-        // Creates a mesh that displays the range of that camera
+    public float cameraRange = 10;
+
+    private void Start() {
+        cameraUI.ChangeActiveCamText("CAM " + (transform.GetSiblingIndex() + 1) + "/" + transform.parent.childCount);
+    }
+
+    public bool ShouldStopRecordingRewind() {
+        if (videoPlaybackTime < 0)
+            return true;
+
+        return false;
+    }
+
+    public bool ShouldStopRecordingForward() {
+        if (videoPlaybackTime > maxTime)
+            return true;
+
+        return false;
+    }
+
+    public bool ShouldStopRecordingPlay() {
+        if (videoPlaybackTime > maxTime)
+            return true;
+
+        return false;
+    }
+
+    public void DeAssign() {
+        cam.targetTexture = null;
+    }
+
+    public void Assign() {
+        cam.targetTexture = CameraManager.instance.mainRenderTexture;
+    }
+
+    private void OnDrawGizmosSelected() {
+        //Gizmos.DrawMesh()
+        Gizmos.DrawWireSphere(cam.transform.position, cameraRange);
     }
 }

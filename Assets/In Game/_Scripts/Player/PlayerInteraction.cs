@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,9 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField] private Transform playerCam;
     [SerializeField, Tooltip("Transform of game object where the object should be after interaction")] private Transform interactedObjectPos;
     [SerializeField] private KeyCode interactKey = KeyCode.E;
-    [SerializeField] private KeyCode toggleKey = KeyCode.Q;
+    [SerializeField] private KeyCode toggleKey = KeyCode.Tab;
+
+    [SerializeField] TMP_Text interactText;
 
     [SerializeField] Transform currentInteractedObject;
     public Transform CurrentInetractedObject { get => currentInteractedObject;  set => currentInteractedObject = value; }
@@ -53,6 +56,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
+
         if (!playerController.CanInteract)
         {
             return;
@@ -64,7 +68,7 @@ public class PlayerInteraction : MonoBehaviour
         if (IsCurrentlyInteracted)
         {
             HandleAlreadyInteracting();
-
+            ShowInteractMessage("");
             return;
         }
 
@@ -80,9 +84,9 @@ public class PlayerInteraction : MonoBehaviour
             }
             string message = rayCastMessage.OnPlayerViewedText;
             IRayCastMessage.OnPlayerViewed?.Invoke(message);
-            //Debug.Log("We can hold the object");
+            ShowInteractMessage(message);
 
-            if (Input.GetKey(interactKey))
+            if (Input.GetKeyDown(interactKey))
             {
                 
                 HandleInteraction();
@@ -91,7 +95,12 @@ public class PlayerInteraction : MonoBehaviour
         else
         {
             IRayCastMessage.OnPlayerViewed?.Invoke("");
+            ShowInteractMessage("");
         }
+    }
+
+    void ShowInteractMessage(string message) {
+        interactText.text = message;
     }
 
     private void SetRay()
@@ -144,7 +153,7 @@ public class PlayerInteraction : MonoBehaviour
         // Puts "object" in "hand" position by moving the "parent"
         Vector3 dist = currentInteractedObject.GetChild(0).position - interactedObjectPos.position;
         Vector3 targetDist = currentInteractedObject.transform.position - dist;
-        currentInteractedObject.transform.position = Vector3.Lerp(currentInteractedObject.transform.position, targetDist, 0.8f);
+        currentInteractedObject.transform.position = Vector3.Lerp(currentInteractedObject.transform.position, targetDist, 0.4f);
 
         if (Input.GetKeyDown(interactKey))
         {
@@ -163,11 +172,9 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    [SerializeField] CameraInfluence cam;
-
     private void ToggleScreen() {
         isScreenOpen = !isScreenOpen;
-        CameraManager.instance.activeCam = isScreenOpen ? cam : null;
+        CameraManager.instance.activeCam = isScreenOpen ? CameraManager.instance.FindActiveCam() : null;
 
         ResetInteractedObject();
 
