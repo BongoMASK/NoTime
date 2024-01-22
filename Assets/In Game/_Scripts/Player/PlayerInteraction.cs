@@ -116,6 +116,10 @@ public class PlayerInteraction : MonoBehaviour
 
     private void ResetInteractedObject()
     {
+        if (currentInteractedObject == null)
+            return;
+
+        //currentInteractedObject.GetComponentInChildren<Collider>().enabled = true;
         currentInteractedObject = null;
     }
 
@@ -169,6 +173,8 @@ public class PlayerInteraction : MonoBehaviour
             interactable.Interact(this);
             IRayCastMessage.OnPlayerViewed?.Invoke(pickable.OnInteractText);
             lastTimeInteracted = Time.time;
+
+            //currentInteractedObject.GetComponentInChildren<Collider>().enabled = false;
         }
     }
 

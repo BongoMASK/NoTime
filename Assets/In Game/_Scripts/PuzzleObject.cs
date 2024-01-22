@@ -30,6 +30,7 @@ public abstract class PuzzleObject : MonoBehaviour
     /// Functions that override this must always call the base function.
     /// </summary>
     public virtual void SwitchOn() {
+        // Not calling isOn, so that we dont infinitely loop
         _isOn = true;
     }
 
@@ -38,6 +39,7 @@ public abstract class PuzzleObject : MonoBehaviour
     /// Functions that override this must always call the base function.
     /// </summary>
     public virtual void SwitchOff() {
+        // Not calling isOn, so that we dont infinitely loop
         _isOn = false;
     }
 }

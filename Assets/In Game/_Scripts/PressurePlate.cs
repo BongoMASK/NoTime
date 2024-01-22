@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PressurePlate : MonoBehaviour {
@@ -7,6 +8,12 @@ public class PressurePlate : MonoBehaviour {
     Vector3 ogPos;
 
     bool canMoveBack = false;
+
+    public static List<string> tags = new List<string>() {
+        "Player",
+        "Sphere",
+        "Cube",
+    };
 
     private void Start() {
         ogPos = transform.localPosition;
@@ -50,8 +57,13 @@ public class PressurePlate : MonoBehaviour {
     private void OnCollisionExit(Collision collision) {
         // When button has been released
         if (isValidObject(collision.gameObject)) {
-            canMoveBack = true;
+            // Delays time to move back so that it doesnt move inside player hitbox
+            Invoke(nameof(DelayCanMoveBack), 0.1f);
         }
+    }
+
+    private void DelayCanMoveBack() {
+        canMoveBack = true;
     }
 
     #endregion
@@ -62,19 +74,6 @@ public class PressurePlate : MonoBehaviour {
     /// <param name="go"></param>
     /// <returns></returns>
     bool isValidObject(GameObject go) {
-        //Check if Player
-        if (go.tag == "Player")
-            return true;
-
-        //Check if Cube
-        if (go.tag == "Cube")
-            return true;
-
-        //Check if Sphere
-        if (go.tag == "Sphere")
-            return true;
-
-        //Return false if the tag is not equal to "Player"
-        return false;
+        return tags.Contains(go.tag);
     }
 }

@@ -1,18 +1,14 @@
 using UnityEngine;
 
-public class DoorTrigger : Button
-{
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.transform.name == "Plate")
-        {
+public class DoorTrigger : Button {
+    private void OnTriggerEnter(Collider other) {
+        if (other.transform.name == "Plate") {
             isOn = true;
         }
     }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.transform.name == "Plate")
-        {
+
+    private void OnTriggerExit(Collider other) {
+        if (other.transform.name == "Plate") {
             isOn = false;
         }
     }
