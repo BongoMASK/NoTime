@@ -4820,6 +4820,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1168925935}
     m_Modifications:
+    - target: {fileID: 4750545292052997061, guid: 14b99fdbcbd9f054b9eaacfdf1da8dfd,
+        type: 3}
+      propertyPath: flashSwitchCamera
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6475216609683955760, guid: 14b99fdbcbd9f054b9eaacfdf1da8dfd,
         type: 3}
       propertyPath: m_Name

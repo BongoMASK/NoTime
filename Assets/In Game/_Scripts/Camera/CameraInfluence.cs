@@ -12,7 +12,7 @@ public class CameraInfluence : MonoBehaviour {
     public float cameraRange = 10;
 
     private void Start() {
-        cameraUI.ChangeActiveCamText("CAM " + (transform.GetSiblingIndex() + 1) + "/" + transform.parent.childCount);
+        ChangeActiveCamText();
     }
 
     public bool ShouldStopRecordingRewind() {
@@ -42,6 +42,10 @@ public class CameraInfluence : MonoBehaviour {
 
     public void Assign() {
         cam.targetTexture = CameraManager.instance.mainRenderTexture;
+    }
+
+    public void ChangeActiveCamText() {
+        cameraUI.ChangeActiveCamText("CAM " + (transform.GetSiblingIndex() + 1) + "/" + transform.parent.childCount);
     }
 
     private void OnDrawGizmosSelected() {

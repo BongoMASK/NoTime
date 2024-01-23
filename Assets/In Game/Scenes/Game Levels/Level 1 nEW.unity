@@ -1114,7 +1114,6 @@ MonoBehaviour:
   rewindLine: {fileID: 1435053409}
   forwardLine: {fileID: 946227212}
   boxBox: {fileID: 221455602}
-  maxSkips: 5
 --- !u!114 &221455608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6524,7 +6523,6 @@ MonoBehaviour:
   rewindLine: {fileID: 1387009279}
   forwardLine: {fileID: 1049631063}
   boxBox: {fileID: 1540549878}
-  maxSkips: 5
 --- !u!114 &1540549883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8320,7 +8318,6 @@ MonoBehaviour:
   rewindLine: {fileID: 376218949}
   forwardLine: {fileID: 1748878737}
   boxBox: {fileID: 1639877514}
-  maxSkips: 5
 --- !u!114 &1639877520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10817,6 +10814,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4750545292052997061, guid: 14b99fdbcbd9f054b9eaacfdf1da8dfd,
+        type: 3}
+      propertyPath: flashPlay
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6293955046866714788, guid: 14b99fdbcbd9f054b9eaacfdf1da8dfd,
         type: 3}

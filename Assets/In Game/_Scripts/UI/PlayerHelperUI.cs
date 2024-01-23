@@ -1,37 +1,86 @@
-//using DG.Tweening;
+using DG.Tweening;
 using UnityEngine;
 
 public class PlayerHelperUI : MonoBehaviour
 {
+    private bool _hasPressedTab = false;
+
+    [Header("Helper Vars")]
+    [SerializeField] float flashSpeed = 0.3f;
+    
+    public bool hasPressedTab {
+        get => _hasPressedTab;
+        set {
+            _hasPressedTab = value;
+            OnPressedTab();
+        }
+    }
+
+    public bool hasSwitchedCamera = false;
+    public bool hasPlay = false;
+    public bool hasRewind = false;
+    public bool hasForward = false;
+
+    bool isCameraOpen => CameraManager.instance.activeCam != null;
+
     [Header("Booleans")]
     [SerializeField] bool flashTab;
     [SerializeField] bool flashSwitchCamera;
-    [SerializeField] bool flashPause;
+    [SerializeField] bool flashPlay;
     [SerializeField] bool flashRewind;
     [SerializeField] bool flashForward;
 
+    [Header("Canvas Groups")]
     [SerializeField] CanvasGroup tabGroup;
     [SerializeField] CanvasGroup switchCameraGroup;
-    [SerializeField] CanvasGroup pauseGroup;
+    [SerializeField] CanvasGroup playGroup;
     [SerializeField] CanvasGroup rewindGroup;
     [SerializeField] CanvasGroup forwardGroup;
 
     private void Start() {
-        if (flashTab)
-            Invoke(nameof(FlashTab), 60);
+        Invoke(nameof(FlashTab), 1);
+    }
+
+    void FlashUI(CanvasGroup cg, bool hasPressed, bool shouldBeDone, bool isCameraOpen, string funcName) {
+        if (hasPressed || !shouldBeDone || !isCameraOpen)
+            return;
+
+        cg.DOFade(0, flashSpeed).SetLoops(6, LoopType.Yoyo).SetEase(Ease.InOutSine);
+        Invoke(funcName, 10);
     }
 
     void FlashTab() {
-        //tabGroup.DOFade(0, 0.5f).SetLoops(3);
+        FlashUI(tabGroup, hasPressedTab, flashTab, !isCameraOpen, nameof(FlashTab));
     }
 
     void FlashSwitchCamera() {
-
+        FlashUI(switchCameraGroup, hasSwitchedCamera, flashSwitchCamera, isCameraOpen, nameof(FlashSwitchCamera));
     }
 
-    void FlashPause() { }
+    void FlashPlay() {
+        FlashUI(playGroup, hasPlay, flashPlay, isCameraOpen, nameof(FlashPlay));
+    }
 
-    void FlashRewind() { }
+    void FlashRewind() {
+        FlashUI(rewindGroup, hasRewind, flashRewind, isCameraOpen, nameof(FlashRewind));
+    }
 
-    void FlashForward() { }
+    void FlashForward() {
+        FlashUI(forwardGroup, hasForward, flashForward, isCameraOpen, nameof(FlashForward));
+    }
+
+    void OnPressedTab() {
+        Invoke(nameof(FlashPlay), 3);
+        Invoke(nameof(FlashForward), 3);
+        Invoke(nameof(FlashRewind), 3);
+        Invoke(nameof(FlashSwitchCamera), 3);
+    }
+
+    public void ResetBools() {
+        hasPressedTab = false;
+        hasSwitchedCamera = false;
+        hasPlay = false;
+        hasRewind = false;
+        hasForward = false;
+    }
 }

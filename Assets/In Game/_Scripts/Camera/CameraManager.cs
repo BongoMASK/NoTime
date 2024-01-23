@@ -133,7 +133,7 @@ public class CameraManager : MonoBehaviour {
         if (lockInput)
             return;
 
-        switch (_cameraMode) {
+        switch (cameraMode) {
             case CameraMode.Pause:
                 break;
 
@@ -224,11 +224,16 @@ public class CameraManager : MonoBehaviour {
             activeCamIndex = cameraInfluences.Count - 1;
 
         activeCam = cameraInfluences[activeCamIndex];
+        activeCam.ChangeActiveCamText();
+
+        UIManager.Instance.playerHelperUI.hasSwitchedCamera = true;
     }
 
     public void ChangeCameraParent(Transform parent) {
         camParent = parent;
         GetAllCameras(camParent);
+
+        UIManager.Instance.playerHelperUI.ResetBools();
     }
 
     void GetAllCameras(Transform cameraParent) {
@@ -282,6 +287,7 @@ public class CameraManager : MonoBehaviour {
         //isPlaying = false;
 
         cameraMode = CameraMode.Rewind;
+        UIManager.Instance.playerHelperUI.hasRewind = true;
     }
 
     /// <summary>
@@ -294,6 +300,7 @@ public class CameraManager : MonoBehaviour {
         //isPlaying = false;
 
         cameraMode = CameraMode.Forward;
+        UIManager.Instance.playerHelperUI.hasForward = true;
     }
 
     void WhenPressedPlay() {
@@ -301,6 +308,8 @@ public class CameraManager : MonoBehaviour {
             cameraMode = CameraMode.Pause;
         else
             cameraMode = CameraMode.Play;
+
+        UIManager.Instance.playerHelperUI.hasPlay = true;
     }
 
     void EmptyFunc() { }

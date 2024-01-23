@@ -8,6 +8,7 @@ public class UIManager : MonoBehaviour
     public static UIManager Instance;
 
     public CameraUI cameraUI;
+    public PlayerHelperUI playerHelperUI;
 
     [SerializeField] Transform playerHUD;
     [SerializeField] Transform cameraHUD;
@@ -38,6 +39,8 @@ public class UIManager : MonoBehaviour
             SwitchToCameraHUD();
         else
             SwitchToPlayerHUD();
+
+        playerHelperUI.hasPressedTab = true;
     }
 
     public void SetInteractText(string message) {

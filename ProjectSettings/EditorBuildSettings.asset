@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/In Game/Scenes/Game Levels/Level 4.5.unity
     guid: 2710f87ca0501024a99430c5041482ea
+  - enabled: 1
+    path: Assets/Kitbash3D - Laboratory/Kitbash Asset viewer.unity
+    guid: d16cffb64c9107040b927f78bd0d5912
   m_configObjects: {}

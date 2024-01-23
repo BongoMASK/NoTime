@@ -390,6 +390,7 @@ GameObject:
   - component: {fileID: 1103759658648500909}
   - component: {fileID: 4715062713264069252}
   - component: {fileID: 6963572851154643254}
+  - component: {fileID: 8894820407719170466}
   m_Layer: 5
   m_Name: Rewind Button
   m_TagString: Untagged
@@ -454,6 +455,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &8894820407719170466
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414760484291284513}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &2429421592218346316
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,8 +567,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1352948952272839923}
   - component: {fileID: 3400118153334107987}
+  - component: {fileID: 8010779793066200425}
   m_Layer: 5
-  m_Name: Camera Text UI
+  m_Name: SwitchCamera UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -611,6 +625,18 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
+--- !u!225 &8010779793066200425
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2687869924841658926}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &2769978823731222960
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +782,7 @@ GameObject:
   - component: {fileID: 7533129522631225501}
   - component: {fileID: 5813619075387572642}
   - component: {fileID: 8591104650701086603}
+  - component: {fileID: 1822318121901714570}
   m_Layer: 5
   m_Name: Forward Button
   m_TagString: Untagged
@@ -820,6 +847,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &1822318121901714570
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3121017187325731852}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &3339995562318303459
 GameObject:
   m_ObjectHideFlags: 0
@@ -1769,6 +1808,7 @@ GameObject:
   - component: {fileID: 2069820674351781099}
   - component: {fileID: 3989201290763816354}
   - component: {fileID: 7365821357818474335}
+  - component: {fileID: 2472961498538227320}
   m_Layer: 5
   m_Name: Pause Button
   m_TagString: Untagged
@@ -1833,6 +1873,18 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &2472961498538227320
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5865856092226047316}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &6475216609683955760
 GameObject:
   m_ObjectHideFlags: 0
@@ -1846,6 +1898,7 @@ GameObject:
   - component: {fileID: 5302551106999326929}
   - component: {fileID: 6475216609683955762}
   - component: {fileID: 6475216609683955763}
+  - component: {fileID: 4750545292052997061}
   m_Layer: 5
   m_Name: Player HUD Canvas
   m_TagString: Untagged
@@ -1912,6 +1965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraUI: {fileID: 944504846720804019}
+  playerHelperUI: {fileID: 4750545292052997061}
   playerHUD: {fileID: 7542689862795637106}
   cameraHUD: {fileID: 4055281017425378720}
   crosshairHUD: {fileID: 7050253001306932598}
@@ -1957,6 +2011,33 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4750545292052997061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6475216609683955760}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f47ec40a24c4ee409c4f36b60efa0ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  flashSpeed: 0.7
+  hasSwitchedCamera: 0
+  hasPlay: 0
+  hasRewind: 0
+  hasForward: 0
+  flashTab: 1
+  flashSwitchCamera: 0
+  flashPlay: 0
+  flashRewind: 0
+  flashForward: 0
+  tabGroup: {fileID: 1601139841263092315}
+  switchCameraGroup: {fileID: 8010779793066200425}
+  playGroup: {fileID: 2472961498538227320}
+  rewindGroup: {fileID: 8894820407719170466}
+  forwardGroup: {fileID: 1822318121901714570}
 --- !u!1 &6475216610729598165
 GameObject:
   m_ObjectHideFlags: 0

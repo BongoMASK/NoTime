@@ -54,7 +54,6 @@ public class ChangeCameraParent : MonoBehaviour
             default:
                 Debug.Log("No change in parent.");
                 return;
-                break;
         }
     }
 
