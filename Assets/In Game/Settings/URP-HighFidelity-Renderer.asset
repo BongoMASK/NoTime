@@ -15,12 +15,48 @@ MonoBehaviour:
   m_Active: 1
   injectionPoint: 550
   fetchColorBuffer: 1
-  requirements: 6
+  requirements: 7
   passMaterial: {fileID: -876546973899608171, guid: 0549a0c55f56db144b013d8bc706cad9,
     type: 3}
   passIndex: 0
-  bindDepthStencilAttachment: 0
+  bindDepthStencilAttachment: 1
   m_Version: 1
+--- !u!114 &-2025066582270027312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de29bc19364ac914fbcce99e3a408d6c, type: 3}
+  m_Name: ScreenSpaceOutlines
+  m_EditorClassIdentifier: 
+  m_Active: 0
+  renderPassEvent: 1000
+  outlinesLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  outlinesOccluderLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  outlineSettings:
+    outlineColor: {r: 0, g: 0, b: 0, a: 1}
+    outlineScale: 1
+    depthThreshold: 1.5
+    robertsCrossMultiplier: 25
+    normalThreshold: 0.5
+    steepAngleThreshold: 0.2
+    steepAngleMultiplier: 25
+  viewSpaceNormalsTextureSettings:
+    colorFormat: 0
+    depthBufferBits: 16
+    filterMode: 0
+    backgroundColor: {r: 0, g: 0, b: 0, a: 1}
+    perObjectData: 0
+    enableDynamicBatching: 0
+    enableInstancing: 0
 --- !u!114 &-1878332245247344467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +133,8 @@ MonoBehaviour:
   - {fileID: -1878332245247344467}
   - {fileID: -1509289547802009202}
   - {fileID: -3736140320685462211}
-  m_RendererFeatureMap: adc0de57c6d2eee58e210d2027ed0deb3d6d875a2c9026cc
+  - {fileID: -2025066582270027312}
+  m_RendererFeatureMap: adc0de57c6d2eee58e210d2027ed0deb3d6d875a2c9026ccd0d94735ac84e5e3
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -136,7 +173,7 @@ MonoBehaviour:
     zFailOperation: 0
   m_ShadowTransparentReceive: 1
   m_RenderingMode: 0
-  m_DepthPrimingMode: 0
+  m_DepthPrimingMode: 1
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
