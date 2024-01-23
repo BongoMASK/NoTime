@@ -12,7 +12,7 @@ public class VisualPath : MonoBehaviour {
 
     bool isVisible = false;
 
-    [SerializeField] int maxSkips = 5;
+    int maxSkips = 0;
     int skipCount = 0;
     int skipCount1 = 0;
 

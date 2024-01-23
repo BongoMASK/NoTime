@@ -1,33 +1,46 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    // remove this later. Try not to use singletons
+    public static UIManager Instance;
 
-    [SerializeField] private TextMeshProUGUI interactText;
-    public void SetInteractText(string text)
-    {
-        interactText.text = text;
-        interactText.gameObject.SetActive(true);
-    }
-    private void Awake()
-    {
-        interactText.gameObject.SetActive(false);
-    }
+    public CameraUI cameraUI;
 
-    private void OnEnable()
-    {
-        IRayCastMessage.OnPlayerViewed += OnPlayerViewed;
-    }
+    [SerializeField] Transform playerHUD;
+    [SerializeField] Transform cameraHUD;
+    [SerializeField] Transform crosshairHUD;
 
-    private void OnDisable()
-    {
-        IRayCastMessage.OnPlayerViewed -= OnPlayerViewed;
+    [SerializeField] RawImage screen;
+
+    [SerializeField] TMP_Text interactText;
+
+    private void Awake() {
+        Instance = this;
     }
 
-    private void OnPlayerViewed(string viewedObjMessage)
-    {
-        interactText.text = viewedObjMessage;
-        interactText.gameObject.SetActive(true);
+    public void SwitchToPlayerHUD() {
+        cameraHUD.gameObject.SetActive(false);
+        playerHUD.gameObject.SetActive(true);
+    }
+
+    public void SwitchToCameraHUD() {
+        cameraHUD.gameObject.SetActive(true);
+        playerHUD.gameObject.SetActive(false);
+    }
+
+    public void EnableScreen(bool enabled) {
+        screen.enabled = enabled;
+
+        if (enabled)
+            SwitchToCameraHUD();
+        else
+            SwitchToPlayerHUD();
+    }
+
+    public void SetInteractText(string message) {
+        interactText.text = message;
     }
 }

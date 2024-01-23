@@ -7,8 +7,6 @@ public class PlayerInteraction : MonoBehaviour
     FPSController playerController;
     PlayerMovement playerMovement;
 
-    [Header("References")]
-    [SerializeField] RawImage screen;
 
     [Header("Object detection")]
     [SerializeField] private float detectionRange = 1f;
@@ -57,7 +55,7 @@ public class PlayerInteraction : MonoBehaviour
     private void Update()
     {
 
-        if (!playerController.CanInteract)
+        if (!playerMovement.CanInteract)
         {
             return;
         }
@@ -100,7 +98,7 @@ public class PlayerInteraction : MonoBehaviour
     }
 
     void ShowInteractMessage(string message) {
-        interactText.text = message;
+        UIManager.Instance.SetInteractText(message);
     }
 
     private void SetRay()
@@ -185,9 +183,12 @@ public class PlayerInteraction : MonoBehaviour
         ResetInteractedObject();
 
         // Enables and disables the screen
-        screen.enabled = isScreenOpen;
+        //screen.enabled = isScreenOpen;
+        UIManager.Instance.EnableScreen(isScreenOpen);
         playerController.lockInput = isScreenOpen;
         playerMovement.lockInput = isScreenOpen;
+
+        playerMovement.ResetInput();
     }
 
 }

@@ -71,13 +71,16 @@ public class Recorder : MonoBehaviour {
 
         Playback lastPlayback = rewindPath.Pop();
 
+        if (!CheckIfPosHardSetPossible(lastPlayback.position)) {
+            Vector3 diff = lastPlayback.position - transform.localPosition;
+            transform.parent.position -= diff;
+        }
+
         transform.localPosition = lastPlayback.position;
         transform.rotation = lastPlayback.rotation;
 
         forwardPath.Push(lastPlayback);
     }
-
-    //bool badCode = false;
 
     /// <summary>
     /// Gives back position data to the Rewind Stack on FixedUpdate
@@ -86,25 +89,33 @@ public class Recorder : MonoBehaviour {
     /// </summary>
     public void Forward() {
         if (forwardPath.Count <= 0) {
-            
-            //if(!badCode)
-            //    rb.AddForce(rb.mass * CalculateForce());
-
-            //badCode = true;
-
-            //DontLimit();
-            //Play();
             return;
         }
 
-        //badCode = false;
-
         Playback lastPlayback = forwardPath.Pop();
+
+        if (!CheckIfPosHardSetPossible(lastPlayback.position)) {
+            Vector3 diff = lastPlayback.position - transform.localPosition;
+            transform.parent.position -= diff;
+        }
 
         transform.localPosition = lastPlayback.position;
         transform.rotation = lastPlayback.rotation;
 
         rewindPath.Push(lastPlayback);
+    }
+
+    private bool CheckIfPosHardSetPossible(Vector3 pos) {
+        Vector3 dir = pos - transform.localPosition;
+        Debug.DrawLine(transform.position, transform.position + dir, Color.red, 1);
+        Physics.Raycast(transform.position, dir, out RaycastHit hitInfo, dir.magnitude);
+
+        if (hitInfo.transform != null) {
+            Debug.Log(hitInfo.transform.name);
+            return false;
+        }
+
+        return true;
     }
 
     public void OnPlayPress() {
@@ -142,11 +153,6 @@ public class Recorder : MonoBehaviour {
 
         rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
     }
-
-    //public void DontLimit() {
-    //    rb.constraints = RigidbodyConstraints.None;
-
-    //}
 
     private void OnDrawGizmosSelected() {
         Gizmos.DrawRay(transform.position, startForce / 10);

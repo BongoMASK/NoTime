@@ -41,6 +41,7 @@ public class PlayerMovement : HeroUnitBase {
     private Vector3 playerScale;
 
     private bool _lockInput = false;
+    public bool CanInteract { get; set; } = true;
 
     public bool lockInput {
         get {
@@ -70,6 +71,11 @@ public class PlayerMovement : HeroUnitBase {
 
         public bool IsPressed() {
             return x == 0 && y == 0;
+        }
+
+        public void ResetInput() {
+            x = 0;
+            y = 0;
         }
     }
 
@@ -122,12 +128,19 @@ public class PlayerMovement : HeroUnitBase {
         rb.AddForce(currentGravity, ForceMode.Acceleration);   //does gravity based on slope of floor
     }
 
+    /// <summary>
+    /// This is called so that player doesnt continue walking in camera mode
+    /// </summary>
+    public void ResetInput() {
+        userInput.ResetInput();
+    }
+
     bool crouchSound = false;
     bool hasJumped = false;
     float currentYPos;
 
     private void MyInput() {
-        if (lockInput == true)
+        if (lockInput)
             return;
 
         if (Input.GetKey(KeyCode.D))
@@ -268,6 +281,9 @@ public class PlayerMovement : HeroUnitBase {
 
     private float desiredX;
     private void Look() {
+        if (lockInput)
+            return;
+
         float mouseX = Input.GetAxis("Mouse X") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
         float mouseY = Input.GetAxis("Mouse Y") * sensitivity * Time.fixedDeltaTime * sensMultiplier;
 

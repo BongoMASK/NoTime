@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class CameraInfluence : MonoBehaviour {
 
-    public const int maxTime = 10;
+    public float maxTime = 10;
     public float videoPlaybackTime = 0;
 
     public Camera cam;
 
-    public CameraUI cameraUI;
+    public CameraUI cameraUI => UIManager.Instance.cameraUI;
 
     public float cameraRange = 10;
 

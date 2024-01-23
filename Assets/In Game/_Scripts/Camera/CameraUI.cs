@@ -27,6 +27,7 @@ public class CameraUI : MonoBehaviour
         // Show Camera video seconds
         if (CameraManager.instance.activeCam != null) {
             videoSlider.value = CameraManager.instance.activeCam.videoPlaybackTime;
+            videoSlider.maxValue = CameraManager.instance.activeCam.maxTime;
 
             currentTime = now.AddSeconds(videoSlider.value);
 
