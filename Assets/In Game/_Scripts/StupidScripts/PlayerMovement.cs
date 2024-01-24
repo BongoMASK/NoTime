@@ -21,6 +21,7 @@ public class PlayerMovement : HeroUnitBase {
     [SerializeField] float _maxSpeed = 20;
     [SerializeField] bool grounded;
     [SerializeField] LayerMask whatIsGround;
+    float currentSlopeAngle = 0;
 
     private float maxSpeed {
         get {
@@ -63,23 +64,7 @@ public class PlayerMovement : HeroUnitBase {
 
     [SerializeField] float downForce = 20;
 
-    //Input
-    protected struct UserInput {
-        public int x, y;
-        public bool jumping;
-        public bool pressed;
-
-        public bool IsPressed() {
-            return x == 0 && y == 0;
-        }
-
-        public void ResetInput() {
-            x = 0;
-            y = 0;
-        }
-    }
-
-    protected UserInput userInput;
+    public UserInput userInput = new UserInput();
 
     //Sliding
     private Vector3 normalVector = Vector3.up;
@@ -90,6 +75,14 @@ public class PlayerMovement : HeroUnitBase {
     float soundTimer = 0f;
 
     Vector3 currentGravity;
+
+    [Header("Step Stuff")]
+    [SerializeField] Transform stepUpRay;
+    [SerializeField] Transform stepLowRay;
+    [SerializeField] float stepHeight = 0.3f;
+    [SerializeField] float stepSmooth = 0.1f;
+    [SerializeField] float distance = 0.4f;
+
 
     void Awake() {
         rb = GetComponent<Rigidbody>();
@@ -109,6 +102,7 @@ public class PlayerMovement : HeroUnitBase {
     private void FixedUpdate() {
         Movement();
         Gravity();
+        StepClimb();
     }
 
     private void Update() {
@@ -157,7 +151,8 @@ public class PlayerMovement : HeroUnitBase {
         else
             userInput.y = 0;
 
-        userInput.jumping = Input.GetKey(KeyCode.Space);
+        if (Input.GetKeyDown(KeyCode.Space))
+            userInput.jumping = true;
     }
 
     private void StartCrouch() {
@@ -233,6 +228,11 @@ public class PlayerMovement : HeroUnitBase {
         //Apply forces to move player
         rb.AddForce(orientation.transform.forward * userInput.y * moveSpeed * Time.deltaTime * multiplier * multiplierV);
         rb.AddForce(orientation.transform.right * userInput.x * moveSpeed * Time.deltaTime * multiplier);
+
+        float threshold = 0.01f;
+        if (rb.velocity.x < threshold && rb.velocity.z < threshold && userInput.IsPressed()) {
+            rb.velocity = new Vector3(0, rb.velocity.y, 0);
+        }
     }
 
     private void Jump() {
@@ -242,6 +242,7 @@ public class PlayerMovement : HeroUnitBase {
 
         if (userInput.jumping) {
             jumpButtonPressedTime = Time.time;
+            userInput.jumping = false;
         }
 
         //if (grounded && readyToJump) {
@@ -252,7 +253,7 @@ public class PlayerMovement : HeroUnitBase {
                 //Add jump forces
                 //rb.AddForce(Vector2.up * jumpForce * 1.5f);
                 rb.AddForce(normalVector * jumpForce * 2);
-                rb.AddForce(orientation.transform.forward * userInput.y * moveSpeed * Time.deltaTime);
+                rb.AddForce(orientation.transform.forward * userInput.y * moveSpeed * Time.deltaTime); 
 
                 //If userInput.jumping while falling, reset userInput.y velocity.
                 Vector3 vel = rb.velocity;
@@ -268,11 +269,6 @@ public class PlayerMovement : HeroUnitBase {
                 lastGroundedTime = null;
                 jumpButtonPressedTime = null;
             }
-
-        // This is a bad way to fix the bug, but i have no idea whats causing it
-        if (userInput.IsPressed() && userInput.jumping)
-            rb.velocity = new Vector3(0, rb.velocity.y, 0);
-
     }
 
     private void ResetJump() {
@@ -353,6 +349,7 @@ public class PlayerMovement : HeroUnitBase {
 
     private bool IsFloor(Vector3 v) {
         float angle = Vector3.Angle(Vector3.up, v);
+        currentSlopeAngle = angle;
         return angle < maxSlopeAngle;
     }
 
@@ -392,5 +389,21 @@ public class PlayerMovement : HeroUnitBase {
     private void StopGrounded() {
         grounded = false;
         currentGravity = Physics.gravity;
+    }
+
+
+    private void StepClimb() {
+        if(Physics.Raycast(stepLowRay.position, stepLowRay.forward, out RaycastHit hitlower, distance)) {
+            if (!Physics.Raycast(stepUpRay.position, stepUpRay.forward, out RaycastHit hitUpper, distance * 4)) {
+                transform.position -= new Vector3(0, -stepSmooth, 0);
+            }
+        }
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.DrawRay(stepUpRay.position, stepUpRay.forward * distance * 4);
+        Gizmos.DrawRay(stepLowRay.position, stepLowRay.forward * distance);
+
+        Gizmos.DrawLine(stepUpRay.position, stepLowRay.position);
     }
 }

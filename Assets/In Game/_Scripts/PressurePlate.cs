@@ -57,6 +57,7 @@ public class PressurePlate : MonoBehaviour {
     private void OnCollisionExit(Collision collision) {
         // When button has been released
         if (isValidObject(collision.gameObject)) {
+            //collision.gameObject.GetComponent<Rigidbody>().Sleep();
             // Delays time to move back so that it doesnt move inside player hitbox
             Invoke(nameof(DelayCanMoveBack), 0.1f);
         }

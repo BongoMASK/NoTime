@@ -26,13 +26,13 @@ public class FPSController : MonoBehaviour
     #region Unity Methods
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        cam = GetComponentInChildren<Camera>();
-        capCollider = GetComponentInChildren<CapsuleCollider>();
-        rb.freezeRotation = true;
-        stepRayUpper.position = new Vector3(stepRayUpper.position.x, maxStepHeight, stepRayUpper.position.z);
-        if (sphereCastPosition == null)
-            sphereCastPosition = transform;
+        //rb = GetComponent<Rigidbody>();
+        //cam = GetComponentInChildren<Camera>();
+        //capCollider = GetComponentInChildren<CapsuleCollider>();
+        //rb.freezeRotation = true;
+        //stepRayUpper.position = new Vector3(stepRayUpper.position.x, maxStepHeight, stepRayUpper.position.z);
+        //if (sphereCastPosition == null)
+        //    sphereCastPosition = transform;
     }
 
     private void Start()
@@ -270,9 +270,7 @@ public class FPSController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireSphere(transform.position, sphereRadius);
-        Gizmos.DrawRay(stepRayLower.position, -transform.up * lowerRayDetectRange);
-        Gizmos.DrawRay(stepRayUpper.position, -transform.up * upperRayDetectRange);
+        
     }
 
     private void ResetJump()

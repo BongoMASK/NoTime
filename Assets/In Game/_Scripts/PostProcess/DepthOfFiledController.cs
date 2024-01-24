@@ -21,6 +21,13 @@ public class DepthOfFiledController : MonoBehaviour
     }
 
     private void Update() {
+        if (CameraManager.instance.activeCam != null) {
+            depthOfField.active = false;
+            return;
+        }
+        else
+            depthOfField.active = true;
+
         raycast = new Ray(cam.position, cam.forward * 100);
 
         isHit = false;
@@ -38,15 +45,10 @@ public class DepthOfFiledController : MonoBehaviour
     }
 
     private void SetFocus() {
+        if (hitDistance < 1) {
+            return;
+        }
+
         depthOfField.focusDistance.value = hitDistance;
     }
-
-    //private void OnDrawGizmos() {
-    //    if (isHit) {
-    //        Gizmos.DrawSphere(hit.point, 0.1f);
-    //        Debug.DrawRay(cam.position, cam.forward * Vector3.Distance(cam.position, hit.point));
-    //    }
-    //    else
-    //        Debug.DrawRay(cam.position, cam.forward * 100f);
-    //}
 }
