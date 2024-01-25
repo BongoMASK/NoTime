@@ -1,4 +1,4 @@
-﻿public abstract class Button : PuzzleObject {
+﻿public abstract class PhysicalButton : PuzzleObject {
 
     /// <summary>
     /// Called to update the objects it is connected to check if their state should change

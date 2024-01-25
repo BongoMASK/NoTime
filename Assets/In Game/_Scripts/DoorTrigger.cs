@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class DoorTrigger : Button {
+public class DoorTrigger : PhysicalButton {
     private void OnTriggerEnter(Collider other) {
         if (other.transform.name == "Plate") {
             isOn = true;

@@ -29,17 +29,11 @@ public class CameraManager : MonoBehaviour {
             // Pause game when there is no active cam present
             if (value == null) {
                 lockInput = true;
+                Application.targetFrameRate = 1000;
             }
             else {
-                // It's better to set these values to false when you assign a camera,
-                // than set it to false when you remove the camera
-                // slightly messy and difficult to understand
-                // review later
-
-                //isPlaying = false;
-                //isRewinding = false;
-                //isForwarding = false;
-
+                Application.targetFrameRate = 24;
+                
                 cameraMode = CameraMode.Pause;
 
                 lockInput = false;
@@ -98,8 +92,10 @@ public class CameraManager : MonoBehaviour {
             _cameraMode = value;
             LimitRigidbody();
 
-            if (activeCam != null)
+            if (activeCam != null) {
                 activeCam.cameraUI.DisplayPlayerInput(_cameraMode);
+                //activeCam.SetPlaybackSpeed(_cameraMode);
+            }
         }
     }
 
