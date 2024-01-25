@@ -23,7 +23,7 @@ public class CameraInfluence : MonoBehaviour {
         if (!videoPlayer.gameObject.activeInHierarchy)
             return;
 
-        SetPlaybackSpeed(CameraManager.instance.cameraMode);
+        //SetPlaybackSpeed(CameraManager.instance.cameraMode);
     }
 
     public void SetPlaybackSpeed(CameraMode action) {

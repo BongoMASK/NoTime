@@ -63,6 +63,9 @@ public class PlayerInteraction : MonoBehaviour
         if (Input.GetKeyDown(toggleKey))
             ToggleScreen();
 
+        if (Input.GetKeyDown(KeyCode.Escape) && isScreenOpen)
+            ToggleScreen();
+
         if (IsCurrentlyInteracted)
         {
             HandleAlreadyInteracting();

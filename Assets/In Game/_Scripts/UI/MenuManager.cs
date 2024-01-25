@@ -44,7 +44,7 @@ public class MenuManager : MonoBehaviour {
     IEnumerator OpenAMenu(Menu menu) {
         DoTransitionAnimIn();
 
-        yield return new WaitForSeconds(time * 2);
+        yield return new WaitForSecondsRealtime(time * 2);
 
         for (int i = 0; i < menus.Length; i++) {
             if (menus[i].open) {
@@ -54,16 +54,11 @@ public class MenuManager : MonoBehaviour {
         menu.Open();
 
         DoTransitionAnimOut();
-        //transitionUI.rectTransform.DOSizeDelta(Vector2.one * 5000, time * 1.5f);
-
-        //yield return new WaitForSeconds(time * 1.5f);
-
-        //transitionUI.gameObject.SetActive(false); 
     }
 
     public void DoTransitionAnimIn() {
         transitionUI.gameObject.SetActive(true);
-        transitionUI.rectTransform.DOSizeDelta(Vector2.zero, time);
+        transitionUI.rectTransform.DOSizeDelta(Vector2.zero, time).SetUpdate(true);
 
     }
 
@@ -72,9 +67,9 @@ public class MenuManager : MonoBehaviour {
     }
 
     IEnumerator TransitionAnimOut() {
-        transitionUI.rectTransform.DOSizeDelta(Vector2.one * 5000, time * 1.5f);
+        transitionUI.rectTransform.DOSizeDelta(Vector2.one * 5000, time * 1.5f).SetUpdate(true);
 
-        yield return new WaitForSeconds(time * 1.5f);
+        yield return new WaitForSecondsRealtime(time * 1.5f);
         EventSystem.current.SetSelectedGameObject(null);
         transitionUI.gameObject.SetActive(false);
     }

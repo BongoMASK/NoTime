@@ -50,7 +50,6 @@ public class PlayerMovement : HeroUnitBase {
         }
         set {
             _lockInput = value;
-            //playerCam.GetComponentInChildren<Camera>().enabled = !value;
         }
     }
 

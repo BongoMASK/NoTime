@@ -157,9 +157,13 @@ public class CameraManager : MonoBehaviour {
     }
 
     void GetInput() {
-        if (lockInput)
-            return;
+        if (lockInput) {
+            if (Input.GetKeyDown(KeyCode.H)) {
+                PauseScreen.isPaused = !PauseScreen.isPaused;
+            }
 
+            return;
+        }
         #region Camera Actions
 
         if (Input.GetKeyDown(KeyCode.A)) {

@@ -6,6 +6,7 @@ public class ChangeScenes : MonoBehaviour
 {
     Transform player;
     [SerializeField] KeyCode restartKey = KeyCode.P;
+    [SerializeField] MenuManager menuManager;
 
     private void Start() {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
@@ -41,17 +42,16 @@ public class ChangeScenes : MonoBehaviour
     }
 
     IEnumerator Cor_ChangeLevelWithDelay(int index, float time = 1) {
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSecondsRealtime(time);
         SceneManager.LoadScene(index);
-    }
-
-    private void ChangeLevel(int sceneIndex) {
-
+        Time.timeScale = 1;
     }
 
     void CheckForPos() {
-        if (player.position.y < -40)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        if (player.position.y < -40) {
+            menuManager.DoTransitionAnimIn();
+            ChangeLevelWithDelay(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     public void Quit() {
