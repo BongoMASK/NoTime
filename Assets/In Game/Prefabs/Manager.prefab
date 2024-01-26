@@ -351,6 +351,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   volume: {fileID: 4178418046779999132}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 507
 --- !u!1001 &5441896951839598123
 PrefabInstance:
   m_ObjectHideFlags: 0

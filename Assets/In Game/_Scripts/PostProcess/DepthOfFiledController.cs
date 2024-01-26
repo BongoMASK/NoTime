@@ -15,6 +15,8 @@ public class DepthOfFiledController : MonoBehaviour
 
     Transform cam;
 
+    [SerializeField] LayerMask layerMask;
+
     private void Start() {
         cam = Camera.main.transform;
         volume.profile.TryGet(out depthOfField);
@@ -32,7 +34,7 @@ public class DepthOfFiledController : MonoBehaviour
 
         isHit = false;
 
-        if (Physics.Raycast(raycast, out hit, 100f)) {
+        if (Physics.Raycast(raycast, out hit, 100f, layerMask)) {
             isHit = true;
             hitDistance = Vector3.Distance(cam.position, hit.point);
         }
