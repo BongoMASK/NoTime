@@ -317,14 +317,30 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'W, A, S, D - Movement
+  m_text: '<color=#EC9E2B>Player Controls:</color>
 
-    Tab - Open Camera
+    [W], [A], [S], [D] - Movement
 
-    E - Interact
+    [Tab]
+    - Open Camera
 
-    Shift
-    + P - Restart level'
+    [E] - Interact
+
+    [Shift] + [P] - Restart level
+
+
+
+    <color=#EC9E2B>Camera
+    Controls:</color>
+
+    [A] - Rewind
+
+    [D] - Forward
+
+    [Space] - Play /
+    Pause
+
+    [W] [S] - Prev / Next Camera'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a402a1865b5b614e9561d7a0437fbd5, type: 2}
   m_sharedMaterial: {fileID: 4360474901574125758, guid: 2a402a1865b5b614e9561d7a0437fbd5,
@@ -352,8 +368,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 75
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -675,6 +691,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261384806715320911, guid: 5bca222a40b6dfe418a0f8ddcab71968,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.16862746
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261384806715320911, guid: 5bca222a40b6dfe418a0f8ddcab71968,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.61960787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261384806715320911, guid: 5bca222a40b6dfe418a0f8ddcab71968,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.9254902
       objectReference: {fileID: 0}
     - target: {fileID: 4217554238376419551, guid: 5bca222a40b6dfe418a0f8ddcab71968,
         type: 3}

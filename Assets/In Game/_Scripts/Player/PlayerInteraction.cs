@@ -54,6 +54,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Update()
     {
+        if (PauseScreen.isPaused)
+            return;
 
         if (!playerMovement.CanInteract)
         {

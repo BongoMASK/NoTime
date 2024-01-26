@@ -29,10 +29,10 @@ public class CameraManager : MonoBehaviour {
             // Pause game when there is no active cam present
             if (value == null) {
                 lockInput = true;
-                Application.targetFrameRate = 1000;
+                //Application.targetFrameRate = 1000;
             }
             else {
-                Application.targetFrameRate = 24;
+                //Application.targetFrameRate = 24;
                 
                 cameraMode = CameraMode.Pause;
 
@@ -158,7 +158,7 @@ public class CameraManager : MonoBehaviour {
 
     void GetInput() {
         if (lockInput) {
-            if (Input.GetKeyDown(KeyCode.H)) {
+            if (Input.GetKeyDown(KeyCode.Escape)) {
                 PauseScreen.isPaused = !PauseScreen.isPaused;
             }
 

@@ -10,9 +10,9 @@ public class UIManager : MonoBehaviour
     public CameraUI cameraUI;
     public PlayerHelperUI playerHelperUI;
 
-    [SerializeField] Transform playerHUD;
-    [SerializeField] Transform cameraHUD;
-    [SerializeField] Transform crosshairHUD;
+    public Transform playerHUD;
+    public Transform cameraHUD;
+    public Transform crosshairHUD;
 
     [SerializeField] RawImage screen;
 

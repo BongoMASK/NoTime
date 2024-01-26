@@ -49,6 +49,8 @@ public class PauseScreen : MonoBehaviour
         Time.timeScale = 0;
         pausePanel.SetActive(true);
 
+        UIManager.Instance.crosshairHUD.gameObject.SetActive(false);
+
         EventSystem.current.SetSelectedGameObject(null);
     }
 
@@ -60,5 +62,7 @@ public class PauseScreen : MonoBehaviour
 
         Time.timeScale = 1;
         pausePanel.SetActive(false);
+
+        UIManager.Instance.crosshairHUD.gameObject.SetActive(true);
     }
 }
