@@ -8,8 +8,15 @@ public class ChangeScenes : MonoBehaviour
     [SerializeField] KeyCode restartKey = KeyCode.P;
     [SerializeField] MenuManager menuManager;
 
+    [SerializeField] bool enableCursor = false;
+
     private void Start() {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
+        if(enableCursor) {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 
     private void Update() {

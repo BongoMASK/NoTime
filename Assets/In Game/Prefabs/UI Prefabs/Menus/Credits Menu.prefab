@@ -89,8 +89,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 300}
-  m_SizeDelta: {x: 950, y: 300}
+  m_AnchoredPosition: {x: 0, y: 322.79712}
+  m_SizeDelta: {x: 950, y: 345.5942}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &1725910108963882606
 CanvasRenderer:
@@ -120,8 +120,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Thanks for Playing
+  m_text: 'Thanks for Playing!
 
+
+    A game by:
 
     Shourish <color=#EC9E2B>Adhicary</color>
 
@@ -154,8 +156,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 60
-  m_fontSizeBase: 60
+  m_fontSize: 55
+  m_fontSizeBase: 55
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -230,8 +232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -41}
-  m_SizeDelta: {x: 950, y: 500}
+  m_AnchoredPosition: {x: 0, y: -64.48224}
+  m_SizeDelta: {x: 950, y: 429.9645}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!222 &4273593453008102106
 CanvasRenderer:
@@ -261,19 +263,19 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'This is currenlty a "Work in progress" project.
+  m_text: 'This is currenlty a "Work in Progress" project.
 
     A steam release Demo
     will be coming soon,  with new features, gameplay and more.
 
-    Join our discord
-    for updates. Any sort help will help us to develop the project sooner.
+
+    Join our <color=#949FFF>discord
+    server</color> for updates and to talk directly to us. Any help is greatly appreciated
+    and will allow us to release this game sooner.
 
 
-    Please
-    provide your feedback to this given google form.
-
-'
+    Please provide your feedback
+    to this given <color=#AB87EC>Google Form</color>.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a402a1865b5b614e9561d7a0437fbd5, type: 2}
   m_sharedMaterial: {fileID: 4360474901574125758, guid: 2a402a1865b5b614e9561d7a0437fbd5,
@@ -301,8 +303,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -377,7 +379,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -350}
+  m_AnchoredPosition: {x: 0, y: -354.46}
   m_SizeDelta: {x: 950, y: 150}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &2524071464942062864

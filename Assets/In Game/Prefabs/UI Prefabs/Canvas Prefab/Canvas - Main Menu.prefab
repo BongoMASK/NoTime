@@ -288,6 +288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   restartKey: 112
   menuManager: {fileID: 3315105522758460889}
+  enableCursor: 1
 --- !u!1 &8362038862775597445
 GameObject:
   m_ObjectHideFlags: 0

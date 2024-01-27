@@ -2,10 +2,18 @@ using UnityEngine;
 
 public class BGMusicPlayer : MonoBehaviour
 {
-
     [SerializeField] AudioSource source;
 
+    public static BGMusicPlayer instance;
+
     private void Awake() {
+        if (instance != null && instance != this) {
+            Destroy(this.gameObject);
+        }
+        else {
+            instance = this;
+        }
+
         DontDestroyOnLoad(this);
     }
 
