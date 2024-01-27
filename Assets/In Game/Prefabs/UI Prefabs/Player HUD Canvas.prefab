@@ -107,7 +107,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 100, y: -118.03061}
-  m_SizeDelta: {x: 22.19, y: 50}
+  m_SizeDelta: {x: 142.25, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5582639695774347126
 CanvasRenderer:
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[W]'
+  m_text: '[W] - Next Cam'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a402a1865b5b614e9561d7a0437fbd5, type: 2}
   m_sharedMaterial: {fileID: 4360474901574125758, guid: 2a402a1865b5b614e9561d7a0437fbd5,
@@ -165,8 +165,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -898,7 +898,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1443968139932717365
 CanvasRenderer:
@@ -928,7 +928,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[Space]'
+  m_text: '[Space] - Play / Puase'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a402a1865b5b614e9561d7a0437fbd5, type: 2}
   m_sharedMaterial: {fileID: 4360474901574125758, guid: 2a402a1865b5b614e9561d7a0437fbd5,
@@ -956,8 +956,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1369,7 +1369,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 300, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 300, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &3374484168263535083
 CanvasRenderer:
@@ -1399,7 +1399,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[D]'
+  m_text: '[D] - Forward'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a402a1865b5b614e9561d7a0437fbd5, type: 2}
   m_sharedMaterial: {fileID: 4360474901574125758, guid: 2a402a1865b5b614e9561d7a0437fbd5,
@@ -1427,8 +1427,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2500,7 +2500,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 100, y: -331.9694}
-  m_SizeDelta: {x: 18.49, y: 50}
+  m_SizeDelta: {x: 135.91, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5046240502249287811
 CanvasRenderer:
@@ -2530,7 +2530,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[S]'
+  m_text: '[S] - Prev Cam'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a402a1865b5b614e9561d7a0437fbd5, type: 2}
   m_sharedMaterial: {fileID: 4360474901574125758, guid: 2a402a1865b5b614e9561d7a0437fbd5,
@@ -2558,8 +2558,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2665,7 +2665,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '[A]'
+  m_text: '[A] - Rewind'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a402a1865b5b614e9561d7a0437fbd5, type: 2}
   m_sharedMaterial: {fileID: 4360474901574125758, guid: 2a402a1865b5b614e9561d7a0437fbd5,
@@ -2693,8 +2693,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 30
+  m_fontSizeBase: 30
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

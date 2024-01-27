@@ -120,10 +120,13 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Shourish <color=#EC9E2B>Adhicary</color>
+  m_text: 'Thanks for Playing
 
-    <color=#EC9E2B>Soumya </color>
-    bhunia'
+
+    Shourish <color=#EC9E2B>Adhicary</color>
+
+    <color=#EC9E2B>Soumya
+    </color> bhunia'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2a402a1865b5b614e9561d7a0437fbd5, type: 2}
   m_sharedMaterial: {fileID: 4360474901574125758, guid: 2a402a1865b5b614e9561d7a0437fbd5,
