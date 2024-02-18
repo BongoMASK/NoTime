@@ -26,6 +26,8 @@ public class CameraInfluence : MonoBehaviour {
         //SetPlaybackSpeed(CameraManager.instance.cameraMode);
     }
 
+    #region Video Player Funcs
+
     public void SetPlaybackSpeed(CameraMode action) {
         switch (action) {
             case CameraMode.Play:
@@ -74,6 +76,8 @@ public class CameraInfluence : MonoBehaviour {
         }
     }
 
+    #endregion
+
     public bool ShouldStopRecordingRewind() {
         if (videoPlaybackTime < 0)
             return true;
@@ -111,7 +115,6 @@ public class CameraInfluence : MonoBehaviour {
     }
 
     private void OnDrawGizmosSelected() {
-        //Gizmos.DrawMesh()
         Gizmos.DrawWireSphere(cam.transform.position, cameraRange);
     }
 }

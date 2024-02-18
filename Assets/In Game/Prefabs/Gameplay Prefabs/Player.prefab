@@ -264,16 +264,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba7106da50236f4581f19454d4b4844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectionRange: 4
-  interactableLayer:
-    serializedVersion: 2
-    m_Bits: 192
+  playerMovement: {fileID: 2568705755908630225}
   playerCam: {fileID: 7064831151119904475}
   interactedObjectPos: {fileID: 7064831150386370106}
   interactKey: 101
-  toggleKey: 9
-  interactText: {fileID: 0}
-  currentInteractedObject: {fileID: 0}
+  whatIsInteractable:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &2568705755908630225
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -4889,6 +4889,21 @@ PrefabInstance:
       propertyPath: m_VersionIndex
       value: 1557
       objectReference: {fileID: 0}
+    - target: {fileID: 8437683665277375930, guid: dce918cd165ddfc4e86ff6468fe092a0,
+        type: 3}
+      propertyPath: m_SelectedEdges.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437683665277375930, guid: dce918cd165ddfc4e86ff6468fe092a0,
+        type: 3}
+      propertyPath: m_SelectedFaces.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437683665277375930, guid: dce918cd165ddfc4e86ff6468fe092a0,
+        type: 3}
+      propertyPath: m_SelectedVertices.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8617639086953619683, guid: dce918cd165ddfc4e86ff6468fe092a0,
         type: 3}
       propertyPath: m_RootOrder
@@ -9909,6 +9924,18 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!114 &1557724830 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2568705755908630225, guid: c9366d785be0a8f458eabeb4bcca9af0,
+    type: 3}
+  m_PrefabInstance: {fileID: 1864273826}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14904b6c0a0da934ba89d157f01e40a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1558175140
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13047,6 +13074,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7064831151021580995, guid: c9366d785be0a8f458eabeb4bcca9af0,
+        type: 3}
+      propertyPath: playerMovement
+      value: 
+      objectReference: {fileID: 1557724830}
     - target: {fileID: 7064831151021580996, guid: c9366d785be0a8f458eabeb4bcca9af0,
         type: 3}
       propertyPath: m_Name

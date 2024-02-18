@@ -44,7 +44,10 @@ GameObject:
   - component: {fileID: 2248508512916561800}
   - component: {fileID: 2248508512916561803}
   - component: {fileID: 2248508512916561802}
-  m_Layer: 0
+  - component: {fileID: 5156873654219087923}
+  - component: {fileID: -5060257100911354498}
+  - component: {fileID: 3116284069488315862}
+  m_Layer: 6
   m_Name: Cam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -180,6 +183,60 @@ MonoBehaviour:
   cam: {fileID: 2248508512916561800}
   videoPlayer: {fileID: 4016495548362475514}
   cameraRange: 100
+--- !u!114 &5156873654219087923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2248508512916561812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72b438368f026c246aebfeec2019e309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cameraInfluence: {fileID: 2248508512916561802}
+  outline: {fileID: 3116284069488315862}
+  interactText: Press [E] to Access Camera
+--- !u!135 &-5060257100911354498
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2248508512916561812}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.2
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3116284069488315862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2248508512916561812}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 3
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 3.79
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &2509836743817216054
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +247,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2999234160750664332}
   m_Layer: 0
-  m_Name: Camera_altcam_DCF51IR_FBX
+  m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
