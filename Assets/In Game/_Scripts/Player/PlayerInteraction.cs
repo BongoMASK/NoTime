@@ -1,4 +1,3 @@
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour {
@@ -45,7 +44,7 @@ public class PlayerInteraction : MonoBehaviour {
 
     private void Update() {
         if(isScreenOpen) {
-            if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.Tab) || Input.GetKeyDown(interactKey)) {
+            if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(interactKey)) {
                 CameraManager.instance.activeCam = null;
                 OnCameraOpened(false);
             }
@@ -80,6 +79,7 @@ public class PlayerInteraction : MonoBehaviour {
         if (interactable != null && Input.GetKeyDown(interactKey)) {
             interactable.Interact(this);
             timeSinceLastInteracted = Time.time;
+            ShowInteractMessage("");
         }
     }
 
@@ -150,21 +150,6 @@ public class PlayerInteraction : MonoBehaviour {
         if (isCurrentlyInteracting)
             currentInteractedObject = null;
     }
-
-    //private void ToggleScreen() {
-    //    isScreenOpen = !isScreenOpen;
-    //    CameraManager.instance.activeCam = isScreenOpen ? CameraManager.instance.FindActiveCam() : null;
-
-    //    ResetInteractedObject();
-
-    //    // Enables and disables the screen
-    //    //screen.enabled = isScreenOpen;
-    //    UIManager.Instance.EnableScreen(isScreenOpen);
-    //    playerController.lockInput = isScreenOpen;
-    //    playerMovement.lockInput = isScreenOpen;
-
-    //    playerMovement.ResetInput();
-    //}
 
     public void OnCameraOpened(bool isScreenOpen = true) {
         ResetInteractedObject();

@@ -21,7 +21,7 @@ public class PlayerMovement : HeroUnitBase {
     [SerializeField] float _maxSpeed = 20;
     [SerializeField] bool grounded;
     [SerializeField] LayerMask whatIsGround;
-    float currentSlopeAngle = 0;
+    [SerializeField] float currentSlopeAngle = 0;
 
     private float maxSpeed {
         get {
@@ -390,18 +390,33 @@ public class PlayerMovement : HeroUnitBase {
         currentGravity = Physics.gravity;
     }
 
+    [SerializeField] LayerMask whatIsStairs;
 
     private void StepClimb() {
-        if(Physics.Raycast(stepLowRay.position, stepLowRay.forward, out RaycastHit hitlower, distance)) {
-            if (!Physics.Raycast(stepUpRay.position, stepUpRay.forward, out RaycastHit hitUpper, distance * 4)) {
+        if (userInput.IsPressed())
+            return;
+
+        Vector3 dir = new Vector3(userInput.x, 0, userInput.y);
+        dir = orientation.rotation * dir;
+
+        if (Physics.Raycast(stepLowRay.position, dir, out RaycastHit hitlower, distance)) {
+            if (!Physics.Raycast(stepUpRay.position, dir, out RaycastHit hitUpper, distance + 0.1f)) {
+
+                float angle = Vector3.Angle(Vector3.up, hitlower.normal);
+                if (angle > 20 && angle < maxSlopeAngle)
+                    return;
+
                 transform.position -= new Vector3(0, -stepSmooth, 0);
             }
         }
     }
 
     private void OnDrawGizmos() {
-        Gizmos.DrawRay(stepUpRay.position, stepUpRay.forward * distance * 4);
-        Gizmos.DrawRay(stepLowRay.position, stepLowRay.forward * distance);
+        Vector3 dir = new Vector3(userInput.x, 0, userInput.y);
+        dir = orientation.rotation * dir;
+
+        Gizmos.DrawRay(stepUpRay.position, dir * distance * 1.2f);
+        Gizmos.DrawRay(stepLowRay.position, dir * distance);
 
         Gizmos.DrawLine(stepUpRay.position, stepLowRay.position);
     }

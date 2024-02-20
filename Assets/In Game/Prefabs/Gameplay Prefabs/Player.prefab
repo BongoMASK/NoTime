@@ -291,6 +291,7 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 4294967295
+  currentSlopeAngle: 0
   counterMovement: 0.175
   stopMovement: 0.3
   maxSlopeAngle: 35
@@ -301,7 +302,10 @@ MonoBehaviour:
   stepLowRay: {fileID: 9155727447171969300}
   stepHeight: 0.3
   stepSmooth: 0.1
-  distance: 0.45
+  distance: 0.55
+  whatIsStairs:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &8180962370155386962
 MonoBehaviour:
   m_ObjectHideFlags: 0
