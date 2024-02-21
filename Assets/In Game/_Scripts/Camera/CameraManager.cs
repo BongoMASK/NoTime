@@ -197,13 +197,13 @@ public class CameraManager : MonoBehaviour {
 
         #region Camera Switching
 
-        if (Input.GetKeyDown(KeyCode.W)) {
-            ChangeActiveCamera(1);
-        }
+        //if (Input.GetKeyDown(KeyCode.W)) {
+        //    ChangeActiveCamera(1);
+        //}
 
-        if (Input.GetKeyDown(KeyCode.S)) {
-            ChangeActiveCamera(-1);
-        }
+        //if (Input.GetKeyDown(KeyCode.S)) {
+        //    ChangeActiveCamera(-1);
+        //}
 
         #endregion
     }
