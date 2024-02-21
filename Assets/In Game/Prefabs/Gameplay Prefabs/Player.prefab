@@ -71,9 +71,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7064831150412861655}
-  - component: {fileID: 7064831150412861652}
-  - component: {fileID: 7064831150412861653}
-  - component: {fileID: 7064831150412861654}
+  - component: {fileID: 1605681665020893036}
+  - component: {fileID: 6412558292682805006}
   m_Layer: 7
   m_Name: PlayerGFX
   m_TagString: Player
@@ -99,57 +98,28 @@ Transform:
   - {fileID: 6457470106912996802}
   m_Father: {fileID: 7064831151021580992}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7064831150412861652
-MeshFilter:
+--- !u!65 &1605681665020893036
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7064831150412861656}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7064831150412861653
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7064831150412861656}
+  m_Material: {fileID: 13400000, guid: 9bd2ae7d90e69fa4a8d9af604128454a, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 97dc068eed65a6b41bf7451fab3edc15, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &7064831150412861654
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 2, z: 0.5}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!136 &6412558292682805006
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -171,7 +141,7 @@ CapsuleCollider:
   m_Radius: 0.3
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0.98, z: 0}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &7064831151021580996
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +155,6 @@ GameObject:
   - component: {fileID: 7684798956310426299}
   - component: {fileID: 7064831151021580995}
   - component: {fileID: 2568705755908630225}
-  - component: {fileID: 8180962370155386962}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -235,7 +204,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &7684798956310426299
 MonoBehaviour:
@@ -303,57 +272,6 @@ MonoBehaviour:
   stepHeight: 0.3
   stepSmooth: 0.1
   distance: 0.55
-  whatIsStairs:
-    serializedVersion: 2
-    m_Bits: 0
---- !u!114 &8180962370155386962
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7064831151021580996}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0916c09815e52440896530e22544362, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActive: 1
-  canWalk: 1
-  canSprint: 1
-  canInteract: 1
-  canAirMove: 1
-  canJump: 1
-  canStepUp: 1
-  lockInput: 0
-  walkSpeed: 4
-  acceleration: 15
-  airMovementMultiplier: 0.5
-  frictionWhenStoping: 1
-  groundMovementMultiplier: 10
-  sprintSpeed: 7
-  sprintKey: 304
-  camSensi: 400
-  upperLookLimit: 90
-  lowerLookLimit: 70
-  jumpHeight: 1.5
-  jumpKey: 32
-  allowJumpButtonHold: 0
-  jumpCooldown: 0.5
-  groundCheckDistance: 0.2
-  sphereCastPosition: {fileID: 0}
-  sphereRadius: 1
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  gravityMultiplier: 10
-  maxFallingSpeed: 10
-  maxStepHeight: 0.5
-  stepUpSpeed: 0.1
-  stepRayUpper: {fileID: 6457470106912996802}
-  stepRayLower: {fileID: 9155727447171969300}
-  lowerRayDetectRange: 0.3
-  upperRayDetectRange: 0.3
 --- !u!1 &7064831151119904476
 GameObject:
   m_ObjectHideFlags: 0
@@ -549,7 +467,7 @@ Transform:
   m_GameObject: {fileID: 7336606243000237407}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.05, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []

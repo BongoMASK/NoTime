@@ -252,7 +252,7 @@ public class PlayerMovement : HeroUnitBase {
                 //Add jump forces
                 //rb.AddForce(Vector2.up * jumpForce * 1.5f);
                 rb.AddForce(normalVector * jumpForce * 2);
-                rb.AddForce(orientation.transform.forward * userInput.y * moveSpeed * Time.deltaTime); 
+                rb.AddForce(orientation.transform.forward * userInput.y * moveSpeed * Time.deltaTime);
 
                 //If userInput.jumping while falling, reset userInput.y velocity.
                 Vector3 vel = rb.velocity;
@@ -390,8 +390,6 @@ public class PlayerMovement : HeroUnitBase {
         currentGravity = Physics.gravity;
     }
 
-    [SerializeField] LayerMask whatIsStairs;
-
     private void StepClimb() {
         if (userInput.IsPressed())
             return;
@@ -403,7 +401,7 @@ public class PlayerMovement : HeroUnitBase {
             if (!Physics.Raycast(stepUpRay.position, dir, out RaycastHit hitUpper, distance + 0.1f)) {
 
                 float angle = Vector3.Angle(Vector3.up, hitlower.normal);
-                if (angle > 20 && angle < maxSlopeAngle)
+                if (angle > 20 && angle < 80)
                     return;
 
                 transform.position -= new Vector3(0, -stepSmooth, 0);

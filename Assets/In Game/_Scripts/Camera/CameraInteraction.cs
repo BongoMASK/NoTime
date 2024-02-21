@@ -1,23 +1,34 @@
 using UnityEngine;
 
-public class CameraInteraction : MonoBehaviour, IRayCastMessage, IInteractable
+public class CameraInteraction : PuzzleComponent, IRayCastMessage, IInteractable
 {
     [Header("Assignables")]
     [SerializeField] CameraInfluence cameraInfluence;
     [SerializeField] Outline outline;
 
+    [Header("Vars")]
     [SerializeField] string interactText = "Press [E] to Access Camera";
+    [SerializeField] string cannotInteractText = "Cannot interact. Camera is Switched Off";
+
+    [SerializeField] bool isAlreadyOn = true;
+
     float maxInteractDist = Mathf.Infinity;
 
-    public string OnPlayerViewedText => interactText;
+    public string OnPlayerViewedText => isOn ? interactText : cannotInteractText;
 
     public float messageDistance => maxInteractDist;
 
     public string OnInteractText => interactText;
 
-    public void Interact(PlayerInteraction interactor) {
-        CameraManager.instance.activeCam = cameraInfluence;
+    private void Start() {
+        isOn = isAlreadyOn;
+    }
 
+    public void Interact(PlayerInteraction interactor) {
+        if(!isOn)
+            return;
+
+        CameraManager.instance.activeCam = cameraInfluence;
         interactor.OnCameraOpened();
     }
 
@@ -30,5 +41,13 @@ public class CameraInteraction : MonoBehaviour, IRayCastMessage, IInteractable
     }
 
     public void OnPlayerViewing() {
+    }
+
+    public override void SwitchOff() {
+        base.SwitchOff();
+    }
+
+    public override void SwitchOn() {
+        base.SwitchOn();
     }
 }

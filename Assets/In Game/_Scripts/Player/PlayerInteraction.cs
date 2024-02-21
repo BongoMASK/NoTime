@@ -27,18 +27,24 @@ public class PlayerInteraction : MonoBehaviour {
         get => _currentRCM;
 
         set {
-            if(value == _currentRCM) 
+            if (value == _currentRCM) {
+                if (_currentRCM != null)
+                    ShowInteractMessage(currentRCM.OnPlayerViewedText);
+
                 return;
+            }
 
             if (value == null) {
-                _currentRCM.OnPlayerViewExit();
+                if (_currentRCM != null)
+                    _currentRCM.OnPlayerViewExit();
+
                 ShowInteractMessage("");
                 _currentRCM = value;
                 return;
             }
 
             _currentRCM = value;
-            OnRCMValueUpdate();
+            currentRCM.OnPlayerViewEnter();
         }
     }
 
@@ -108,7 +114,6 @@ public class PlayerInteraction : MonoBehaviour {
 
     private void OnRCMValueUpdate() {
         ShowInteractMessage(currentRCM.OnPlayerViewedText);
-        currentRCM.OnPlayerViewEnter();
     }
 
     private void ShowInteractMessage(string message) {
@@ -144,8 +149,67 @@ public class PlayerInteraction : MonoBehaviour {
     /// Lets go of the object that was being interacted with
     /// </summary>
     public void ResetInteractedObject() {
+        if (currentInteractedObject == null)
+            return;
+
         if (Time.time - timeSinceLastInteracted < minTimeBetweenInteraction)
             return;
+
+        // Check if it is safe to release object
+        Collider col = currentInteractedObject.GetChild(0).transform.GetComponent<Collider>();
+
+        Vector3 cameraPos = Camera.main.transform.position;
+        Vector3 dir = col.transform.position - cameraPos;
+
+        // check if object is still in view of the player
+        if (Physics.Raycast(Camera.main.transform.position, dir, out RaycastHit hit)) {
+            if (hit.collider != col)
+                return;
+        }
+
+        Vector3 size = col.bounds.extents;
+        Collider[] cols = Physics.OverlapBox(col.bounds.center, size);
+
+        // if something is colliding against the interacted obj...
+        if (cols.Length > 1) {
+            // tries to offset it to get a good floor pos
+            if (Physics.Raycast(col.bounds.center, Vector3.down, out RaycastHit hitInfo, col.bounds.extents.y)) {
+                float pressurePlateOffset = 0;
+                if (hitInfo.collider.CompareTag("PressurePlate")) {
+                    pressurePlateOffset = 0.22f;
+                }
+
+                Vector3 newObjOrigin = new Vector3(hitInfo.point.x, hitInfo.point.y + col.bounds.extents.y, hitInfo.point.z);
+                Transform t = currentInteractedObject;
+                Vector3 dist = t.GetChild(0).position - newObjOrigin;
+                Vector3 targetDist = t.position - dist;
+                currentInteractedObject.position = targetDist;
+            }
+            else
+                return;
+        }
+
+        // Tries to make the object touch the floor
+        //if (Physics.Raycast(col.bounds.center, Vector3.down, out RaycastHit hitInfo, col.bounds.size.y * 2)) {
+        //    float pressurePlateOffset = 0;
+        //    if(hitInfo.collider.CompareTag("PressurePlate")) {
+        //        pressurePlateOffset = 0.6f;
+        //    }
+
+        //    Vector3 newObjOrigin = new Vector3(hitInfo.point.x, hitInfo.point.y + col.bounds.extents.y - pressurePlateOffset, hitInfo.point.z);
+
+        //    cols = Physics.OverlapBox(newObjOrigin, size / 2);
+        //    if (cols.Length > 1) {
+        //        return;
+        //    }
+
+        //    Transform t = currentInteractedObject;
+        //    Vector3 dist = t.GetChild(0).position - newObjOrigin;
+        //    Vector3 targetDist = t.position - dist;
+        //    currentInteractedObject.position = targetDist;
+        //}
+        //else
+        //    return;
 
         if (isCurrentlyInteracting)
             currentInteractedObject = null;
