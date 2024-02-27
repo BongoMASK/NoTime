@@ -7,9 +7,13 @@ public class PreRecorder : MonoBehaviour {
     [SerializeField] public List<Playback> rewindList = new List<Playback>();
     [SerializeField] bool shouldRecord = true;
 
+    [SerializeField] Recorder recorder;
+    [SerializeField] Rigidbody rb;
+
     public void Start() {
         if(shouldRecord) {
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+            rb.AddForce(recorder.startForce);            
         }
 
         if (!shouldRecord) {

@@ -14,7 +14,7 @@ public class Recorder : MonoBehaviour {
     [SerializeField] Rigidbody rb;
 
     [Header("Values")]
-    [SerializeField] Vector3 startForce;
+    public Vector3 startForce;
 
     bool isPlaying => CameraManager.instance.cameraMode == CameraMode.Play;
 
@@ -107,7 +107,7 @@ public class Recorder : MonoBehaviour {
 
     private bool CheckIfPosHardSetPossible(Vector3 pos) {
         Vector3 dir = pos - transform.localPosition;
-        Debug.DrawLine(transform.position, transform.position + dir, Color.red, 1);
+        Debug.DrawRay(transform.position, dir, Color.red, 1);
         Physics.Raycast(transform.position, dir, out RaycastHit hitInfo, dir.magnitude);
 
         if (hitInfo.transform != null) {
@@ -115,6 +115,7 @@ public class Recorder : MonoBehaviour {
             return false;
         }
 
+        Debug.Log("fjhasd");
         return true;
     }
 
