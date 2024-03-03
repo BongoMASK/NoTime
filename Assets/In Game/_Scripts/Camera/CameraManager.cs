@@ -164,6 +164,7 @@ public class CameraManager : MonoBehaviour {
 
             return;
         }
+
         #region Camera Actions
 
         if (Input.GetKeyDown(KeyCode.A)) {
