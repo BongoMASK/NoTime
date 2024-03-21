@@ -115,7 +115,6 @@ public class Recorder : MonoBehaviour {
             return false;
         }
 
-        Debug.Log("fjhasd");
         return true;
     }
 

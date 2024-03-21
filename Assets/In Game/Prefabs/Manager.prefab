@@ -133,7 +133,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   restartKey: 112
-  menuManager: {fileID: 0}
+  menuManager: {fileID: 5411048833787362676}
+  enableCursor: 0
 --- !u!1 &140832535611387473
 GameObject:
   m_ObjectHideFlags: 0
@@ -478,3 +479,15 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 5441896951839598123}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5411048833787362676 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 41210035891723103, guid: fe82d359fbc37264894b620e897f7605,
+    type: 3}
+  m_PrefabInstance: {fileID: 5441896951839598123}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19decdfbd191c524b92e7e5d275cd2cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

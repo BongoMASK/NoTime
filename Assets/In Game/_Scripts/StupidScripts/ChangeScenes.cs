@@ -10,6 +10,9 @@ public class ChangeScenes : MonoBehaviour
 
     [SerializeField] bool enableCursor = false;
 
+    [SerializeField] int lowestYVal = -40;
+    [SerializeField] bool checkForPos = true;
+
     private void Start() {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
 
@@ -55,7 +58,10 @@ public class ChangeScenes : MonoBehaviour
     }
 
     void CheckForPos() {
-        if (player.position.y < -40) {
+        if (!checkForPos)
+            return;
+
+        if (player.position.y < lowestYVal) {
             menuManager.DoTransitionAnimIn();
             ChangeLevelWithDelay(SceneManager.GetActiveScene().buildIndex + 1);
         }

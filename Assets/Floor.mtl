@@ -1,0 +1,10 @@
+newmtl OrangeTile
+map_Kd BathroomTiles_albedo.png
+Kd 1.0 1.0 1.0
+d 1.0
+
+newmtl Concrete_Tile
+map_Kd concrete-33.jpg
+Kd 1.0 1.0 1.0
+d 1.0
+

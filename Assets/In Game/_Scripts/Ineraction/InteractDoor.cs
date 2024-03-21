@@ -37,10 +37,13 @@ public class InteractDoor : MonoBehaviour, IInteractable, IRayCastMessage {
 
     [SerializeField] bool isOpenAtStart = false;
     [SerializeField] Vector3 openDoorRotation = new Vector3(0, -90, 0);
+    Vector3 closeDoorRotation = Vector3.zero;
 
 
     void Start()
     {
+        closeDoorRotation = transform.rotation.eulerAngles;
+
         if (isOpenAtStart)
             Invoke(nameof(OpenDoor), 1);
     }
@@ -64,7 +67,7 @@ public class InteractDoor : MonoBehaviour, IInteractable, IRayCastMessage {
 
     void CloseDoor() {
         isDoorMoving = true;
-        transform.DORotate(Vector3.zero, 0.5f, RotateMode.Fast)
+        transform.DORotate(closeDoorRotation, 0.5f, RotateMode.Fast)
             .onComplete += () => isDoorMoving = false;
         isOpen = false;
     }
